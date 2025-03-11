@@ -1,18 +1,18 @@
 # endpoints for tweet management
 # create, retrieve, update, delete, like, unlike, reply 
-from flask import Blueprint, request, jsonify
 
-tweet_bp = Blueprint('tweets', __name__)
+from flask import Flask, Blueprint, jsonify, request
 
+tweets_bp = Blueprint('tweets', __name__)
 # @desc GET retrive all tweets
 # route /tweets
-@tweet_bp.route('/', methods=['GET'])
+@tweets_bp.route('/', methods=['GET'])
 def get_all_tweets():
     return jsonify({ "tweets": [] }), 200
 
 # @desc GET retrive one tweet
 # route /tweets/{tweet_id}
-@tweet_bp.route('/<tweet_id>', methods=['GET'])
+@tweets_bp.route('/<tweet_id>', methods=['GET'])
 def get_single_tweet(tweet_id):
     return jsonify({ "tweet": {"id": tweet_id, "content": "Dont know"} }), 200
 
