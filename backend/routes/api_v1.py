@@ -8,3 +8,4 @@ api_v1_bp = Blueprint('api_v1', __name__)
 api_v1_bp.register_blueprint(user_bp, url_prefix='/users')
 api_v1_bp.register_blueprint(tweets_bp, url_prefix='/tweets')
 
+
