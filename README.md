@@ -1,3 +1,6 @@
+This fetches the latest changes from main and merges them into your current branch:
+git pull origin main
+
 Our first step in this project was to define the structure and define endpoints.
 
 Installations so far:
