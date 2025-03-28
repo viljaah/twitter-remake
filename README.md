@@ -1,9 +1,13 @@
+This fetches the latest changes from main and merges them into your current branch:
+git pull origin main
+
 Our first step in this project was to define the structure and define endpoints.
 
 Installations so far:
 - pip install requests (success)
 - pip install Flask (success)
 - pip install Flask-PyMongo (success)
+- pip install python-dotenv passlib pyjwt (success)
 
 Technologies:
 - database: mongoDB
