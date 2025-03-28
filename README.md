@@ -7,6 +7,7 @@ Installations so far:
 - pip install requests (success)
 - pip install Flask (success)
 - pip install Flask-PyMongo (success)
+- pip install python-dotenv passlib pyjwt (success)
 
 Technologies:
 - database: mongoDB
