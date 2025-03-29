@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from config.db import get_db
 #from routes import tweet_routes
 
 app = FastAPI()
