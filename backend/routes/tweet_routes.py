@@ -1,23 +1,10 @@
-# endpoints for tweet management
+from fastapi import APIRouter, HTTPException, status
+from backend.models.tweet_schema import Tweet, TweetCreate
+from backend.controllers.tweet_controller import create_tweet, list_tweets, get_tweet, update_tweet, delete_tweet
 
+router = APIRouter()
 
-# @desc post a new tweet
-# route POST /tweets
-
-# @desc retrive all tweets
-# route GET /tweets
-
-# @desc retrive one tweet
-# route GET /tweets/{tweet_id}
-
-# @desc edit one tweet
-# route PUT /tweets/{tweet_id}
-
-# @desc delete one tweet
-# route DELETE /tweets/{tweet_id}
-
-# @desc search for tweets
-# route GET /tweets/search?={query}
-
-# @desc search for hashtags
-# route GET /tweets/hashtag/search?={query}
+@router.post('/', response_model=Tweet, status_code=status.HTTP_201_CREATED)
+def post_tweet(tweet: TweetCreate, user_id: str):
+    new_tweet = create_tweet(tweet, user_id)
+    return new_tweet
