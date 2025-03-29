@@ -4,10 +4,7 @@ git pull origin main
 Our first step in this project was to define the structure and define endpoints.
 
 Installations so far:
-- pip install requests (success)
-- pip install Flask (success) (dont need)
-- pip install Flask-PyMongo (success) (dont need)
-- pip install python-dotenv passlib pyjwt (success)
+-pip install fastapi uvicorn sqlalchemy psycopg2-binary "python-jose[cryptography]" passlib python-multipart bcrypt "pydantic[email]"
 
 ### ENDPOINTS: 
 ## Authentication Endpoints
