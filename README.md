@@ -155,7 +155,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     display_name VARCHAR(100),
     bio TEXT,
-    profile_picture_url VARCHAR(255),
+    profile_picture_url VARCHAR(255),// ignore 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
