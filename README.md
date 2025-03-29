@@ -274,3 +274,6 @@ Here's a detailed explanation for each table in our Twitter clone database desig
 5. **Connection Management**: Supports following/unfollowing functionality with simple insert/delete operations.
 
 This normalized database structure adheres to best practices for relational databases while supporting all the required Twitter clone functionality. The separation of concerns across tables makes the system more maintainable and extensible for future enhancements in assignment 2.
+
+Source we used on when decided whteher to go for Flask or FastApi:
+https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison
