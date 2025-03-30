@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship
-from ..config.db import Base
+from config.db import Base
 
 class Tweet(Base):
     __tablename__ = "tweets"
@@ -15,4 +15,4 @@ class Tweet(Base):
 
     # establishes a relationship to the User model
     user = relationship("User", back_populates="tweets")
-    hashtag = relationship("Hashtag", secondary="tweet_hashtags", back_populates="tweets")
+    hashtags = relationship("Hashtag", secondary="tweet_hashtags", back_populates="tweets")

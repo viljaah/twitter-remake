@@ -4,14 +4,13 @@ from models.user_schema import User
 from models.tweet_schema import Tweet
 from models.hashtag_schema import Hashtag
 from routes.tweet_routes import tweet_router
+from routes.user_routes import userRouter 
 
 app = FastAPI()
 
+# Include the router - this is like app.use("/api/users", userRoutes) in Express
+app.include_router(userRouter, prefix="/api")
 app.include_router(tweet_router, prefix="/api/tweets", tags=["tweets"])
-
-@app.get("/")
-def read_root():
-    return {"message": "Twitter Clone API is running!"}
 
 if __name__ == "__main__":
     import uvicorn

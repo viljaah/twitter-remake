@@ -1,0 +1,17 @@
+### Register User
+POST http://localhost:8000/api/users/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "password123",
+  "display_name": "Test User",
+  "bio": "This is a test user"
+}
+
+### Get All Users
+GET http://localhost:8000/api/users
+
+### Get User by ID
+GET http://localhost:8000/api/users/1
