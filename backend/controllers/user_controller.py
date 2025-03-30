@@ -83,6 +83,24 @@ def logout_user():
 
 # @desc retrieve all accouts
 # route GET /users
+def getAll_users(db: Session):
+    #query all users from the db
+    users = db.query(User).all()
+
+    #create a list with user data
+    user_list = []
+    for user in users:
+        user_list.append({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "display_name": user.display_name,
+            "bio": user.bio
+        })
+    return {
+        "count": len(user_list),
+        "users": user_list
+    }
 
 
 # @desc retrieve specific accout
