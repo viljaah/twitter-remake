@@ -306,3 +306,11 @@ Python:
 4. imports the User class from that file
 
 and also the reason we have non-dots for imports is because python will look for modules like config.db directly in the backend folder, which is where they are located once we decalre that we are in the backend folder in the terminal. 
+
+For authentication in a Python FastAPI application, I would recommend using JSON Web Tokens (JWT). Here's why:
+
+1. Industry Standard: JWT is widely adopted and has good library support in Python.
+2. Stateless: Unlike session-based authentication, JWT doesn't require server-side storage, making it easier to scale.
+3. Cross-domain: JWTs work well across different domains, which is helpful if you'll have separate frontend and backend services.
+4. Rich Information: You can embed user information (like roles, permissions) directly in the token.
+5. Library Support: Python has excellent libraries for JWT like python-jose and PyJWT.
