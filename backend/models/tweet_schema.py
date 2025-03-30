@@ -15,4 +15,4 @@ class Tweet(Base):
 
     # establishes a relationship to the User model
     user = relationship("User", back_populates="tweets")
-    hashtag = relationship("Hashtag", secondary="tweet_hashtags", back_populates="tweets")
+    hashtags = relationship("Hashtag", secondary="tweet_hashtags", back_populates="tweets")
