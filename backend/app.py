@@ -6,6 +6,9 @@ from models.hashtag_schema import Hashtag
 from routes.tweet_routes import tweet_router
 from routes.user_routes import userRouter 
 
+# this creates tables if they have not been created yet, need to create the tbales in my db before i can use them
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
 
 # Include the router - this is like app.use("/api/users", userRoutes) in Express
