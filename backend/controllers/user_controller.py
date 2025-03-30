@@ -39,11 +39,47 @@ def create_user(user, db: Session):
 
 # @desc login user
 # route POST /users/login
+def login_user(user_credentials, db: Session):
+    # find user by username
+    db_user = db.query(User).filter(User.username == user_credentials.username).first()
 
+    if not db_user:
+        raise HTTPException(
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = "Invalid username or password",
+            headers = {"WWW-Authenticate": "Bearer"},
+        )
+    # Checks if the password matches using bcrypt
+    # we need to encode the password from teh request to bytes and comapre with stored hash
+    _is_password_correct = bcrypt.checkpw(
+        user_credentials.password.encode('utf-8'), #UTF-8 is a character encoding that can represent virtually all characters in the Unicode standard
+        db_user.password_hash.encode('utf-8')
+    )
+
+    if not _is_password_correct:
+        raise HTTPException(
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail= "invalid username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    #if authentication is successful, return user data (without password)
+    return {
+        "id": db_user.id,
+        "username": db_user.username,
+        "email": db_user.email,
+        "display_name": db_user.display_name,
+        "bio": db_user.bio,
+        "message": "login successful"
+    }
 
 # @desc logout user
 # route POST /users/logout
-
+def logout_user():
+ return {
+        "success": True,
+        "message": "User logged out successfully"
+    }
 
 # @desc retrieve all accouts
 # route GET /users
