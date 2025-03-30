@@ -274,3 +274,35 @@ This normalized database structure adheres to best practices for relational data
 
 Source we used on when decided whteher to go for Flask or FastApi:
 https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison
+
+---
+Reason for why we need __init__.py in each folder for backend:
+
+Python handles import differently. When we are running a file directly (like with python app.py once we are in the backend direcotry in the temrinal), Python does not treat it as part of a package, so relative imports with dots like (.config.db) dont work. 
+
+In Python, we need __init-_.py files to mark direcotries as pakcges, which enables Python's import system to work corecctly with relative imports. 
+
+so for exmaple comapring it to JS ES6 way of how we know that works, we do something like this: 
+// user.js
+export default class User {...}
+// app.js
+import User from './models/user.js';
+
+In python it would look somehting like this:
+# models/user.py
+class User: 
+    ...
+# app.py
+from models.user import User
+
+A "package" in Python is jsut a direcotry that Python recognizes as containing importable code. When you create empty __init__.py files, you are essentially telling Python "treat this folder as a module that i can import from." -> this folder is not jsut for organizing files, it contians code modules. 
+
+so when we use: 
+- from models.user import User in app.py
+Python: 
+1. Looks for a models direcotry
+2. checks if it has an __init__.py (confirming its a package)
+3. the looks for a user.py file insinde that pakcge
+4. imports the User class from that file
+
+and also the reason we have non-dots for imports is because python will look for modules like config.db directly in the backend folder, which is where they are located once we decalre that we are in the backend folder in the terminal. 
