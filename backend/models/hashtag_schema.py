@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, Table, ForeignKey
 from sqlalchemy.orm import relationship
-from ..config.db import Base
+from config.db import Base
 
 # association table for the many-to-many relationship between tweets and hashtags
 tweet_hashtags = Table(

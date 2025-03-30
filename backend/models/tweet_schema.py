@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship
-from ..config.db import Base
+from config.db import Base
 
 class Tweet(Base):
     __tablename__ = "tweets"
