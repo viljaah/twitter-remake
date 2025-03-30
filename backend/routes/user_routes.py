@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user
+from controllers.user_controller import create_user, login_user, logout_user, getAll_users
 
 app = FastAPI()
 
@@ -27,8 +27,8 @@ async def handle_logout():
 
 
 @userRouter.get("/")
-async def get_users():
-    return {"message": "All users retrieved successfully"}
+async def get_users(db: Session = Depends(get_db)):
+    return getAll_users(db)
 
 
 @userRouter.get("/{user_id}")
