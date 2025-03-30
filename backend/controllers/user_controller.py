@@ -105,10 +105,59 @@ def getAll_users(db: Session):
 
 # @desc retrieve specific accout
 # route GET /users/{user_id}
+"""
+    Retrieves a specific user by their ID.
+    
+    :param user_id: The ID of the user to retrieve
+    :param db: SQLAlchemy database session
+    :return: User details if found
+    :raises HTTPException: If user not found
+    """
+def get_user_by_id(user_id: int, db: Session):
+    user = db.query(User).filter(User.id == user_id).first()
 
+    if not user:
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = f"User with ID {user_id} not found"
+        )
+    return {
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "display_name": user.display_name,
+            "bio": user.bio,
+            "created_at": user.created_at,
+            "updated_at": user.updated_at
+        }
+    }
 
 # @desc delete your own account
 # route DELETE /users/{user_id}
+"""
+    Deletes a user account by ID.
+    
+    :param user_id: The ID of the user to delete
+    :param db: SQLAlchemy database session
+    :return: Success message if deleted
+    :raises HTTPException: If user not found
+    """
+def delete_user_by_id(user_id: int, db: Session):
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with ID {user_id} not found"
+        )
+    
+    db.delete(user)
+    db.commit()
+    
+    return {
+        "message": f"User with ID {user_id} has been deleted"
+    }
 
 # @desc search for account
 # route GET /users/search?q={query}

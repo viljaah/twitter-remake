@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, getAll_users
+from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id
 
 app = FastAPI()
 
@@ -25,19 +25,17 @@ async def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
 async def handle_logout():
     return logout_user()
 
-
 @userRouter.get("/")
 async def get_users(db: Session = Depends(get_db)):
     return getAll_users(db)
 
-
 @userRouter.get("/{user_id}")
-async def get_user(user_id: int):
-    return {"message": f"User {user_id} retrieved successfully"}
+async def get_user(user_id: int, db: Session = Depends(get_db)):
+    return get_user_by_id(user_id, db)
 
 @userRouter.delete("/{user_id}")
-async def delete_user(user_id: int):
-    return {"message": f"User {user_id} deleted successfully"}
+async def delete_user(user_id: int, db: Session = Depends(get_db)):
+    return delete_user_by_id(user_id, db)
 
 
 @userRouter.get("/search")
