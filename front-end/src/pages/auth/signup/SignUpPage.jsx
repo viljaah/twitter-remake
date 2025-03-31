@@ -6,7 +6,7 @@ import {useState} from "react";
 import {MdOutlineMail} from "react-icons/md";
 import {FaUser} from "react-icons/fa";
 import {MdPassword} from "react-icons/md";
-import {MdDriveFileRenameOutline} from "react-icons/md";
+import styles from './SignUpPage.module.css';
 
 const SignUpPage = () => {
     // the pure js goes here, while the html-like goes inside the return
@@ -32,25 +32,25 @@ const SignUpPage = () => {
     const isError = false; //if there are any errors we will get "somehting went wrong" form the code down below, by defualt it is false, it will become true if there will be some errors
 
   return (
-    <div className='main-signup-div'>
-        <div className='svg-logo'>
+    <div className={styles.mainSignupDiv}>
+        <div className={styles.svgLogo}>
             {/*here should the logo of the x go*/ }
         </div>
-        <div className='submit-form'>
+        <div className={styles.submitForm}>
             <form onSubmit={handleSumbit}>
                 <h1>Join today</h1>
                 <label>
                     <MdOutlineMail />
                     <input
                     type='email'
-                    className='grow'
+                    className={styles.grow}
                     placeholder='Email'
                     name='email'
                     onChange={handleInputChange}
                     value={formData.email}
                     />
                 </label>
-                <div className='input-second'>
+                <div className={styles.inputSecond}>
                     <label>
                         <FaUser />
                         <input 
