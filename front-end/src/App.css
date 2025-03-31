@@ -1,4 +1,6 @@
-
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
 .root-div{
     display: flex;
     max-width: 6x1; /*72rem / which is also the same as 1152px*/

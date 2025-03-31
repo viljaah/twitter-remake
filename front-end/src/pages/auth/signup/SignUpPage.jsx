@@ -7,6 +7,7 @@ import {MdOutlineMail} from "react-icons/md";
 import {FaUser} from "react-icons/fa";
 import {MdPassword} from "react-icons/md";
 import styles from './SignUpPage.module.css';
+import XSvg from "../../../components/svgs/X.jsx";
 
 const SignUpPage = () => {
     // the pure js goes here, while the html-like goes inside the return
@@ -33,8 +34,8 @@ const SignUpPage = () => {
 
   return (
     <div className={styles.mainSignupDiv}>
-        <div className={styles.svgLogo}>
-            {/*here should the logo of the x go*/ }
+        <div>
+        <XSvg className={styles.svgLogo}/>
         </div>
         <div className={styles.submitForm}>
             <form onSubmit={handleSumbit}>
