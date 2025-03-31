@@ -316,3 +316,36 @@ For authentication in a Python FastAPI application, I would recommend using JSON
 5. Library Support: Python has excellent libraries for JWT like python-jose and PyJWT.
 
 source for leanring and setting up react: https://github.com/burakorkmez/twitter-clone/tree/master/frontend + his youtube video (provide link here as well later)
+
+Regarding CSS in React, you have several options, and each has its advantages:
+
+Regular CSS files:
+
+Create a .css file and import it in your component
+Example: import './SignUpPage.css'
+Pros: Simple, familiar if you know CSS
+Cons: No scoping (styles apply globally)
+
+
+CSS Modules:
+
+Create files with .module.css extension
+Import like: import styles from './SignUpPage.module.css'
+Use like: <div className={styles.mainSignupDiv}>
+Pros: Scoped to component, prevents style conflicts
+Cons: Slightly more complex syntax
+
+
+Inline styles:
+
+Define styles as JavaScript objects
+Example: <div style={{display: 'flex', flexDirection: 'column'}}>
+Pros: Fully contained in component
+Cons: Limited CSS features, can be verbose
+
+
+CSS-in-JS libraries (styled-components, emotion):
+
+Uses JavaScript to define styles
+Pros: Component-scoped, powerful features
+Cons: Requires additional libraries
