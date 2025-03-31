@@ -40,3 +40,20 @@ b) Token blacklisting: The server maintains a list of invalidated tokens
 c) Short token expiration with refresh tokens: Main tokens expire quickly, refresh tokens can be invalidated
 
 '''
+
+'''
+Look for articles that specifically cover:
+
+Basic JWT concepts (tokens, claims, signing)
+Implementing login with JWT in FastAPI
+Using FastAPI dependencies for protected routes
+Token refresh strategies
+
+good articles: 
+https://medium.com/@kevinkoech265/jwt-authentication-in-fastapi-building-secure-apis-ce63f4164eb2
+
+'''
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/login')
