@@ -314,3 +314,5 @@ For authentication in a Python FastAPI application, I would recommend using JSON
 3. Cross-domain: JWTs work well across different domains, which is helpful if you'll have separate frontend and backend services.
 4. Rich Information: You can embed user information (like roles, permissions) directly in the token.
 5. Library Support: Python has excellent libraries for JWT like python-jose and PyJWT.
+
+source for leanring and setting up react: https://github.com/burakorkmez/twitter-clone/tree/master/frontend + his youtube video (provide link here as well later)
