@@ -18,5 +18,4 @@ class Hashtag(Base):
     created_at = Column(DateTime, default=func.now())
 
     # relationship to Tweet using the association table
-    tweets = relationship("Tweet", secondary=tweet_hashtags, back_populates="hashtags")
-
+    tweets = relationship("Tweet", secondary="tweet_hashtags", back_populates="hashtags")

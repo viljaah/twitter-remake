@@ -1,8 +1,5 @@
 from fastapi import FastAPI
-from config.db import get_db, engine, Base
-from models.user_schema import User
-from models.tweet_schema import Tweet
-from models.hashtag_schema import Hashtag
+from config.db import engine, Base
 from routes.tweet_routes import tweet_router
 from routes.user_routes import userRouter 
 
