@@ -1,62 +1,96 @@
-.mainSignupDiv {
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  color: white;
+}
+
+.logoContainer {
+  display: none;
+}
+
+.logo {
+  width: 50%;
+  height: 50%;
+  fill: white;
+  position: relative;
+  left: 20%; 
+}
+
+.formContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1.5rem 0;
+}
+
+.inputLabel {
+  display: flex;
+  align-items: center;
+  background-color: #192734;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #38444d;
+}
+
+.icon {
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.loginButton {
+  background-color: #1da1f2; /* Twitter blue */
+  color: white;
+  padding: 0.8rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signupContainer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.signupButton {
+  background-color: transparent;
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+/* Media query for larger screens */
+@media (min-width: 1024px) {
+  .logoContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 50%;
   }
   
-  .svgLogo {
-    margin-bottom: 20px;
+  .formContainer {
+    width: 50%;
   }
-  
-  .submitForm {
-    width: 100%;
-  }
-  
-  .submitForm form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .submitForm h1 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .submitForm label {
-    display: flex;
-    align-items: center;
-    background: #f5f5f5;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  .submitForm input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 5px 10px;
-    outline: none;
-  }
-  
-  .inputSecond {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .submitForm button {
-    padding: 10px;
-    background: #1d9bf0;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .submitForm button:hover {
-    background: #1a8cd8;
-  }
+}
+
+
