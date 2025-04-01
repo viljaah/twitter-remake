@@ -1,9 +1,15 @@
 *{
     font-family: Arial, Helvetica, sans-serif;
 }
-.root-div{
-    display: flex;
-    max-width: 6x1; /*72rem / which is also the same as 1152px*/
-    margin-left: auto;
-    margin-right: auto;
-}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #15202b;
+  }
+  
+  #root {
+    height: 100%;
+    width: 100%;
+  }
