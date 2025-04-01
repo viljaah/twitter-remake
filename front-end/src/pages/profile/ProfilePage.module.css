@@ -1,8 +1,11 @@
-.profileContainer {
-    width: 100%;
-    background-color: white;
-    color: black; /* changes colors for eveyrhting inse that contianer, colro of the name, and other informaiton details*/
-}
+.mainContent {
+    flex: 1; /*doe sthis actually do naything?*/
+    max-width: 600px;
+    border-left: 1px solid #2f3336;
+    border-right: 1px solid #2f3336;
+    color: white;
+  }
+
 
 /* styling for the header section*/
 .header {
@@ -48,6 +51,11 @@
 }
 
 /* 3. Profile Information Section */
+.profileDetails {
+    margin-top: 80px; /* Increase from 60px to 80px or more */
+    padding-bottom: 15px;
+  }
+
 .profileInfo {
     padding: 0 15px;
     position: relative;
@@ -134,13 +142,11 @@
     flex: 1;
     text-align: center;
     font-weight: bold;
-    color: #536471;
     cursor: pointer;
-    min-width: 80px; /* Prevent tiny tabs */
   }
 
   .activeTab {
-    color: black;
+    color: white;
     border-bottom: 4px solid #1d9bf0;
   }
   
