@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id
+from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id, search_user_by_username
 
 app = FastAPI()
 
@@ -39,8 +39,8 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @userRouter.get("/search")
-async def search_users(q: str):
-    return {"message": f"Searching for users matching: {q}"}
+async def search_users(q: str, db: Session = Depends(get_db)):
+    return search_user_by_username(q, db)
 
 
 

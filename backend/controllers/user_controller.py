@@ -161,3 +161,23 @@ def delete_user_by_id(user_id: int, db: Session):
 
 # @desc search for account
 # route GET /users/search?q={query}
+def search_user_by_username(username: str, db: Session):
+    user = db.query(User).filter(User.username == username).first()
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with username {username} not found"
+        )
+    
+    return {
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "display_name": user.display_name,
+            "bio": user.bio,
+            "created_at": user.created_at,
+            "updated_at": user.updated_at
+        }
+    }
