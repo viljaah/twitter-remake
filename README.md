@@ -315,7 +315,7 @@ For authentication in a Python FastAPI application, I would recommend using JSON
 4. Rich Information: You can embed user information (like roles, permissions) directly in the token.
 5. Library Support: Python has excellent libraries for JWT like python-jose and PyJWT.
 
-source for leanring and setting up react: https://github.com/burakorkmez/twitter-clone/tree/master/frontend + his youtube video (provide link here as well later)
+source for leanring and setting up react: https://github.com/burakorkmez/twitter-clone/tree/master/frontend + his youtube video (https://www.youtube.com/watch?v=4GUVz2psWUg&t=10253s)
 
 Regarding CSS in React, you have several options, and each has its advantages:
 

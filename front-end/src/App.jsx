@@ -9,6 +9,7 @@ import SignUpPage from './pages/auth/signup/SignUpPage';
 import ProfilePage from './pages/profile/ProfilePage';
 // import PostPage from './pages/post/PostPage';
 
+
 function App() {
   // dummy authentication until we make the real shit
   const dummyUser = {
