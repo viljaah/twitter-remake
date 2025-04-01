@@ -1,24 +1,58 @@
-import { useState } from "react"; // react hooks for handling side effects and state
-import { Link } from "react-router-dom"; // react router hooks to access URL parameters (like username)
+import { useState, useEffect } from "react"; // react hooks for handling side effects and state
+import { useParams, Link } from "react-router-dom"; // react router hooks to access URL parameters (like username)
 import { FaArrowLeft } from "react-icons/fa6"; // back button
 import { IoCalendarOutline } from "react-icons/io5"; //for join data
 import styles from './ProfilePage.module.css';
-import {useParams} from 'react-router-dom';
+
 
 const ProfilePage = () => {
-    const { username } = useParams();
-    console.log("Username parameter:", username);
-  // just some placeholder data for now
-  // my profile page and state logic will otherways go here
-  const profileData = {
-    name: "mode tr",
-    username: "modetr15430",
-    joinDate: "march 2025",
-    following: 0,
-    followers: 0,
-    posts: 0
-  }
+  // get the username from the URL parameter
+  const { username } = useParams();
+  // state to store user data
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // effect to fetch user data when component mounts or username changes
+  // ask about hsi arrow function, why this arrow function?
+  useEffect(() => {
+    //define the fetch function
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        // make API request to your backend
+        const response = await fetch(`http://loclahost:8000/api/users/search?q=${username}`);
+
+        // check if request was successful
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        //parse JSON response
+        const data = await response.json();
+        setUserData(data.user);
+        setLoading(false);
+      } catch (error) {
+        console.log('error fetching user data:', err);
+        setError('Could not load user profile');
+        setLoading(false);
+      }
+    };
+
+    // call the fetch function
+    fetchUserData();
+  }, [username]); // this dependecy array means this effect runs when username changes
+
+    // show loading state
+    if (loading) {
+      return <div className={styles.loadingState}>Loading user profile...</div>
+    }
+
+    // show error state
+    if (error) {
+      return <div className={styles.errorState}>{error}</div>;
+    }
+  
+  // show user profile when data is laoded -> the jsx 
   return (
     <div className={styles.mainContent}>
       {/*1. header section (top nav with back arrow and "Mode Tr" / "0 posts")*/}
@@ -27,8 +61,8 @@ const ProfilePage = () => {
           <FaArrowLeft />
         </Link>
         <div className={styles.headerInfo}>
-          <h2 className={styles.headerName}>{profileData.name}</h2>
-          <span className={styles.postCount}>{profileData.posts} posts</span>
+          <h2 className={styles.headerName}>{userData?.display_name || userData?.username}</h2>
+          <span className={styles.postCount}> 0 posts</span>
         </div>
       </div>
       
@@ -59,8 +93,12 @@ const ProfilePage = () => {
           
           {/*profile details*/}
           <div className={styles.profileDetails}>
-            <h1 className={styles.displayName}>{profileData.name}</h1>
-            <p className={styles.username}>@{profileData.username}</p>
+            <h1 className={styles.displayName}>{userData?.display_name || userData?.username}</h1>
+            <p className={styles.username}>@{userData?.username}</p>
+            
+            {userData?.bio && (
+              <p className={styles.bio}>{userData.bio}</p>
+            )}
             
             {/* Join date */}
             <div className={styles.joinDateContainer}>
