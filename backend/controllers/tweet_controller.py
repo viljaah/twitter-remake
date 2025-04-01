@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from models.tweet_schema import Tweet
 from models.hashtag_schema import Hashtag
+import re
 
 # create a new tweet
 # route POST /tweets
@@ -13,6 +14,19 @@ def create_tweet(db: Session, tweet_data: dict) -> Tweet:
     """
     # dictionary unpacking (**) lets me pass key-value pairs in a dictionary as separate keyword arguments to a function or constructor
     new_tweet = Tweet(**tweet_data)
+
+    # extract hashtags from content
+    hashtags_content = set(re.findall(r"#(\w+)", tweet_data.get("content", "")))
+
+    for tag in hashtags_content:
+        hashtag_obj = db.query(Hashtag).filter(Hashtag.name == tag).first()
+        if not hashtag_obj:
+            hashtag_obj = Hashtag(name=tag)
+            db.add(hashtag_obj)
+            db.flush()  # make sure the hashtag has an id before association
+        # associate the hashtag with the tweet using the updated relationship name
+        new_tweet.hashtags.append(hashtag_obj)
+
     # the tweet is added to the session
     db.add(new_tweet)
     db.commit()
@@ -41,7 +55,7 @@ def get_tweet(db: Session, tweet_id: int) -> Tweet:
     return tweet
 
 # edit one tweet
-# route PUT /tweets/{tweet_id}
+# route PATCH /tweets/{tweet_id}
 def update_tweet(db: Session, tweet_id: int, tweet_data: dict) -> Tweet:
     """
     :param tweet_id: the id of the tweet to update
@@ -86,12 +100,19 @@ def search_tweets(db: Session, query: str):
     tweets = db.query(Tweet).filter(Tweet.content.ilike(f"%{query}%")).all()
     return tweets
 
-# search for hashtags that have the query string in their name
+# search for tweets with hashtags that have the query string in their name
 # route GET /tweets/hashtag/search?={query}
 def search_hashtags(db: Session, query: str):
     """
     :param query: the search string
-    :return: a list of hashtags that match the search query, if no hashtags match it returns an empty list
+    :return: a list of tweets that have a hashtag matching the query
+    uses a join between tweet and hashtag
     """
-    hashtags = db.query(Hashtag).filter(Hashtag.name.ilike(f"%{query}%")).all()
-    return hashtags
+    tweets = (
+        db.query(Tweet)
+        # join the tweets table with the associated hashtags
+        .join(Tweet.hashtags)
+        .filter(Hashtag.name.ilike(f"%{query}%"))
+        .all()
+    )
+    return tweets

@@ -1,0 +1,34 @@
+### tweet id
+@tweet_id = 16
+
+### create a new tweet
+POST http://localhost:8000/api/tweets
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "content": "Hi my twitter fans, have a good day! #good #day"
+}
+
+### get all tweets
+GET http://localhost:8000/api/tweets
+
+### get a tweet by id
+GET http://localhost:8000/api/tweets/{{tweet_id}}
+
+### update a tweet
+PATCH http://localhost:8000/api/tweets/{{tweet_id}}
+Content-Type: application/json
+
+{
+  "content": "Updated tweet content"
+}
+
+### delete a tweet
+DELETE http://localhost:8000/api/tweets/{{tweet_id}}
+
+### search for tweets containing the word you write in the query
+GET http://localhost:8000/api/tweets/search?query=weather
+
+### Search for hashtags containing the word "fun"
+GET http://localhost:8000/api/tweets/hashtag/search?query=summer
