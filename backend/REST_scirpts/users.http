@@ -3,15 +3,32 @@ POST http://localhost:8000/api/users/register
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "email": "test@example.com",
-  "password": "password123",
-  "display_name": "Test User",
-  "bio": "This is a test user"
+  "username": "modestat",
+  "email": "mode@hotmail.com",
+  "password": "modestaErKul",
+  "display_name": "modeErKul",
+  "bio": "im a cool dev"
+}
+###
+POST http://localhost:8000/api/users/login
+Content-Type: application/json
+
+{
+  "username": "modestat",
+  "password": "modestaErKul"
 }
 
-### Get All Users
+### Logout
+POST http://localhost:8000/api/users/logout
+Content-Type: application/json
+
+{}
+
+### Get All user profiles
 GET http://localhost:8000/api/users
 
-### Get User by ID
-GET http://localhost:8000/api/users/1
+### Get specific users profile/account -> by id
+GET http://localhost:8000/api/users/2
+
+### Delete a user (replace 1 with an actual user ID)
+DELETE http://localhost:8000/api/users/1
