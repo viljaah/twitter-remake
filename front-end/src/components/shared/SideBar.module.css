@@ -1,24 +1,114 @@
 .sidebar {
-    width: 200px;
-    padding: 20px;
+  background-color: #000;
+  color: #fff;
+  width: 300px;
+  min-height: 100vh;
+  padding: 20px 40px 0 40px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.sidebar ul {
+  padding: 0;
+  margin: 0;
 }
 
-li {
-    margin-bottom: 10px;
+.sidebar li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
-/* .active {
-    font-weight: bold;
-    color: blue;
-} */
-  
-.logo {
-    width: 15%;
-    height: 15%;
-    fill: white;
+.sidebar li a {
+  text-decoration: none;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+}
+
+.linkText {
+  margin-left: 15px;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+/* hover effect for all links, men dårlig hover effect, vil ha det annerledes */
+.sidebar li .linkText:hover {
+  color: #1da1f2;
+}
+
+.postBtn {
+  background-color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 6% 40%;
+  color: black;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.postBtn:hover {
+  background-color: rgb(192, 190, 190);
+}
+
+.userSection {
+  padding-top: 20px;
+}
+
+.profileImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 14px;
+}
+
+.username {
+  font-size: 18px;
+  margin-right: 30px;
+}
+
+.userButton {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1250px) {
+  .sidebar {
+    width: 170px;
+    padding: 20px 70px 0 70px;
+  }
+
+  .linkText {
+    display: none;
+  }
+
+  .postBtn {
+    margin-left: -25px;
+    padding: 40% 70%;
+  }
+
+  .userButton .username,
+  .userButton .icon {
+    display: none;
+  }
+
+  .profileImg {
+    margin-left: -14px;
+  }
 }
