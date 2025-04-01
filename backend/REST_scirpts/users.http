@@ -32,3 +32,6 @@ GET http://localhost:8000/api/users/2
 
 ### Delete a user (replace 1 with an actual user ID)
 DELETE http://localhost:8000/api/users/1
+
+###
+GET http://localhost:8000/api/users/search?q=modestat

@@ -28,6 +28,10 @@ async def handle_logout():
 @userRouter.get("/")
 async def get_users(db: Session = Depends(get_db)):
     return getAll_users(db)
+# In FastAPI, route order matters. When you have a route with a path parameter like /{user_id} and another specific route like /search, the more specific route (/search) needs to be defined first.
+@userRouter.get("/search")
+async def search_users(q: str, db: Session = Depends(get_db)):
+    return search_user_by_username(q, db)
 
 @userRouter.get("/{user_id}")
 async def get_user(user_id: int, db: Session = Depends(get_db)):
@@ -38,9 +42,6 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
     return delete_user_by_id(user_id, db)
 
 
-@userRouter.get("/search")
-async def search_users(q: str, db: Session = Depends(get_db)):
-    return search_user_by_username(q, db)
 
 
 
