@@ -72,7 +72,7 @@ function SideBar() {
           </a>
         </li>
         <li>
-          <NavLink to="/profile/username">
+          <NavLink to="/profile/:username">
             <BsPerson className={styles.icon} />
             <span className={styles.linkText}>Profile</span>
           </NavLink>
