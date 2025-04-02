@@ -56,7 +56,7 @@ async def get_users(db: Session = Depends(get_db), current_user = Depends(get_cu
 async def search_users(q: str, db: Session = Depends(get_db)):
     return search_user_by_username(q, db)
 
-# this route return a specific user by ID, need a suer ID in the URL, can return any user's profile, for exmaple "show Joh'ns profile"
+# this route return a specific user by ID, need a user ID in the URL, can return any user's profile, for exmaple "show Joh'ns profile"
 @userRouter.get("/{user_id}")
 async def get_user(user_id: int, db: Session = Depends(get_db)):
     return get_user_by_id(user_id, db)
