@@ -3,20 +3,23 @@ POST http://localhost:8000/api/users/register
 Content-Type: application/json
 
 {
-  "username": "modestat",
-  "email": "mode@hotmail.com",
-  "password": "modestaErKul",
-  "display_name": "modeErKul",
-  "bio": "im a cool dev"
+  "username": "vilja",
+  "email": "vilja@hotmail.com",
+  "password": "stratos",
+  "display_name": "viljaH",
+  "bio": "hei, im vilja and i love stratos"
 }
-###
-POST http://localhost:8000/api/users/login
-Content-Type: application/json
 
-{
-  "username": "modestat",
-  "password": "modestaErKul"
-}
+
+### Login User - IMPORTANT: For OAuth2 you need to use form data, not JSON
+POST http://localhost:8000/api/users/login
+Content-Type: application/x-www-form-urlencoded
+
+username=vilja&password=stratos
+
+### Get current user (protected route)
+GET http://localhost:8000/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzNTk5Nzg4fQ.vht5HUmY5nAlRt2kXPp7z7MgSk-5b1s1NiNP5GWY3yY
 
 ### Logout
 POST http://localhost:8000/api/users/logout
@@ -24,14 +27,16 @@ Content-Type: application/json
 
 {}
 
-### Get All user profiles
+### Get All user profiles (protected route)
 GET http://localhost:8000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzNTk5Nzg4fQ.vht5HUmY5nAlRt2kXPp7z7MgSk-5b1s1NiNP5GWY3yY
 
-### Get specific users profile/account -> by id
-GET http://localhost:8000/api/users/2
+### Get specific user's profile by ID (public route)
+GET http://localhost:8000/api/users/3
 
-### Delete a user (replace 1 with an actual user ID)
+### Search for a user by username (public route)
+GET http://localhost:8000/api/users/search?q=vilja
+
+### Delete a user (protected route)
 DELETE http://localhost:8000/api/users/1
-
-###
-GET http://localhost:8000/api/users/search?q=modestat
+Authorization: Bearer YOUR_TOKEN_HERE
