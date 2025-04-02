@@ -5,78 +5,120 @@ import { MdOutlineMail } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
 import styles from './LoginPage.module.css';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
   // these are placeholder variables
-  const isPending = false;
-  const isError = false;
-  const error = { message: ""};
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const loginMutation = (data) => {
-	console.log("Attempting to login with:", data);
-	// this would normally be my API call to authenticate
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
-  const handleSubmit = (e) => {
-		e.preventDefault();
-		loginMutation(formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+	try {
+		// Create FormData for OAuth2 compatibility
+		const formBody = new URLSearchParams();
+		formBody.append('username', formData.username);
+		formBody.append('password', formData.password);
+  
+		// Make API request to login endpoint
+		const response = await fetch('http://localhost:8000/api/users/login', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		  },
+		  body: formBody
+		});
+  
+		// Parse response
+		const data = await response.json();
+  
+		// Check if request was successful
+		if (!response.ok) {
+		  throw new Error(data.detail || 'Login failed');
+		}
+  
+		// Call the login handler from parent component
+		onLogin(
+		  {
+			id: data.id,
+			username: data.username,
+			display_name: data.display_name,
+			email: data.email,
+			bio: data.bio
+		  },
+		  data.access_token
+		);
+	  } catch (error) {
+		console.error('Login error:', error);
+		setError(error.message || 'Failed to login. Please try again.');
+	  } finally {
+		setLoading(false);
+	  }
 	};
 
-	const handleInputChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
-
-  return (
-	<div >
-    <div className={styles.container}>
-			<div className={styles.logoContainer}>
-				<XSvg className={styles.logo} />
+	return (
+		<div className={styles.loginContainer}>
+		  <div className={styles.loginForm}>
+			<h1 className={styles.title}>Log in to Your Account</h1>
+			
+			{error && <div className={styles.errorMessage}>{error}</div>}
+			
+			<form onSubmit={handleSubmit}>
+			  <div className={styles.formGroup}>
+				<label htmlFor="username">Username</label>
+				<input
+				 className={styles.input}
+				  type="text"
+				  id="username"
+				  name="username"
+				  value={formData.username}
+				  onChange={handleChange}
+				  required
+				/>
+			  </div>
+			  
+			  <div className={styles.formGroup}>
+				<label htmlFor="password">Password</label>
+				<input
+				  className={styles.input}
+				  type="password"
+				  id="password"
+				  name="password"
+				  value={formData.password}
+				  onChange={handleChange}
+				  required
+				/>
+			  </div>
+			  
+			  <button 
+				type="submit" 
+				className={styles.loginButton}
+				disabled={loading}
+			  >
+				{loading ? 'Logging in...' : 'Log In'}
+			  </button>
+			</form>
+			
+			<div className={styles.signupLink}>
+			  <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
 			</div>
-			<div className={styles.formContainer}>
-				<form  onSubmit={handleSubmit} className={styles.form}>
-					<h1 className={styles.heading}>{"Let's"} go.</h1>
-					<label className={styles.inputLabel}>
-						<MdOutlineMail className={styles.icon} />
-						<input
-							type='text'
-							className='grow'
-							placeholder='username'
-							name='username'
-							onChange={handleInputChange}
-							value={formData.username}
-						/>
-					</label>
-
-					<label className={styles.inputLabel}>
-						<MdPassword className={styles.icon}/>
-						<input
-							type='password'
-							className='grow'
-							placeholder='Password'
-							name='password'
-							onChange={handleInputChange}
-							value={formData.password}
-						/>
-					</label>
-					<button className={styles.loginButton}>
-						{isPending ? "Loading..." : "Login"}
-					</button>
-					{isError && <p className='text-red-500'>{error.message}</p>}
-				</form>
-				<div className={styles.signupContainer}>
-					<p>{"Don't"} have an account?</p>
-					<Link to='/signup'>
-						<button className={styles.signupButton}>Sign up</button>
-					</Link>
-				</div>
-			</div>
+		  </div>
 		</div>
-	</div>
-  )
-}
-
-export default LoginPage
+	  );
+	};
+	
+	export default LoginPage;
