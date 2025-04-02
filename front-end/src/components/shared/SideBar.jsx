@@ -14,7 +14,9 @@ import { BsPerson } from "react-icons/bs";
 import { CiCircleMore } from "react-icons/ci";
 import { IoIosMore } from "react-icons/io";
 
-function SideBar({ currentUser = { username: 'username', profilePicture: 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg' }, onLogout }) {
+function SideBar({ 
+  
+  currentUser = { username: 'username', profilePicture: 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg' }, onLogout }) {
   return (
     <nav className={styles.sidebar}>
       <ul>
