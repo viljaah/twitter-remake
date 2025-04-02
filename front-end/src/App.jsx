@@ -52,13 +52,25 @@ function App() {
   };
 
   // Logout handler function
-  const handleLogout = () => {
-    // Remove token and user data from localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    
-    // Update state
-    setAuthUser(null);
+  const handleLogout = async () => {
+    try {
+      // Optional: Call backend logout endpoint if needed for any server-side cleanup
+      await fetch('http://localhost:8000/api/users/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      
+      // Remove token and user data from localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Update state
+      setAuthUser(null);
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   };
 
   // Show loading state while checking auth
