@@ -2,6 +2,8 @@ from fastapi import HTTPException, status #exceptions are used as error handler,
 from sqlalchemy.orm import Session
 from models.user_schema import User
 import bcrypt 
+from datetime import timedelta
+from middleware.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 
 # @desc create new account
 # route POST /api/users/register
@@ -63,20 +65,29 @@ def login_user(user_credentials, db: Session):
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    #if authentication is successful, return user data (without password)
+    # After success password validation, generate access token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": str(db_user.id)},
+        expires_delta=access_token_expires
+    )
+    
+    # If authentication is successful, return user data (without password)
     return {
         "id": db_user.id,
         "username": db_user.username,
         "email": db_user.email,
         "display_name": db_user.display_name,
         "bio": db_user.bio,
+        "access_token": access_token,
+        "token_type": "bearer",
         "message": "login successful"
     }
 
 # @desc logout user
 # route POST /users/logout
 def logout_user():
- return {
+    return {
         "success": True,
         "message": "User logged out successfully"
     }
@@ -140,12 +151,19 @@ def get_user_by_id(user_id: int, db: Session):
     
     :param user_id: The ID of the user to delete
     :param db: SQLAlchemy database session
+    :param current_user: The currently authenticated user
     :return: Success message if deleted
-    :raises HTTPException: If user not found
+    :raises HTTPException: If user not found or not authorized
     """
-def delete_user_by_id(user_id: int, db: Session):
+def delete_user_by_id(user_id: int, db: Session, current_user):
+    # Check if user is deleting their own account
+    if current_user.id != user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You can only delete your own account"
+        )
+    
     user = db.query(User).filter(User.id == user_id).first()
-
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -178,6 +196,9 @@ def search_user_by_username(username: str, db: Session):
             "display_name": user.display_name,
             "bio": user.bio,
             "created_at": user.created_at,
-            "updated_at": user.updated_at
+            "updated_at": user.updated_at,
+            "following": 0,  # You can implement this later
+            "followers": 0,  # You can implement this later
+            "joinDate": user.created_at.strftime("%B %Y")  # Format: "April 2023"
         }
     }
