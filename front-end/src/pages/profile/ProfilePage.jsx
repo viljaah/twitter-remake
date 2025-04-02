@@ -16,12 +16,15 @@ const ProfilePage = () => {
   // effect to fetch user data when component mounts or username changes
   // ask about hsi arrow function, why this arrow function?
   useEffect(() => {
+       // Log the actual username from the URL to debug
+       console.log("Current username parameter:", username);
+
     //define the fetch function
     const fetchUserData = async () => {
       setLoading(true);
       try {
         // make API request to your backend
-        const response = await fetch(`http://loclahost:8000/api/users/search?q=${username}`);
+        const response = await fetch(`http://localhost:8000/api/users/search?q=${username}`);
 
         // check if request was successful
         if (!response.ok) {
@@ -32,7 +35,7 @@ const ProfilePage = () => {
         setUserData(data.user);
         setLoading(false);
       } catch (error) {
-        console.log('error fetching user data:', err);
+        console.log('error fetching user data:', error);
         setError('Could not load user profile');
         setLoading(false);
       }
@@ -103,16 +106,16 @@ const ProfilePage = () => {
             {/* Join date */}
             <div className={styles.joinDateContainer}>
               <IoCalendarOutline className={styles.calendarIcon} />
-              <span>Joined {profileData.joinDate}</span>
+              <span>Joined {userData.joinDate}</span>
             </div>
             
             {/* Following/Followers */}
             <div className={styles.statsContainer}>
               <span className={styles.statItem}>
-                <strong>{profileData.following}</strong> Following
+                <strong>{userData.following}</strong> Following
               </span>
               <span className={styles.statItem}>
-                <strong>{profileData.followers}</strong> Followers
+                <strong>{userData.followers}</strong> Followers
               </span>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import {Route, Routes, Navigate} from 'react-router-dom';
+import {Route, Routes, Navigate, Link} from 'react-router-dom';
 import SideBar from './components/shared/SideBar';
 import HomePage from './pages/home/HomePage';
 import LoginPage from './pages/auth/login/LoginPage';
