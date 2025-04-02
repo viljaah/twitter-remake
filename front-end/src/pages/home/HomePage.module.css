@@ -1,0 +1,9 @@
+.test {
+    color: white;
+}
+
+.parentDiv {
+    width: 40%;
+    border: 1px solid rgb(192, 190, 190);
+    padding: 20px;
+}
