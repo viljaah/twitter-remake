@@ -317,6 +317,8 @@ For authentication in a Python FastAPI application, I would recommend using JSON
 
 source for leanring and setting up react: https://github.com/burakorkmez/twitter-clone/tree/master/frontend + his youtube video (https://www.youtube.com/watch?v=4GUVz2psWUg&t=10253s)
 
+source for setting up authenticaiton: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/#hash-and-verify-the-passwords
+
 Regarding CSS in React, you have several options, and each has its advantages:
 
 Regular CSS files:
