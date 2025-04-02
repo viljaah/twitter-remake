@@ -89,10 +89,7 @@ function SideBar() {
         {/* mulig denne må endres litt i og med at vi skal ha logout her, kanskje det må være en link..? */}
         <li className={styles.userSection}>
           <button className={styles.userButton}>
-            <img
-              src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"
-              className={styles.profileImg}
-            />
+            <img src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg" className={styles.profileImg}/>
             <span className={styles.username}>@username</span>
             <IoIosMore className={styles.icon} />
           </button>
