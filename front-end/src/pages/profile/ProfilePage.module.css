@@ -4,7 +4,7 @@
     border-left: 1px solid #2f3336;
     border-right: 1px solid #2f3336;
     color: white;
-    margin-left: 170px;
+    margin-left: 300px;
   }
 
 
@@ -152,5 +152,9 @@
   }
   
  
-  
+  @media (max-width: 1250px) {
+    .mainContent {
+      margin-left: 170px;
+    }
+  }
 
