@@ -11,7 +11,7 @@ import { GoBookmark } from "react-icons/go";
 import { BsBriefcase } from "react-icons/bs";
 import { GoVerified } from "react-icons/go";
 import { BsPerson } from "react-icons/bs";
-import { CiCircleMore } from "react-icons/ci";
+import { GoGear } from "react-icons/go";
 import { IoIosMore } from "react-icons/io";
 
 function SideBar({ 
@@ -81,7 +81,7 @@ function SideBar({
         </li>
         <li>
           <NavLink to="/settings">
-            <CiCircleMore className={styles.icon} />
+            <GoGear className={styles.icon} />
             <span className={styles.linkText}>Settings</span>
           </NavLink>
         </li>
@@ -92,7 +92,9 @@ function SideBar({
         <li className={styles.userSection}>
           <button className={styles.userButton} onClick={onLogout}>
             <img
-              src={currentUser.profilePicture}
+              // src={currentUser.profilePicture}
+              // remove the one under eventually when pathing is set up
+              src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"
               className={styles.profileImg}
             />
             <span className={styles.username}>@{currentUser.username}</span>
