@@ -4,20 +4,23 @@ from config.db import get_db
 from validators.tweet_validate import TweetCreate, TweetUpdate
 from controllers.tweet_controller import create_tweet, get_all_tweets, get_tweet, update_tweet, delete_tweet, search_tweets, search_hashtags
 from models.user_schema import User
-# from middleware.auth import get_current_user
+from middleware.auth import get_current_user
 
-tweet_router = APIRouter()
+tweet_router = APIRouter(
+    prefix="/tweets",
+    tags=["tweets"],
+)
 
-@tweet_router.post("/")
-def post_tweet(tweet: TweetCreate, db: Session = Depends(get_db)): # add this eventually current_user: User = Depends(get_current_user)
+@tweet_router.post("")
+def post_tweet(tweet: TweetCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     # convert the validated tweet to a dict (had to use model_dump() instead of dict() because of pydantic version)
     tweet_data = tweet.model_dump()
     # automatically add the current user id
-    # tweet_data["user_id"] = current_user.id
+    tweet_data["user_id"] = current_user.id
     new_tweet = create_tweet(db, tweet_data)
     return new_tweet
 
-@tweet_router.get("/")
+@tweet_router.get("")
 def read_all_tweets(db: Session = Depends(get_db)):
     tweets = get_all_tweets(db)
     return tweets

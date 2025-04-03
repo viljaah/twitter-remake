@@ -21,7 +21,7 @@ app.add_middleware(
 
 # Include the router - this is like app.use("/api/users", userRoutes) in Express
 app.include_router(userRouter, prefix="/api")
-app.include_router(tweet_router, prefix="/api/tweets", tags=["tweets"])
+app.include_router(tweet_router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
