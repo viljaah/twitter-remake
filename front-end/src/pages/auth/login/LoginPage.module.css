@@ -3,7 +3,7 @@
   justify-Content: center;
   align-Items: center;
   min-height: 100vh;
-  background-color: #f5f8fa;
+  width: 100%;
 }
 
 .loginForm {
@@ -11,39 +11,47 @@
   max-width: 400px;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: white;
 }
 
 .title {
   margin-bottom: 20px;
   text-align: center;
   font-size: 24px;
+  color: white;
 }
 
 .formGroup {
   margin-bottom: 15px;
 }
 
-.input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5p;
-  border: 1px solid #ddd;
-  margin-top: 5px;
+.inputLabel {
+  display: flex;
+  align-items: center;
+  background-color: #192734;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #38444d;
+}
+
+.signupLink {
+  background-color: transparent;
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+  border-radius: 9999px;
+  margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 .loginButton {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
   background-color: #1DA1F2;
+  width: 100%;
   color: white;
-  border: none;
+  border: 1px solid #1da1f2;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  margin-top: 0.5rem;
   cursor: pointer;
-  margin-top: 10px;
 }
-
 .errorMessage {
   color: red;
   margin-bottom: 15px;
