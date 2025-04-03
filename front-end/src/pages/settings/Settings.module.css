@@ -1,0 +1,18 @@
+.headingSettings {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 1px solid rgb(47, 51, 54);
+    margin: 0;
+    color: white;
+  }
+
+.listOfSettings {
+    width: 100%;
+    color: #fff;
+    max-width: 600px;
+    padding: 0;
+    border-left: 1px solid rgb(47, 51, 54);
+    border-right: 1px solid rgb(47, 51, 54);
+    min-height: 100vh;
+}
