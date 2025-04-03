@@ -19,11 +19,14 @@ const HomePage = () => {
     setLoading(true);
     setError('');
 
+    const token = localStorage.getItem("token");
+
     try {
       const response = await fetch('http://localhost:8000/api/tweets', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           content: tweetContent,

@@ -82,7 +82,7 @@ function SideBar({
         <li>
           <NavLink to="/settings">
             <CiCircleMore className={styles.icon} />
-            <span className={styles.linkText}>More</span>
+            <span className={styles.linkText}>Settings</span>
           </NavLink>
         </li>
         <li>
@@ -94,7 +94,6 @@ function SideBar({
             <img
               src={currentUser.profilePicture}
               className={styles.profileImg}
-              alt="Profile"
             />
             <span className={styles.username}>@{currentUser.username}</span>
             <IoIosMore className={styles.icon} />
