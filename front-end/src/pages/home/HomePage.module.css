@@ -3,4 +3,60 @@
   color: #fff;
   width: 600px;
   /* box-sizing: border-box; */
+  margin-left: 170px;
+}
+
+.tweetCard {
+  border: 1px solid rgb(192, 190, 190);
+  padding: 16px;
+}
+
+.tweetHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  /* border: 1px solid rgb(192, 190, 190); */
+}
+
+.username {
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.handle {
+  color: #657786;
+  font-size: 0.9rem;
+}
+
+.tweetContent {
+  margin: 8px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.tweetFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.heartIcon {
+  cursor: pointer;
+  color: rgb(192, 190, 190);
+  font-size: 1.2rem;
+  transition: transform 0.1s ease-in-out;
+}
+
+.heartIcon:hover {
+  transform: scale(1.1);
+  color: #e0245e;
 }
