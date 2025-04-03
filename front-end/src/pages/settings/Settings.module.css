@@ -1,18 +1,136 @@
-.headingSettings {
+.settingsContainer {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+    color: #fff;
+    border-left: 1px solid rgb(47, 51, 54);
+    border-right: 1px solid rgb(47, 51, 54);
+  }
+  
+  .headingSettings {
     font-size: 20px;
     font-weight: bold;
     padding: 15px;
-    border-bottom: 1px solid rgb(47, 51, 54);
     margin: 0;
-    color: white;
   }
-
-.listOfSettings {
-    width: 100%;
+  
+  .settingsHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(47, 51, 54);
+  }
+  
+  .backButton {
+    background: none;
+    border: none;
     color: #fff;
-    max-width: 600px;
-    padding: 0;
-    border-left: 1px solid rgb(47, 51, 54);
-    border-right: 1px solid rgb(47, 51, 54);
-    min-height: 100vh;
-}
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  .listOfSettings {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgb(47, 51, 54);
+  }
+  
+  .settingBtn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #fff;
+    text-align: left;
+    padding: 15px;
+    font-size: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(47, 51, 54);
+  }
+  
+  .settingBtn:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  
+  .dangerBtn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: rgb(244, 33, 46);
+    text-align: left;
+    padding: 15px;
+    font-size: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(47, 51, 54);
+  }
+  
+  .dangerBtn:hover {
+    background-color: rgba(244, 33, 46, 0.1);
+  }
+  
+  .displayContent {
+    padding: 15px;
+  }
+  
+  .displayDescription {
+    color: rgb(110, 118, 125);
+    line-height: 1.5;
+    margin-bottom: 25px;
+  }
+  
+  .settingSection {
+    margin-bottom: 30px;
+  }
+  
+  .sectionTitle {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  
+  .backgroundOptions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .backgroundOption {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+    background-color: rgb(21, 32, 43);
+    border: 1px solid rgb(47, 51, 54);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .backgroundOption:first-child {
+    background-color: white;
+    color: black;
+  }
+  
+  .backgroundOption:last-child {
+    background-color: black;
+  }
+  
+  .radioButton {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgb(110, 118, 125);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .radioButtonSelected {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgb(29, 155, 240);
+  }
