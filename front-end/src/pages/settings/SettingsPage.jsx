@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import styles from "./Settings.module.css";
+import { DarkModeContext, THEME_MODES} from "../../contexts/DarkMode";
 
 const SettingsPage = () => {
      const [activePage, setActivePage] = useState("main"); // main for the setting where buttons are displayed (i think), this is by default
+     const { themeMode, setThemeMode } = useContext(DarkModeContext);
  
          {/* using state variable activePage to contorl whihc section is displayed 
         , which gives a clean way to handle navigaiton between settings pages without acutyally changing routes
@@ -71,25 +73,47 @@ const SettingsPage = () => {
                     <div className={styles.settingSection}>
                       <h2 className={styles.sectionTitle}>Background</h2>
                       <div className={styles.backgroundOptions}>
-                             {/* Default */}
-                            <div className={styles.backgroundOption}>
-                                <div className={styles.radioButton}></div>
-                                <span>Default</span>
-                            </div>
-                        
-                            {/* Dim */}
-                            <div className={styles.backgroundOption}>
-                                <div className={styles.radioButton}>
+                               {/* Default (Black) */}
+                              <div className={styles.backgroundOption}
+                                  role="button"
+                                  onClick={() => {
+                                    console.log("Setting theme to DARK");
+                                    setThemeMode(THEME_MODES.DARK)
+                                  }}
+                                  style={{backgroundColor: "#000000", color: "#ffffff" }}>
+                                  <div className={styles.radioButton}>
+                                    {themeMode === THEME_MODES.DARK && (
                                     <div className={styles.radioButtonSelected}></div>
+                                    )}
+                                 </div>
+                                  <span>Default</span>
+                               </div>
+
+                                {/* Dim */}
+                              <div className={styles.backgroundOption}
+                                role="button"
+                                onClick={() => setThemeMode(THEME_MODES.DIM)}
+                                style={{ backgroundColor: "#15202b", color: "#ffffff"}} >
+                                <div className={styles.radioButton}>
+                                  {themeMode === THEME_MODES.DIM && (
+                                    <div className={styles.radioButtonSelected}></div>
+                                  )}
                                 </div>
                                 <span>Dim</span>
-                            </div>
-                        
-                            {/* Lights out */}
-                            <div className={styles.backgroundOption}>
-                                <div className={styles.radioButton}></div>
-                                <span>Lights out</span>
-                            </div>
+                              </div>
+
+                                {/* Light */}
+                                <div className={styles.backgroundOption}
+                                  role="button"
+                                  onClick={() => setThemeMode(THEME_MODES.LIGHT)}
+                                  style={{ backgroundColor: "#ffffff", color: "#000000"}}>
+                                  <div className={styles.radioButton}>
+                                    {themeMode === THEME_MODES.LIGHT && (
+                                      <div className={styles.radioButtonSelected}></div>
+                                    )}
+                                  </div>
+                                  <span>Lights out</span>
+                                </div>
                       </div>
                     </div>
                   </div>

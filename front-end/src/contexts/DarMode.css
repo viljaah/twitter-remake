@@ -1,0 +1,198 @@
+/* Theme Variables */
+
+/* Dark Theme (Default/Black) */
+body[data-theme="dark"] {
+    --background-primary: #000000;
+    --background-secondary: #15202b;
+    --border-color: rgb(47, 51, 54);
+    --text-primary: #ffffff;
+    --text-secondary: rgb(110, 118, 125);
+    --danger-color: rgb(244, 33, 46);
+    --danger-hover: rgba(244, 33, 46, 0.1);
+  }
+  
+  /* Dim Theme */
+  body[data-theme="dim"] {
+    --background-primary: #15202b;
+    --background-secondary: #1e2732;
+    --border-color: rgb(56, 68, 77);
+    --text-primary: #ffffff;
+    --text-secondary: rgb(139, 152, 165);
+    --danger-color: rgb(244, 33, 46);
+    --danger-hover: rgba(244, 33, 46, 0.1);
+  }
+  
+  /* Light Theme */
+  body[data-theme="light"] {
+    --background-primary: #ffffff;
+    --background-secondary: #f7f9fa;
+    --border-color: rgb(235, 238, 240);
+    --text-primary: #000000;
+    --text-secondary: rgb(83, 100, 113);
+    --danger-color: rgb(244, 33, 46);
+    --danger-hover: rgba(244, 33, 46, 0.1);
+  }
+  
+  /* Global styles that override everything */
+  /* These !important declarations will override CSS modules */
+  
+  /* Dark Theme Overrides */
+  body[data-theme="dark"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  body[data-theme="dark"] div[class*="settingsContainer"],
+  body[data-theme="dark"] div[class*="mainContent"],
+  body[data-theme="dark"] div[class*="parentDiv"],
+  body[data-theme="dark"] div[class*="postContainer"],
+  body[data-theme="dark"] div[class*="loginContainer"],
+  body[data-theme="dark"] form[class*="loginForm"],
+  body[data-theme="dark"] div[class*="formContainer"],
+  body[data-theme="dark"] div[class*="pageWrapper"],
+  body[data-theme="dark"] div[class*="container"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  body[data-theme="dark"] nav[class*="sidebar"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  body[data-theme="dark"] textarea,
+  body[data-theme="dark"] input {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  /* Dim Theme Overrides */
+  body[data-theme="dim"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  body[data-theme="dim"] div[class*="settingsContainer"],
+  body[data-theme="dim"] div[class*="mainContent"],
+  body[data-theme="dim"] div[class*="parentDiv"],
+  body[data-theme="dim"] div[class*="postContainer"],
+  body[data-theme="dim"] div[class*="loginContainer"],
+  body[data-theme="dim"] form[class*="loginForm"],
+  body[data-theme="dim"] div[class*="formContainer"],
+  body[data-theme="dim"] div[class*="pageWrapper"],
+  body[data-theme="dim"] div[class*="container"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  body[data-theme="dim"] nav[class*="sidebar"] {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  body[data-theme="dim"] textarea,
+  body[data-theme="dim"] input {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  /* Light Mode Specific Overrides - Add this to your DarMode.css file */
+
+/* Stronger light mode overrides for specific components */
+body[data-theme="light"] {
+    background-color: #ffffff !important;
+  }
+  
+  /* Target the main content areas */
+  body[data-theme="light"] div[class*="parentDiv"],
+  body[data-theme="light"] div[class*="mainContent"],
+  body[data-theme="light"] div[class*="settingsContainer"],
+  body[data-theme="light"] div[class*="postContainer"],
+  body[data-theme="light"] div[class*="tweetCard"],
+  body[data-theme="light"] div[class*="loginContainer"],
+  body[data-theme="light"] form[class*="loginForm"],
+  body[data-theme="light"] div[class*="formContainer"],
+  body[data-theme="light"] div[class*="pageWrapper"],
+  body[data-theme="light"] div[class*="container"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: rgb(235, 238, 240) !important;
+  }
+  
+  /* Target tweet cards specifically */
+  body[data-theme="light"] div[class*="tweetCard"] {
+    background-color: #ffffff !important;
+    border-color: #e1e8ed !important;
+  }
+  
+  /* Fix sidebar in light mode */
+  body[data-theme="light"] nav[class*="sidebar"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: rgb(235, 238, 240) !important;
+  }
+  
+  /* Fix links in sidebar */
+  body[data-theme="light"] a,
+  body[data-theme="light"] a[class*="link"],
+  body[data-theme="light"] span[class*="linkText"] {
+    color: #000000 !important;
+  }
+  
+  /* Fix text in light mode */
+  body[data-theme="light"] h1,
+  body[data-theme="light"] h2,
+  body[data-theme="light"] h3,
+  body[data-theme="light"] p,
+  body[data-theme="light"] span:not([class*="icon"]),
+  body[data-theme="light"] div[class*="username"],
+  body[data-theme="light"] div[class*="displayName"] {
+    color: #000000 !important;
+  }
+  
+  /* Fix tweet content */
+  body[data-theme="light"] div[class*="tweetContent"] {
+    color: #000000 !important;
+  }
+  
+  /* Fix buttons */
+  body[data-theme="light"] button:not([class*="postBtn"]):not([class*="loginButton"]):not([class*="signupButton"]) {
+    color: #000000 !important;
+  }
+  
+  /* Fix post component textarea */
+  body[data-theme="light"] textarea[class*="textArea"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Style any right sidebar or additional elements */
+  body[data-theme="light"] div[class*="rightSidebar"],
+  body[data-theme="light"] div[class*="trendingSection"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Apply specific styles to home feed */
+  body[data-theme="light"] [class*="HomePage"] {
+    background-color: #ffffff !important;
+  }
+  
+  /* Target any remaining dark spots in light mode */
+  body[data-theme="light"] [class*="Header"],
+  body[data-theme="light"] [class*="Footer"],
+  body[data-theme="light"] [class*="Profile"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Handle SVG icons */
+  body[data-theme="light"] svg:not([class*="logo"]) path {
+    fill: #000000;
+  }

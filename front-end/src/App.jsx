@@ -7,6 +7,8 @@ import LoginPage from './pages/auth/login/LoginPage';
 import SignUpPage from './pages/auth/signup/SignUpPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import SettingsPage from "./pages/settings/SettingsPage";
+import {DarkModeProvider} from './contexts/DarkMode';
+import './contexts/DarMode.css';
 // import ExplorePage from './pages/explore/ExplorePage';
 // import PostPage from './pages/post/PostPage';
 
@@ -102,19 +104,21 @@ function App() {
   }
 
   return (
-    <div className="root-div">
-      {authUser && <SideBar currentUser={authUser} onLogout={handleLogout}/>}
-        <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
-          <Route path="/login" element={!authUser ? (<LoginPage onLogin={handleLogin} />) : (<Navigate to="/" />) } />
-          <Route path="/signup" element={!authUser ? (<SignUpPage onSignup={handleLogin} />) : (<Navigate to="/" />) } /> {/* Fixed typo in path and component name */}
-          <Route path="/profile/:username" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
-          <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
-          {/* <Route path="/explore" element={authUser ? <ExplorePage /> : <Navigate to="/login" />} />
-          <Route path="/post" element={authUser ? <PostPage /> : <Navigate to="/login" />} />
-           */}
-        </Routes>
-    </div>
+    <DarkModeProvider>
+      <div className="root-div">
+        {authUser && <SideBar currentUser={authUser} onLogout={handleLogout}/>}
+          <Routes>
+            <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
+            <Route path="/login" element={!authUser ? (<LoginPage onLogin={handleLogin} />) : (<Navigate to="/" />) } />
+            <Route path="/signup" element={!authUser ? (<SignUpPage onSignup={handleLogin} />) : (<Navigate to="/" />) } /> {/* Fixed typo in path and component name */}
+            <Route path="/profile/:username" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
+            <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
+            {/* <Route path="/explore" element={authUser ? <ExplorePage /> : <Navigate to="/login" />} />
+            <Route path="/post" element={authUser ? <PostPage /> : <Navigate to="/login" />} />
+            */}
+          </Routes>
+      </div>
+    </DarkModeProvider>
   );
 }
 
