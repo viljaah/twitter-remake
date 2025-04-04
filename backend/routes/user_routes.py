@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id, search_user_by_username
+from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id, search_user_by_username, get_tweets_by_user
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -55,6 +55,10 @@ async def get_users(db: Session = Depends(get_db), current_user = Depends(get_cu
 @userRouter.get("/search")
 async def search_users(q: str, db: Session = Depends(get_db)):
     return search_user_by_username(q, db)
+
+@userRouter.get("/{user_id}/tweets")
+async def get_user_tweets(user_id: int, db: Session = Depends(get_db)):
+    return get_tweets_by_user(user_id, db)
 
 # this route return a specific user by ID, need a user ID in the URL, can return any user's profile, for exmaple "show Joh'ns profile"
 @userRouter.get("/{user_id}")

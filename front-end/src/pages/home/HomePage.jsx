@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import styles from './HomePage.module.css';
-import PostContainer from '../../components/shared/postComponent';
+import React, { useState, useEffect } from "react";
+import styles from "./HomePage.module.css";
+import PostHome from "../../components/shared/PostHome";
+import SearchBar from "../../components/shared/SearchBar";
 import { GoHeart } from "react-icons/go";
 
-const HomePage = () => {
+function HomePage() {
   const [tweets, setTweets] = useState([]);
 
   useEffect(() => {
     const fetchTweets = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/tweets');
+        const response = await fetch("http://localhost:8000/api/tweets");
         if (!response.ok) {
-          throw new Error('Failed to get tweets');
+          throw new Error("Failed to get tweets");
         }
         const data = await response.json();
         setTweets(data);
@@ -24,33 +25,31 @@ const HomePage = () => {
 
   return (
     <div className={styles.parentDiv}>
-      <PostContainer />
+      <SearchBar />
 
-      {/* {tweets.map((tweet) => (
-        <div key={tweet.id} className={styles.tweetCard}>
-          <p>{tweet.content}</p>
-        </div>
-      ))} */}
+      <PostHome />
 
-{tweets.map((tweet) => (
+      {tweets.map((tweet) => (
         <div key={tweet.id} className={styles.tweetCard}>
           <div className={styles.tweetHeader}>
             <img
-              src={tweet.userAvatar || 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg'}
-              alt="User Avatar"
+              src={
+                tweet.userAvatar ||
+                "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
+              }
               className={styles.avatar}
             />
             <div>
-              <span className={styles.username}>{tweet.username || 'Anonymous'}</span>
+              <span className={styles.username}>
+                {tweet.username || "Anonymous"}
+              </span>
               <span className={styles.handle}>
-                @{tweet.handle || 'anonymous'}
+                @{tweet.handle || "anonymous"}
               </span>
             </div>
           </div>
 
-          <div className={styles.tweetContent}>
-            {tweet.content}
-          </div>
+          <div className={styles.tweetContent}>{tweet.content}</div>
 
           <div className={styles.tweetFooter}>
             <GoHeart className={styles.heartIcon} />
@@ -62,4 +61,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
