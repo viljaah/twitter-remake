@@ -103,12 +103,19 @@
     align-items: center;
     justify-content: center;
     padding: 20px 10px;
-    background-color: rgb(21, 32, 43);
-    border: 1px solid rgb(47, 51, 54);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .backgroundOption:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
+  .backgroundOption:active {
+    transform: scale(0.98);
+  }
   .backgroundOption:first-child {
     background-color: white;
     color: black;
@@ -122,11 +129,18 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid rgb(110, 118, 125);
+    border: 2px solid var(--text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+  }
+
+  .radioButtonSelected {
+    width: 12px;
+    height: 12px;
+    background-color: #1da1f2; /* Twitter blue */
+    border-radius: 50%;
   }
   
   @media (max-width: 1250px) {
