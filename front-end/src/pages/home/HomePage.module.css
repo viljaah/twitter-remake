@@ -1,14 +1,13 @@
 .parentDiv {
-  background-color: #000;
-  color: #fff;
   width: 600px;
-  /* box-sizing: border-box; */
   margin-left: 300px;
-  border: 1px solid rgb(192, 190, 190);
+  border: 1px solid var(--border-color);
+  min-height: 100vh;
+  background-color: transparent;
 }
 
 .tweetCard {
-  border-top: 1px solid rgb(192, 190, 190);
+  border-top: 1px solid var(--border-color);
   padding: 16px;
 }
 
@@ -24,7 +23,6 @@
   border-radius: 50%;
   margin-right: 10px;
   object-fit: cover;
-  /* border: 1px solid rgb(192, 190, 190); */
 }
 
 .username {

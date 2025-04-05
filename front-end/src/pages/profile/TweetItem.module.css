@@ -1,5 +1,5 @@
 .tweetCard {
-  border-bottom: 1px solid rgb(192, 190, 190);
+  border-bottom: 1px solid var(--border-color);
   padding: 16px;
   position: relative;
 }
@@ -44,7 +44,7 @@
   position: absolute;
   top: 40px;
   right: 10px;
-  background-color: #000;
+
   border: 1px solid rgb(192, 190, 190);
   border-radius: 4px;
   padding: 8px;
@@ -85,7 +85,6 @@
   margin-bottom: 8px;
   background: transparent;
   resize: none;
-  color: white;
   outline: none;
 }
 
