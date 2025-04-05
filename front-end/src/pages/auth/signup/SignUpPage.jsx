@@ -133,7 +133,7 @@ const SignUpPage = ({ onSignup }) => {
                 rows="3"
               />
             </label>
-            <button className={styles.loginButton} disabled={isPending}>
+            <button className={styles.signUpButton} disabled={isPending}>
               {isPending ? "Creating account..." : "Sign up"}
             </button>
             {error && <p className={styles.errorMessage}>{error}</p>}
@@ -141,7 +141,7 @@ const SignUpPage = ({ onSignup }) => {
           <div className={styles.signupContainer}>
             <p>Already have an account?</p>
             <Link to='/login'>
-              <button className={styles.signupButton}>Sign in</button>
+              <button className={styles.signInButton}>Sign in</button>
             </Link>
           </div>
         </div>

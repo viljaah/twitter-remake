@@ -3,7 +3,7 @@
 /* Context API
 *createContext() is a react function that creates context object
 */
-import React, {createContext, useState, useEffect, useContext} from 'react';
+import React, {createContext, useState, useEffect} from 'react';
 
 const DarkModeContext = createContext();
 
