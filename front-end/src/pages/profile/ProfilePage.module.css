@@ -1,10 +1,8 @@
 .mainContent {
   flex: 1; /*doe sthis actually do naything?*/
   max-width: 600px;
-  border: 1px solid rgb(192, 190, 190);
-  color: white;
+  border: 1px solid var(--border-color);
   margin-left: 300px;
-  background-color: #000;
 }
 
 /* styling for the header section*/
@@ -12,11 +10,7 @@
   display: flex;
   align-items: flex;
   padding: 10px 15px;
-  border-bottom: 1px solid #eff2f4; /* that one grey line som skille mellom back button og background images*/
-  position: sticky;
   top: 0;
-  background-color: #000;
-  /*backdrop-filter: blur(5px); dont knwo what this does*/
   z-index: 5;
 }
 
@@ -66,7 +60,7 @@
   position: absolute;
   top: -60px; /* Adjust based on your design */
   left: 15px;
-  border: 4px solid #000;
+  border: 4px solid var(--profile-border);
   border-radius: 50%;
   overflow: hidden;
 }
@@ -142,7 +136,8 @@
 /* 4. Navigation Tabs (idk if i need this yet*/
 .navTabs {
   display: flex;
-  border-bottom: 1px solid rgb(192, 190, 190);
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
   margin-top: 15px;
   overflow-x: auto; /* For mobile scrolling */
 }
@@ -154,10 +149,6 @@
   text-align: center;
   font-weight: bold;
   cursor: pointer;
-}
-
-.activeTab {
-  border-top: 1px solid rgb(192, 190, 190);
 }
 
 @media (max-width: 1250px) {

@@ -3,23 +3,26 @@
 .searchContainer {
   width: 100%;
   display: flex;
-  flex-direction: column; /* add this line */
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  border-bottom: 1px solid rgb(192, 190, 190);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .searchInput {
   width: 80%;
   max-width: 600px;
-  background-color: #1d1f23;
   border: 1px solid #333;
   border-radius: 9999px;
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
   outline: none;
+}
+
+/* had to udjust this because of the dark/dim/light mode */
+.searchContainer .searchInput {
+  background: transparent !important;
 }
 
 .searchInput:focus {
