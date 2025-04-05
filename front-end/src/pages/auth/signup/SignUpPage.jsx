@@ -1,31 +1,70 @@
 import React from 'react'
-import {Link} from "react-router-dom";
-import {useState} from "react";
-import {MdOutlineMail} from "react-icons/md";
-import {FaUser} from "react-icons/fa";
-import {MdPassword} from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { MdOutlineMail } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
 import styles from './SignUpPage.module.css';
 import XSvg from "../../../components/svgs/X";
 
-const SignUpPage = () => {
+
+
+const SignUpPage = ({ onSignup }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
     password: "",
+    display_name: "",
+    bio: ""
   });
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   
-  const handleSumbit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsPending(true);
+    setError(null);
+    
+    try {
+      // If display_name is empty, use username as display name
+      const submitData = { ...formData };
+      if (!submitData.display_name) {
+        submitData.display_name = submitData.username;
+      }
+      
+      // Fetch registration
+      const response = await fetch('http://localhost:8000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+      });
+      
+      // Check if the response is ok (status in the range 200-299)
+      if (!response.ok) {
+        // Try to parse error message from response
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to create account');
+      }
+      
+      // Registration successful
+      const userData = await response.json();
+      alert('Account created successfully! Please login.');
+      navigate('/login'); // Redirect to login page
+      
+    } catch (err) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Failed to create account. Please try again.');
+    } finally {
+      setIsPending(false);
+    }
   };
   
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-  
-  const isError = false;
   
   return (
     <div className={styles.pageWrapper}>
@@ -34,10 +73,10 @@ const SignUpPage = () => {
           <XSvg className={styles.logo} />
         </div>
         <div className={styles.formContainer}>
-          <form onSubmit={handleSumbit} className={styles.form}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <h1 className={styles.heading}>Join today</h1>
             <label className={styles.inputLabel}>
-              <MdOutlineMail className={styles.icon} />
+              <MdOutlineMail className={styles.inputIcon} />
               <input
                 type='email'
                 className='grow'
@@ -45,21 +84,34 @@ const SignUpPage = () => {
                 name='email'
                 onChange={handleInputChange}
                 value={formData.email}
+                required
               />
             </label>
             <label className={styles.inputLabel}>
-              <FaUser className={styles.icon}/>
+              <FaUser className={styles.inputIcon}/>
               <input
                 type='text'
                 className='grow'
                 placeholder='Username'
                 name='username'
                 onChange={handleInputChange}
-                value={formData.username} 
+                value={formData.username}
+                required
               />
             </label>
             <label className={styles.inputLabel}>
-              <MdPassword className={styles.icon}/>
+              <FaUser className={styles.inputIcon}/>
+              <input
+                type='text'
+                className='grow'
+                placeholder='Display Name (optional)'
+                name='display_name'
+                onChange={handleInputChange}
+                value={formData.display_name}
+              />
+            </label>
+            <label className={styles.inputLabel}>
+              <MdPassword className={styles.inputIcon}/>
               <input
                 type='password'
                 className='grow'
@@ -67,12 +119,24 @@ const SignUpPage = () => {
                 name='password'
                 onChange={handleInputChange}
                 value={formData.password}
+                required
               />
             </label>
-            <button className={styles.loginButton}>
-              {isPending ? "Loading..." : "Sign up"}
+            <label className={styles.inputLabel}>
+              <FaUser className={styles.inputIcon}/>
+              <textarea
+                className='grow'
+                placeholder='Bio (optional)'
+                name='bio'
+                onChange={handleInputChange}
+                value={formData.bio}
+                rows="3"
+              />
+            </label>
+            <button className={styles.loginButton} disabled={isPending}>
+              {isPending ? "Creating account..." : "Sign up"}
             </button>
-            {isError && <p className='text-red-500'>{error?.message}</p>}
+            {error && <p className={styles.errorMessage}>{error}</p>}
           </form>
           <div className={styles.signupContainer}>
             <p>Already have an account?</p>

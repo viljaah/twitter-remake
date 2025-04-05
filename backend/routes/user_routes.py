@@ -2,7 +2,8 @@ from fastapi import APIRouter, FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, getAll_users, get_user_by_id, delete_user_by_id, search_user_by_username, get_tweets_by_user
+from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user
+from controllers.following_controller import follow_user, unfollow_user, get_user_following
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -14,6 +15,7 @@ userRouter = APIRouter(
     tags=["users"], #this is for API documentation grouping
 )
 # this is the public route, so no auth is needed
+# and implement htis
 @userRouter.post("/register", response_model=UserResponse, status_code=201)
 async def register_user(user: UserCreate, db: Session = Depends(get_db)): # db: session depends getdb, it tells fastapi to call my get_db() function to create db session 
     return create_user(user, db)
@@ -36,6 +38,7 @@ async def handle_logout():
 # No need to specify a user ID in the URL
 # Always returns the profile of whoever is logged in
 #Useful for "My Profile" features
+# need to implement htis
 @userRouter.get("/me")
 async def get_current_user_info(current_user = Depends(get_current_user)):
     """Get the currently authenticated user's profile"""
@@ -47,10 +50,6 @@ async def get_current_user_info(current_user = Depends(get_current_user)):
         "bio": current_user.bio
     }
 
-@userRouter.get("/")
-async def get_users(db: Session = Depends(get_db), current_user = Depends(get_current_user)):
-    return getAll_users(db)
-
 # In FastAPI, route order matters. When you have a route with a path parameter like /{user_id} and another specific route like /search, the more specific route (/search) needs to be defined first.
 @userRouter.get("/search")
 async def search_users(q: str, db: Session = Depends(get_db)):
@@ -60,12 +59,9 @@ async def search_users(q: str, db: Session = Depends(get_db)):
 async def get_user_tweets(user_id: int, db: Session = Depends(get_db)):
     return get_tweets_by_user(user_id, db)
 
-# this route return a specific user by ID, need a user ID in the URL, can return any user's profile, for exmaple "show Joh'ns profile"
-@userRouter.get("/{user_id}")
-async def get_user(user_id: int, db: Session = Depends(get_db)):
-    return get_user_by_id(user_id, db)
 
 # Protected delete route - can only delete your own account
+# implement this
 @userRouter.delete("/{user_id}")
 async def delete_user(
     user_id: int, 
@@ -74,7 +70,34 @@ async def delete_user(
 ):
     return delete_user_by_id(user_id, db, current_user)
 
+# Get users the current user is following
+@userRouter.get("/following")
+async def get_my_following(
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    """Get list of users the current user is following"""
+    return get_user_following(current_user.id, db)
 
+# Follow a user
+@userRouter.post("/follow/{user_id}")
+async def handle_follow_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    """Follow a user"""
+    return follow_user(current_user.id, user_id, db)
+
+# Unfollow a user
+@userRouter.delete("/follow/{user_id}")
+async def handle_unfollow_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    """Unfollow a user"""
+    return unfollow_user(current_user.id, user_id, db)
 
 
 '''

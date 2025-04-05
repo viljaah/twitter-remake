@@ -1,11 +1,61 @@
 import React, {useState, useContext} from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Settings.module.css";
 import { DarkModeContext, THEME_MODES} from "../../contexts/DarkMode";
 
 const SettingsPage = () => {
      const [activePage, setActivePage] = useState("main"); // main for the setting where buttons are displayed (i think), this is by default
      const { themeMode, setThemeMode } = useContext(DarkModeContext);
- 
+     const [deleteError, setDeleteError] = useState("");
+     const [isDeleting, setIsDeleting] = useState(false);
+     const navigate = useNavigate();
+
+    // function that will handle account deletion
+    const handleDeleteAccount = async () => {
+      const confirmed = window.confirm(
+        "are you sure you want to delete your account?"
+      );
+
+      if (!confirmed) return;
+      setIsDeleting(true);
+      setDeleteError("");
+
+      try {
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user");
+
+        if (!token || !userData) {
+          throw new Error("authentication required");
+        }
+
+        const user = JSON.parse(userData);
+
+
+        // api call service
+        const response = await fetch(`http://localhost:8000/api/users/${user.id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.detail);
+        }
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        alert("Your account has been deleted successfully");
+        navigate("/login");
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        setDeleteError(error.message);
+      } finally {
+        setIsDeleting(false);
+      }
+    }
          {/* using state variable activePage to contorl whihc section is displayed 
         , which gives a clean way to handle navigaiton between settings pages without acutyally changing routes
         for that i iwll use conditional rendering for each settings section*/}
@@ -47,9 +97,16 @@ const SettingsPage = () => {
                         <button className={styles.settingBtn}>
                              Change password
                         </button>
+
                         <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}>
-                             Delete your account
+                        onClick={handleDeleteAccount}
+                        disabled={isDeleting}
+                        >
+                          {isDeleting ? "Deleting..." : "Delete your account"}
                         </button>
+                        {deleteError && (
+                          <div className={styles.errorMessage}>{deleteError}</div>
+                        )}
                   </div>
                 </>
               )}
