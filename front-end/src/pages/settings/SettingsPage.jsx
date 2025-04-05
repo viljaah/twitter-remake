@@ -8,7 +8,7 @@ const SettingsPage = () => {
      const { themeMode, setThemeMode } = useContext(DarkModeContext);
      const [deleteError, setDeleteError] = useState("");
      const [isDeleting, setIsDeleting] = useState(false);
-   
+     const navigate = useNavigate();
 
     // function that will handle account deletion
     const handleDeleteAccount = async () => {
@@ -98,7 +98,7 @@ const SettingsPage = () => {
                              Change password
                         </button>
 
-                        <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}>
+                        <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}
                         onClick={handleDeleteAccount}
                         disabled={isDeleting}
                         >
