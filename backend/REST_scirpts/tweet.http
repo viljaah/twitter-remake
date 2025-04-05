@@ -1,7 +1,7 @@
 ### tweet id
 @tweet_id = 16
 ### token
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzNjY0NTE0fQ.Hymbt00ksImu9w-1E090I6DhofdU--m690TRJPkwog4
+@token = 
 
 ### create a new tweet
 POST http://localhost:8000/api/tweets

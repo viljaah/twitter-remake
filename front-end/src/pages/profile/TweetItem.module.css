@@ -1,0 +1,137 @@
+.tweetCard {
+  border-bottom: 1px solid rgb(192, 190, 190);
+  padding: 16px;
+  position: relative;
+}
+
+.tweetHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.handle {
+  color: #657786;
+  font-size: 0.9rem;
+}
+
+.moreButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #536471;
+  margin-left: auto;
+}
+
+.moreIcon {
+  font-size: 1.2rem;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background-color: #000;
+  border: 1px solid rgb(192, 190, 190);
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.dropdownItem {
+  background: none;
+  border: none;
+  color: #fff;
+  text-align: left;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dropdownItem:hover {
+  background-color: #1da1f2;
+}
+
+.tweetContent {
+  margin: 8px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.editContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.editTextArea {
+  width: 80%;
+  font-size: 1rem;
+  padding: 8px;
+  margin-bottom: 8px;
+  background: transparent;
+  resize: none;
+  color: white;
+  outline: none;
+}
+
+.editActions {
+  display: flex;
+  gap: 8px;
+}
+
+.saveBtn,
+.cancelBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.saveBtn {
+  background-color: #1d9bf0;
+  color: #fff;
+}
+
+.cancelBtn {
+  background-color: #ccc;
+  color: #000;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.tweetFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.heartIcon {
+  cursor: pointer;
+  color: rgb(192, 190, 190);
+  font-size: 1.2rem;
+  transition: transform 0.1s ease-in-out;
+}
+
+.heartIcon:hover {
+  transform: scale(1.1);
+  color: #e0245e;
+}

@@ -43,16 +43,17 @@ def get_all_tweets(db: Session):
     tweets = db.query(Tweet).all()
     return tweets
 
+# dont think i need this anymore (intead get all tweets the current user has made)
 # retrive one tweet
 # route GET /tweets/{tweet_id}
-def get_tweet(db: Session, tweet_id: int) -> Tweet:
-    """
-    :param tweet_id: the id of the tweet to retrieve
-    :return: the tweet object if found, if not, None.
-    """
-    # filter by the id column to match the provided tweet_id, first() returns the first matching record, or None
-    tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
-    return tweet
+# def get_tweet(db: Session, tweet_id: int) -> Tweet:
+#     """
+#     :param tweet_id: the id of the tweet to retrieve
+#     :return: the tweet object if found, if not, None.
+#     """
+#     # filter by the id column to match the provided tweet_id, first() returns the first matching record, or None
+#     tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+#     return tweet
 
 # edit one tweet
 # route PATCH /tweets/{tweet_id}

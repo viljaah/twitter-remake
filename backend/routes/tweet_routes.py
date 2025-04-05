@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.tweet_validate import TweetCreate, TweetUpdate
-from controllers.tweet_controller import create_tweet, get_all_tweets, get_tweet, update_tweet, delete_tweet, search_tweets, search_hashtags
+from controllers.tweet_controller import create_tweet, get_all_tweets, update_tweet, delete_tweet, search_tweets, search_hashtags
 from models.user_schema import User
 from middleware.auth import get_current_user
 
@@ -35,12 +35,13 @@ def search_for_hashtags(query: str, db: Session = Depends(get_db)):
     results = search_hashtags(db, query)
     return results
 
-@tweet_router.get("/{tweet_id}")
-def read_tweet(tweet_id: int, db: Session = Depends(get_db)):
-    tweet = get_tweet(db, tweet_id)
-    if not tweet:
-        raise HTTPException(status_code=404, detail="Tweet not found")
-    return tweet
+# dont think i need this anymore (intead get all tweets the current user has made)
+# @tweet_router.get("/{tweet_id}")
+# def read_tweet(tweet_id: int, db: Session = Depends(get_db)):
+#     tweet = get_tweet(db, tweet_id)
+#     if not tweet:
+#         raise HTTPException(status_code=404, detail="Tweet not found")
+#     return tweet
 
 @tweet_router.patch("/{tweet_id}")
 def put_tweet(tweet_id: int, tweet: TweetUpdate, db: Session = Depends(get_db)):
