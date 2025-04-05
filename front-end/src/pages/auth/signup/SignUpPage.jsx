@@ -6,7 +6,8 @@ import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
 import styles from './SignUpPage.module.css';
 import XSvg from "../../../components/svgs/X";
-import { registerUser } from "../../../services/userService";
+
+
 
 const SignUpPage = ({ onSignup }) => {
   const navigate = useNavigate();
@@ -27,14 +28,29 @@ const SignUpPage = ({ onSignup }) => {
     
     try {
       // If display_name is empty, use username as display name
-      if (!formData.display_name) {
-        formData.display_name = formData.username;
+      const submitData = { ...formData };
+      if (!submitData.display_name) {
+        submitData.display_name = submitData.username;
       }
       
-      // Use the userService to register the user
-      const userData = await registerUser(formData);
+      // Fetch registration
+      const response = await fetch('http://localhost:8000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData)
+      });
+      
+      // Check if the response is ok (status in the range 200-299)
+      if (!response.ok) {
+        // Try to parse error message from response
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to create account');
+      }
       
       // Registration successful
+      const userData = await response.json();
       alert('Account created successfully! Please login.');
       navigate('/login'); // Redirect to login page
       
