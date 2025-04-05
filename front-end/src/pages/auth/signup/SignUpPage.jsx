@@ -1,13 +1,14 @@
-import React from 'react'
-import {Link} from "react-router-dom";
-import {useState} from "react";
-import {MdOutlineMail} from "react-icons/md";
-import {FaUser} from "react-icons/fa";
-import {MdPassword} from "react-icons/md";
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { MdOutlineMail } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
 import styles from './SignUpPage.module.css';
 import XSvg from "../../../components/svgs/X";
 
-const SignUpPage = () => {
+const SignUpPage = ({ onSignup }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -16,16 +17,49 @@ const SignUpPage = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   
-  const handleSumbit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsPending(true);
+    setError(null);
+    
+    try {
+      // Create request data with display_name defaulting to username
+      const requestData = {
+        ...formData,
+        display_name: formData.username, // Set display_name to username by default
+        bio: "" // Empty bio
+      };
+      
+      // Send registration request to backend
+      const response = await fetch('http://localhost:8000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.detail || 'Registration failed');
+      }
+      
+      // Registration successful
+      alert('Account created successfully! Please login.');
+      navigate('/login'); // Redirect to login page
+      
+    } catch (err) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Failed to create account. Please try again.');
+    } finally {
+      setIsPending(false);
+    }
   };
   
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-  
-  const isError = false;
   
   return (
     <div className={styles.pageWrapper}>
@@ -34,56 +68,69 @@ const SignUpPage = () => {
           <XSvg className={styles.logo} />
         </div>
         <div className={styles.formContainer}>
-          <form onSubmit={handleSumbit} className={styles.form}>
-            <h1 className={styles.heading}>Join today</h1>
-            <label className={styles.inputLabel}>
-              <MdOutlineMail className={styles.icon} />
+          <h1 className={styles.heading}>Join today</h1>
+          
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.inputContainer}>
+              <MdOutlineMail className={styles.inputIcon} />
               <input
-                type='email'
-                className='grow'
-                placeholder='Email'
-                name='email'
+                type="email"
+                className={styles.input}
+                placeholder="Email"
+                name="email"
                 onChange={handleInputChange}
                 value={formData.email}
+                required
               />
-            </label>
-            <label className={styles.inputLabel}>
-              <FaUser className={styles.icon}/>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <FaUser className={styles.inputIcon} />
               <input
-                type='text'
-                className='grow'
-                placeholder='Username'
-                name='username'
+                type="text"
+                className={styles.input}
+                placeholder="Username"
+                name="username"
                 onChange={handleInputChange}
-                value={formData.username} 
+                value={formData.username}
+                required
               />
-            </label>
-            <label className={styles.inputLabel}>
-              <MdPassword className={styles.icon}/>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <MdPassword className={styles.inputIcon} />
               <input
-                type='password'
-                className='grow'
-                placeholder='Password'
-                name='password'
+                type="password"
+                className={styles.input}
+                placeholder="Password"
+                name="password"
                 onChange={handleInputChange}
                 value={formData.password}
+                required
               />
-            </label>
-            <button className={styles.loginButton}>
-              {isPending ? "Loading..." : "Sign up"}
+            </div>
+            
+            <button 
+              type="submit" 
+              className={styles.signUpButton}
+              disabled={isPending}
+            >
+              {isPending ? "Creating account..." : "Sign up"}
             </button>
-            {isError && <p className='text-red-500'>{error?.message}</p>}
           </form>
-          <div className={styles.signupContainer}>
+          
+          {error && <div className={styles.errorMessage}>{error}</div>}
+          
+          <div className={styles.signInSection}>
             <p>Already have an account?</p>
             <Link to='/login'>
-              <button className={styles.signupButton}>Sign in</button>
+              <button className={styles.signInButton}>Sign in</button>
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;
