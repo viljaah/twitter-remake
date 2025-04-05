@@ -38,6 +38,7 @@ function App() {
           console.error('Error parsing user data:', error);
           localStorage.removeItem('token');
           localStorage.removeItem('user');
+          
         }
       }
       setLoading(false);

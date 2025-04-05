@@ -2,7 +2,8 @@ from fastapi import APIRouter, FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user, follow_user, unfollow_user, get_user_following
+from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user
+from controllers.following_controller import follow_user, unfollow_user, get_user_following
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 
