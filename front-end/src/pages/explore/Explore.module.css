@@ -1,0 +1,13 @@
+.exploreContainer {
+    margin-left: 300px;
+    background-color: #000;
+    color: #fff;
+    width: 600px;
+    border: 1px solid rgb(192, 190, 190);
+}
+
+@media (max-width: 1250px) {
+    .exploreContainer {
+      margin-left: 170px;
+    }
+  }

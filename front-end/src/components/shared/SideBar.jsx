@@ -1,6 +1,8 @@
 // import React from 'react';
+import { useState } from 'react'
 import styles from "./SideBar.module.css";
 import { NavLink } from "react-router-dom";
+import PostSidebar from "./PostSidebar";
 import XSvg from "../svgs/X";
 import { GoHome } from "react-icons/go";
 import { GoSearch } from "react-icons/go";
@@ -17,7 +19,18 @@ import { IoIosMore } from "react-icons/io";
 function SideBar({ 
   
   currentUser = { username: 'username', profilePicture: 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg' }, onLogout }) {
-  return (
+  
+  const [isPostSidebarOpen, setIsPostSidebarOpen] = useState(false);
+
+  const handleOpenPostModal = () => {
+    setIsPostSidebarOpen(true);
+  };
+
+  const handleClosePostModal = () => {
+    setIsPostSidebarOpen(false);
+  };
+    
+    return (
     <nav className={styles.sidebar}>
       <ul>
         <li>
@@ -86,7 +99,7 @@ function SideBar({
           </NavLink>
         </li>
         <li>
-          <button className={styles.postBtn}>Post</button>
+          <button className={styles.postBtn} onClick={handleOpenPostModal}>Post</button>
         </li>
         {/* mulig denne må endres litt i og med at vi skal ha logout her, kanskje det må være en link..? */}
         <li className={styles.userSection}>
@@ -102,6 +115,7 @@ function SideBar({
           </button>
         </li>
       </ul>
+      {isPostSidebarOpen && <PostSidebar onClose={handleClosePostModal} />}
     </nav>
   );
 }

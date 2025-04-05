@@ -4,10 +4,11 @@
   width: 600px;
   /* box-sizing: border-box; */
   margin-left: 300px;
+  border: 1px solid rgb(192, 190, 190);
 }
 
 .tweetCard {
-  border: 1px solid rgb(192, 190, 190);
+  border-top: 1px solid rgb(192, 190, 190);
   padding: 16px;
 }
 

@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status #exceptions are used as error handler, like in express we use try/catch
 from sqlalchemy.orm import Session
 from models.user_schema import User
+from models.tweet_schema import Tweet
 import bcrypt 
 from datetime import timedelta
 from middleware.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
@@ -202,3 +203,13 @@ def search_user_by_username(username: str, db: Session):
             "joinDate": user.created_at.strftime("%B %Y")  # Format: "April 2023"
         }
     }
+
+# @desc retrieve all tweets made by the user with the given user_id
+# route GET /users/{userId}/tweets
+def get_tweets_by_user(user_id: int, db: Session):
+    """
+    :param user_id: the id of the user whose tweets to fetch
+    :return: a dictionary containing a list of tweets
+    """
+    tweets = db.query(Tweet).filter(Tweet.user_id == user_id).all()
+    return {"tweets": tweets}

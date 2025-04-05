@@ -31,6 +31,9 @@ Content-Type: application/json
 GET http://localhost:8000/api/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzNTk5Nzg4fQ.vht5HUmY5nAlRt2kXPp7z7MgSk-5b1s1NiNP5GWY3yY
 
+### Get all tweets from specific user
+GET http://localhost:8000/api/users/2/tweets
+
 ### Get specific user's profile by ID (public route)
 GET http://localhost:8000/api/users/3
 

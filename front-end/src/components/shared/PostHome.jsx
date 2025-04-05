@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './post.module.css';
+import styles from './Post.module.css';
 import { BsImage } from "react-icons/bs";
 import { RiFileGifLine } from 'react-icons/ri';
 import { BiPoll } from "react-icons/bi";
@@ -7,7 +7,7 @@ import { BsEmojiSmile } from 'react-icons/bs';
 import { BsCalendar3 } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
 
-const PostContainer = () => {
+function PostHome() {
   const [tweetContent, setTweetContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -93,5 +93,5 @@ const PostContainer = () => {
   );
 };
 
-export default PostContainer;
+export default PostHome;
 
