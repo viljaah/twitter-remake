@@ -3,8 +3,7 @@
     max-width: 600px;
     min-height: 100vh;
     color: #fff;
-    border-left: 1px solid rgb(47, 51, 54);
-    border-right: 1px solid rgb(47, 51, 54);
+    border: 1px solid rgb(47, 51, 54);
     margin-left: 300px;
   }
   
@@ -19,7 +18,7 @@
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    border-bottom: 1px solid rgb(47, 51, 54);
+    border-bottom: 1px solid var(--border-color);
   }
   
   .backButton {
@@ -34,7 +33,7 @@
   .listOfSettings {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid rgb(47, 51, 54);
+    border-top: 1px solid var(--border-color);
   }
   
   .settingBtn {
@@ -47,28 +46,7 @@
     padding: 15px;
     font-size: 15px;
     cursor: pointer;
-    border-bottom: 1px solid rgb(47, 51, 54);
-  }
-  
-  .settingBtn:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-  }
-  
-  .dangerBtn {
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    color: rgb(244, 33, 46);
-    text-align: left;
-    padding: 15px;
-    font-size: 15px;
-    cursor: pointer;
-    border-bottom: 1px solid rgb(47, 51, 54);
-  }
-  
-  .dangerBtn:hover {
-    background-color: rgba(244, 33, 46, 0.1);
+    border-bottom: 1px solid var(--border-color);
   }
   
   .displayContent {
@@ -108,21 +86,15 @@
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
   }
+
   .backgroundOption:hover {
     transform: scale(1.02);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
-  
-  .backgroundOption:active {
-    transform: scale(0.98);
-  }
-  .backgroundOption:first-child {
-    background-color: white;
-    color: black;
-  }
-  
-  .backgroundOption:last-child {
-    background-color: black;
+
+  /* had to udjust this because of the dark/dim/light mode */
+  .settingsContainer div.backgroundOption.themeButton span {
+    color: #ffffff !important;
   }
   
   .radioButton {

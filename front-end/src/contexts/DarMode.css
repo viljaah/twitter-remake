@@ -1,5 +1,12 @@
 /* Theme Variables */
 
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100%;
+  background-color: var(--background-primary) !important;
+}
+
 /* Dark Theme (Default/Black) */
 body[data-theme="dark"] {
     --background-primary: #000000;
@@ -9,6 +16,9 @@ body[data-theme="dark"] {
     --text-secondary: rgb(110, 118, 125);
     --danger-color: rgb(244, 33, 46);
     --danger-hover: rgba(244, 33, 46, 0.1);
+    --profile-border: #000;
+    --post-button: #fff;
+    --popup-post-container: #000;
   }
   
   /* Dim Theme */
@@ -20,6 +30,9 @@ body[data-theme="dark"] {
     --text-secondary: rgb(139, 152, 165);
     --danger-color: rgb(244, 33, 46);
     --danger-hover: rgba(244, 33, 46, 0.1);
+    --profile-border: #15202b;
+    --post-button: #fff;
+    --popup-post-container: #15202b;
   }
   
   /* Light Theme */
@@ -31,6 +44,9 @@ body[data-theme="dark"] {
     --text-secondary: rgb(83, 100, 113);
     --danger-color: rgb(244, 33, 46);
     --danger-hover: rgba(244, 33, 46, 0.1);
+    --profile-border: #fff;
+    --post-button: rgb(167, 166, 166);
+    --popup-post-container: #fff;
   }
   
   /* Global styles that override everything */

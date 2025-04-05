@@ -47,7 +47,7 @@ const SettingsPage = () => {
                         <button className={styles.settingBtn}>
                              Change password
                         </button>
-                        <button className={styles.dangerBtn}>
+                        <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}>
                              Delete your account
                         </button>
                   </div>
@@ -74,7 +74,7 @@ const SettingsPage = () => {
                       <h2 className={styles.sectionTitle}>Background</h2>
                       <div className={styles.backgroundOptions}>
                                {/* Default (Black) */}
-                              <div className={styles.backgroundOption}
+                              <div className={`${styles.backgroundOption} ${styles.themeButton}`}
                                   role="button"
                                   onClick={() => {
                                     console.log("Setting theme to DARK");
@@ -86,11 +86,11 @@ const SettingsPage = () => {
                                     <div className={styles.radioButtonSelected}></div>
                                     )}
                                  </div>
-                                  <span>Default</span>
+                                  <span>Default Dark</span>
                                </div>
 
                                 {/* Dim */}
-                              <div className={styles.backgroundOption}
+                              <div className={`${styles.backgroundOption} ${styles.themeButton}`}
                                 role="button"
                                 onClick={() => setThemeMode(THEME_MODES.DIM)}
                                 style={{ backgroundColor: "#15202b", color: "#ffffff"}} >
@@ -112,7 +112,7 @@ const SettingsPage = () => {
                                       <div className={styles.radioButtonSelected}></div>
                                     )}
                                   </div>
-                                  <span>Lights out</span>
+                                  <span>Light</span>
                                 </div>
                       </div>
                     </div>

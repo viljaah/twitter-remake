@@ -20,14 +20,17 @@
 
 .textArea {
   width: 100%;
-  background: transparent;
   border: none;
   resize: none;
   font-size: 20px;
-  color: #fff;
   outline: none;
   margin-bottom: 8px;
   margin-top: 12px;
+}
+
+/* had to udjust this because of the dark/dim/light mode */
+.postContainer .textArea {
+  background: transparent !important; 
 }
 
 .actionsRow {
@@ -53,11 +56,10 @@
 }
 
 .postBtn {
-  background-color: #fff;
+  background-color: var(--post-button);
   border: none;
   border-radius: 9999px;
   padding: 8px 16px;
-  color: black;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -79,6 +81,7 @@
   }
 }
 
+/* extra styling for the PostSidebar */
 .overlay {
   position: fixed;
   top: 0;
@@ -89,12 +92,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 900;
 }
 
-.modalContent {
+.postSidebarContent {
   position: relative; 
-  background-color: #000;
+  background-color: var(--popup-post-container);
   padding: 20px;
   border-radius: 8px;
   width: 600px;
