@@ -5,6 +5,7 @@ import { IoCalendarOutline } from "react-icons/io5"; //for join data
 import styles from "./ProfilePage.module.css";
 import TweetItem from "./TweetItem";
 import FollowStats from "../../components/shared/followStats/FollowStats";
+import FollowersList from "../../components/shared/profileFollowerList/FollowerList";
 
 
 const ProfilePage = () => {
@@ -15,6 +16,7 @@ const ProfilePage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("posts"); // "posts", "followers", "following"
   
   // Add this if you need to know follow status in the profile component
   const [isFollowing, setIsFollowing] = useState(false);
@@ -102,7 +104,7 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.mainContent}>
-      {/* Header section (keep as is) */}
+      {/* Header section */}
       <div className={styles.header}>
         <Link to="/" className={styles.backButton}>
           <FaArrowLeft />
@@ -111,28 +113,29 @@ const ProfilePage = () => {
           <h2 className={styles.headerName}>
             {userData?.display_name || userData?.username}
           </h2>
-          <span className={styles.postCount}> {userTweets.length}</span>
+          {activeTab === "posts" && <span className={styles.postCount}>{userTweets.length}</span>}
         </div>
       </div>
 
       {/* Profile content container */}
       <div className={styles.profileContent}>
-        {/* Cover Photo Section (keep as is) */}
+        {/* Cover Photo Section */}
         <div className={styles.coverPhoto}>
           {/*this is where user's cover image will go*/}
         </div>
 
         {/* Profile information section */}
         <div className={styles.profileInfo}>
-          {/* Profile picture (keep as is) */}
+          {/* Profile picture */}
           <div className={styles.profilePictureContainer}>
             <img
               src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"
               className={styles.profilePicture}
+              alt="Profile"
             />
           </div>
 
-          {/* Edit profile button - keep only this part */}
+          {/* Edit profile button - only shown on own profile */}
           <div className={styles.editProfileContainer}>
             {isOwnProfile && (
               <button className={styles.editProfileButton}>Edit profile</button>
@@ -151,10 +154,10 @@ const ProfilePage = () => {
             {/* Join date */}
             <div className={styles.joinDateContainer}>
               <IoCalendarOutline className={styles.calendarIcon} />
-              <span>Joined {userData.joinDate}</span>
+              <span>Joined {userData?.joinDate || 'April 2023'}</span>
             </div>
 
-            {/* REMOVE old stats container and REPLACE with FollowStats */}
+            {/* Follow Stats */}
             {userData?.id && (
               <FollowStats
                 userId={userData.id}
@@ -165,34 +168,67 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* Navigation Tabs (keep as is) */}
+        {/* Navigation Tabs */}
         <div className={styles.navTabs}>
-          <div className={`${styles.tab} ${styles.activeTab}`}>Posts</div>
-        </div>
-
-        {/* Display User Tweets (keep as is) */}
-        <div className={styles.tweetsSection}>
-          {userTweets.length > 0 ? (
-            userTweets.map((tweet) => (
-              <TweetItem
-                key={tweet.id}
-                tweet={tweet}
-                onTweetUpdated={(updatedTweet) => {
-                  setUserTweets((prevTweets) =>
-                    prevTweets.map((t) => (t.id === updatedTweet.id ? updatedTweet : t))
-                  );
-                }}
-                onTweetDeleted={(deletedTweetId) => {
-                  setUserTweets((prevTweets) =>
-                    prevTweets.filter((t) => t.id !== deletedTweetId)
-                  );
-                }}
-              />
-            ))
-          ) : (
-            <div className={styles.noTweets}>No tweets found</div>
+          <div 
+            className={`${styles.tab} ${activeTab === "posts" ? styles.activeTab : ""}`}
+            onClick={() => handleTabChange("posts")}
+          >
+            Posts
+          </div>
+          {isOwnProfile && (
+            <>
+              <div 
+                className={`${styles.tab} ${activeTab === "followers" ? styles.activeTab : ""}`}
+                onClick={() => handleTabChange("followers")}
+              >
+                Followers
+              </div>
+              <div 
+                className={`${styles.tab} ${activeTab === "following" ? styles.activeTab : ""}`}
+                onClick={() => handleTabChange("following")}
+              >
+                Following
+              </div>
+            </>
           )}
         </div>
+
+        {/* Content based on active tab */}
+        {activeTab === "posts" && (
+          <div className={styles.tweetsSection}>
+            {userTweets.length > 0 ? (
+              userTweets.map((tweet) => (
+                <TweetItem
+                  key={tweet.id}
+                  tweet={tweet}
+                  onTweetUpdated={(updatedTweet) => {
+                    setUserTweets((prevTweets) =>
+                      prevTweets.map((t) => (t.id === updatedTweet.id ? updatedTweet : t))
+                    );
+                  }}
+                  onTweetDeleted={(deletedTweetId) => {
+                    setUserTweets((prevTweets) =>
+                      prevTweets.filter((t) => t.id !== deletedTweetId)
+                    );
+                  }}
+                />
+              ))
+            ) : (
+              <div className={styles.noTweets}>No tweets found</div>
+            )}
+          </div>
+        )}
+
+        {/* Followers tab */}
+        {activeTab === "followers" && isOwnProfile && (
+          <FollowersList type="followers" />
+        )}
+
+        {/* Following tab */}
+        {activeTab === "following" && isOwnProfile && (
+          <FollowersList type="following" />
+        )}
       </div>
     </div>
   );

@@ -137,28 +137,82 @@
 .navTabs {
   display: flex;
   border-bottom: 1px solid var(--border-color);
-  border-top: 1px solid var(--border-color);
   margin-top: 15px;
-  overflow-x: auto; /* For mobile scrolling */
 }
 
 .tab {
-  /* styling for where all posts will be displayed*/
   padding: 15px;
   flex: 1;
   text-align: center;
   font-weight: bold;
   cursor: pointer;
-}
-/*idk if this code is nessecary yet*/
-.editProfileButton.unfollowButton {
-  background-color: white;
-  color: red;
-  border: 1px solid red;
+  position: relative;
+  transition: color 0.2s ease;
 }
 
-.editProfileButton.unfollowButton:hover {
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.activeTab {
+  color: #1da1f2;
+}
+
+.activeTab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background-color: #1da1f2;
+  border-radius: 2px;
+}
+
+/* Tweet section */
+.tweetsSection {
+  width: 100%;
+}
+
+.noTweets {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Follow button styling */
+.followButton {
+  border: 1px solid var(--border-color);
+  background-color: var(--post-button);
+  color: black;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.unfollowButton {
+  background-color: transparent;
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.unfollowButton:hover {
   background-color: rgba(244, 33, 46, 0.1);
+}
+
+/* Loading and error states */
+.loadingState, 
+.errorState {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.errorState {
+  color: var(--danger-color);
 }
 
 @media (max-width: 1250px) {
