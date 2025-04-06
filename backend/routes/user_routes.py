@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
 from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user, getAll_users
-from controllers.following_controller import follow_user, unfollow_user, get_user_following,  get_followers_count, get_following_count
+from controllers.following_controller import follow_user, unfollow_user, get_user_following,  get_followers_count, get_following_count, get_user_followers
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 from models.follow_schema import Follow
@@ -95,6 +95,15 @@ async def get_my_following(
 ):
     """Get list of users the current user is following"""
     return get_user_following(current_user.id, db)
+
+# NEW ENDPOINT: Get followers of the current user
+@userRouter.get("/followers")
+async def get_my_followers(
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    """Get list of users following the current user"""
+    return get_user_followers(current_user.id, db)
 
 # Follow a user
 @userRouter.post("/follow/{user_id}")

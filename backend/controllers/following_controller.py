@@ -45,6 +45,54 @@ def get_user_following(user_id: int, db: Session):
         "following": following_list
     }
 
+# NEW FUNCTION: Get users following a specific user
+def get_user_followers(user_id: int, db: Session):
+    """
+    Get all followers of a specific user
+    
+    :param user_id: ID of the user whose followers to retrieve
+    :param db: SQLAlchemy database session
+    :return: List of users following the specified user
+    :raises HTTPException: If user not found
+    """
+    # Check if user exists
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with ID {user_id} not found"
+        )
+    
+    # Get all users who follow this user
+    followers = db.query(User).join(
+        Follow, Follow.follower_id == User.id
+    ).filter(
+        Follow.following_id == user_id
+    ).all()
+    
+    # Check which of these followers are also being followed by the user
+    followers_list = []
+    
+    for follower in followers:
+        # Check if user follows this follower back
+        is_following = db.query(Follow).filter(
+            Follow.follower_id == user_id,
+            Follow.following_id == follower.id
+        ).first() is not None
+        
+        followers_list.append({
+            "id": follower.id,
+            "username": follower.username,
+            "display_name": follower.display_name,
+            "bio": follower.bio,
+            "is_following": is_following
+        })
+    
+    return {
+        "count": len(followers_list),
+        "followers": followers_list
+    }
+
 # @desc Follow a user
 # @route POST /users/follow/{user_id}
 def follow_user(current_user_id: int, user_to_follow_id: int, db: Session):
