@@ -150,6 +150,16 @@
   font-weight: bold;
   cursor: pointer;
 }
+/*idk if this code is nessecary yet*/
+.editProfileButton.unfollowButton {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}
+
+.editProfileButton.unfollowButton:hover {
+  background-color: rgba(244, 33, 46, 0.1);
+}
 
 @media (max-width: 1250px) {
   .mainContent {

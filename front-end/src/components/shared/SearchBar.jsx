@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import styles from './SearchBar.module.css';
 
 function SearchBar() {
@@ -9,15 +9,31 @@ function SearchBar() {
   const initialQuery = params.get('query') || "";
   const initialFilter = params.get('filter') || "tweets";
 
-  // inputQuery holds the live value from the input field.
   const [inputQuery, setInputQuery] = useState(initialQuery);
-  // committedQuery holds the query when the user presses Enter.
   const [committedQuery, setCommittedQuery] = useState(initialQuery);
   const [selectedFilter, setSelectedFilter] = useState(initialFilter);
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // Trigger search only when committedQuery changes.
+  // Fetch current user on component mount
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/users/me');
+        if (response.ok) {
+          const userData = await response.json();
+          setCurrentUser(userData);
+        }
+      } catch (error) {
+        console.error('Error fetching current user:', error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  // Trigger search when committedQuery changes
   useEffect(() => {
     if (location.pathname === "/explore" && committedQuery.trim() !== "") {
       fetchResults();
@@ -28,55 +44,100 @@ function SearchBar() {
 
   const fetchResults = async () => {
     let url = "";
-    if (selectedFilter === "tweets") {
-      url = `http://localhost:8000/api/tweets/search?query=${encodeURIComponent(committedQuery)}`;
-    } else if (selectedFilter === "hashtags") {
-      url = `http://localhost:8000/api/tweets/hashtag/search?query=${encodeURIComponent(committedQuery)}`;
-    } else if (selectedFilter === "users") {
-      url = `http://localhost:8000/api/users/search?q=${encodeURIComponent(committedQuery)}`;
-    }
-    
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      switch(selectedFilter) {
+        case "tweets":
+          url = `http://localhost:8000/api/tweets/search?query=${encodeURIComponent(committedQuery)}`;
+          break;
+        case "hashtags":
+          url = `http://localhost:8000/api/tweets/hashtag/search?query=${encodeURIComponent(committedQuery)}`;
+          break;
+        case "users":
+          url = `http://localhost:8000/api/users/search?q=${encodeURIComponent(committedQuery)}`;
+          break;
+        default:
+          setResults([]);
+          return;
       }
+
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        setResults([]);
+        setError("No results found");
+        return;
+      }
+      
       const data = await response.json();
 
-      if (selectedFilter === "users") {
-        // API returns an object with a 'user' key if a user is found.
-        if (data.user) {
+      // Handle different result types
+      if (selectedFilter === "users" && data.user) {
+        // For users, check follow status
+        try {
+          const followStatusResponse = await fetch(
+            {/*WRING ROUTES */}
+            `http://localhost:8000/api/users/${data.user.id}/follow-status`
+          );
+          
+          const followStatusData = await followStatusResponse.json();
+          
+          // Combine user data with follow status
+          setResults([{
+            ...data.user,
+            is_following: followStatusData.is_following
+          }]);
+        } catch (followError) {
+          // If follow status check fails, still show the user
           setResults([data.user]);
-          setError("");
-        } else {
-          // No user found—clear results without setting an error.
-          setResults([]);
-          setError("");
         }
       } else {
-        setResults(data);
-        setError("");
+        // For tweets and hashtags, use the data as-is
+        setResults(selectedFilter === "tweets" ? data : 
+                   selectedFilter === "hashtags" ? data : []);
       }
+      
+      setError("");
     } catch (err) {
       setResults([]);
-      setError("No user found");
+      setError("No results found");
+    }
+  };
+
+  const handleFollowToggle = async (userId, isCurrentlyFollowing) => {
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const endpoint = `/api/users/follow/${userId}`;
+      const method = isCurrentlyFollowing ? 'DELETE' : 'POST';
+      
+      const response = await fetch(endpoint, { method });
+      
+      if (response.ok) {
+        // Update the results to reflect the new follow status
+        setResults(results.map(user => 
+          user.id === userId 
+            ? { ...user, is_following: !isCurrentlyFollowing } 
+            : user
+        ));
+      }
+    } catch (error) {
+      console.error('Error toggling follow:', error);
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      // Commit the current input value as the search query.
       setCommittedQuery(inputQuery);
       if (location.pathname !== "/explore") {
-        // Redirect to ExplorePage with the committed query and selected filter.
         navigate(`/explore?query=${encodeURIComponent(inputQuery)}&filter=${selectedFilter}`);
       }
-      // If already on ExplorePage, the useEffect hook will trigger the search.
     }
   };
 
   const handleFilterClick = (filter) => {
-    // If clicking a different filter, clear the search inputs and results.
     if (filter !== selectedFilter) {
       setSelectedFilter(filter);
       setInputQuery("");
@@ -128,17 +189,29 @@ function SearchBar() {
           ) : results.length > 0 ? (
             results.map((result, index) => (
               <div key={index} className={styles.resultItem}>
-                {selectedFilter === "tweets" && <p>{result.content}</p>}
+                {selectedFilter === "tweets" && (
+                  <p>{result.content}</p>
+                )}
                 {selectedFilter === "hashtags" && (
                   <p>
                     {result.hashtag ? result.hashtag.name : result.content}
                   </p>
                 )}
                 {selectedFilter === "users" && (
-                  <div>
-                    <p><strong>{result.username}</strong></p>
-                    {result.display_name && <p>{result.display_name}</p>}
-                  </div>
+                  <>
+                    <Link to={`/profile/${result.username}`} className={styles.userInfo}>
+                      <p><strong>{result.username}</strong></p>
+                      {result.display_name && <p>{result.display_name}</p>}
+                    </Link>
+                    {currentUser && currentUser.id !== result.id && (
+                      <button 
+                        className={`${styles.followButton} ${result.is_following ? styles.following : ''}`}
+                        onClick={() => handleFollowToggle(result.id, result.is_following)}
+                      >
+                        {result.is_following ? 'Unfollow' : 'Follow'}
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             ))
