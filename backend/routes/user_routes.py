@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
-from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user
+from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user, getAll_users
 from controllers.following_controller import follow_user, unfollow_user, get_user_following
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
@@ -35,6 +35,11 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 @userRouter.post("/logout")
 async def handle_logout():
     return logout_user()
+
+# retrieve all users
+@userRouter.get("/")
+async def get_users(db: Session = Depends(get_db)):
+    return getAll_users(db)
 
 #/me endpoint: Returns the currently authenticated user based on their JWT token
 # No need to specify a user ID in the URL

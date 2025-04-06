@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import {Route, Routes, Navigate} from 'react-router-dom';
+import {Route, Routes, Navigate, useLocation} from 'react-router-dom';
 import SideBar from './components/shared/SideBar';
 import HomePage from './pages/home/HomePage';
 import LoginPage from './pages/auth/login/LoginPage';
@@ -10,8 +10,14 @@ import SettingsPage from "./pages/settings/SettingsPage";
 import {DarkModeProvider} from './contexts/DarkMode';
 import './contexts/DarMode.css';
 import ExplorePage from './pages/explore/ExplorePage';
+import ListUsers from './components/shared/ListUsers';
 
 function App() {
+  const location = useLocation();
+
+  // hide the right sidebar on /login and /signup pages
+  const hideRightSidebar = location.pathname === "/login" || location.pathname === "/signup";
+  
   // Replace dummy auth with real auth state
   /*
   * the authUser state stacks whether a suer is logged in, when null, no user is logged in
@@ -104,7 +110,7 @@ function App() {
 
   return (
     <DarkModeProvider>
-      <div className="root-div">
+      <div className="appContainer">
         {authUser && <SideBar currentUser={authUser} onLogout={handleLogout}/>}
           <Routes>
             <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
@@ -114,6 +120,7 @@ function App() {
             <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
             <Route path="/explore" element={authUser ? <ExplorePage /> : <Navigate to="/login" />} />
           </Routes>
+        {!hideRightSidebar && <ListUsers />}
       </div>
     </DarkModeProvider>
   );

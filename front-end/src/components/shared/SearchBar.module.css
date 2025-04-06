@@ -1,3 +1,4 @@
+
 /* Search Container */
 .searchContainer {
   width: 100%;
@@ -111,6 +112,8 @@
 
 .followButton.following {
   background-color: #000;
+  border-bottom: 1px solid var(--border-color);
+  padding: 30px;
   color: #fff;
   border: 1px solid #fff;
 }
