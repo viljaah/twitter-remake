@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ListUsers.module.css';
+import { getFollowing, followUser, unfollowUser} from '../../service/userService.js';
 
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
@@ -37,9 +38,9 @@ const ListUsers = () => {
     };
 
     // Fetch the list of users the current user is following
-    const fetchFollowing = async () => {
+    /*const fetchFollowing = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users/following');
+        const response = await fetch('http://localhost:8000/api/users/following'); //issue here
         if (!response.ok) {
           throw new Error('Failed to fetch following list');
         }
@@ -48,16 +49,27 @@ const ListUsers = () => {
         const followingIds = data.following.map(u => u.id);
         setFollowing(followingIds);
       } catch (err) {
+        console.error(err); // getting error message that failed ot fetch follwoing list
+      }
+    };*/
+    /* putted this new */
+    // Use the getFollowing function from userService
+    const fetchFollowing = async () => {
+      try {
+        const data = await getFollowing();
+        // Extract the followed user IDs
+        const followingIds = data.following.map(u => u.id);
+        setFollowing(followingIds);
+      } catch (err) {
         console.error(err);
       }
     };
-
     const fetchAll = async () => {
-      await Promise.all([fetchUsers(), fetchFollowing()]);
+      await Promise.all([fetchUsers(), fetchFollowing()]); // issue here
       setLoading(false);
     };
 
-    fetchAll();
+    fetchAll(); // issue here
   }, []);
 
   // Handle follow/unfollow button click
@@ -105,7 +117,6 @@ const ListUsers = () => {
       }
     }
   };
-  
 
   if (loading) {
     return <div className={styles.loading}>Loading users...</div>;

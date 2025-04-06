@@ -34,8 +34,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwI
 ### Get all tweets from specific user
 GET http://localhost:8000/api/users/2/tweets
 
-### Get specific user's profile by ID (public route)
-GET http://localhost:8000/api/users/3
 
 ### Search for a user by username (public route)
 GET http://localhost:8000/api/users/search?q=vilja
@@ -43,3 +41,25 @@ GET http://localhost:8000/api/users/search?q=vilja
 ### Delete a user (protected route)
 DELETE http://localhost:8000/api/users/1
 Authorization: Bearer YOUR_TOKEN_HERE
+
+### Get users the current user is following (protected route)
+GET http://localhost:8000/api/users/following
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzOTQ1Mzg1fQ.ERSCGNrykWQL5QXfT5bfaZKItVlVtV4PPbmy66euTfc
+
+### Follow a user (protected route)
+POST http://localhost:8000/api/users/follow/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzOTQ1Mzg1fQ.ERSCGNrykWQL5QXfT5bfaZKItVlVtV4PPbmy66euTfc
+Content-Type: application/json
+
+{}
+
+### Unfollow a user (protected route)
+DELETE http://localhost:8000/api/users/follow/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzQzOTQ1Mzg1fQ.ERSCGNrykWQL5QXfT5bfaZKItVlVtV4PPbmy66euTfc
+
+### Get followers count for a user
+GET http://localhost:8000/api/users/3/followers/count
+
+### Get following count for a user
+GET http://localhost:8000/api/users/3/following/count
+

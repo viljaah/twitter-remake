@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import styles from './SearchBar.module.css';
+import {getCurrentUser, followUser, unfollowUser} from "../../service/userService.js";
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -17,21 +18,25 @@ function SearchBar() {
   const [currentUser, setCurrentUser] = useState(null);
 
   // Fetch current user on component mount
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/users/me');
-        if (response.ok) {
-          const userData = await response.json();
-          setCurrentUser(userData);
-        }
-      } catch (error) {
-        console.error('Error fetching current user:', error);
+// Fetch current user on component mount
+useEffect(() => {
+  const fetchCurrentUser = async () => {
+    try {
+      const userData = await getCurrentUser();
+      if (userData) {
+        setCurrentUser(userData);
+      } else {
+        // Handle case where no user is found (e.g., redirect to login)
+        navigate('/login');
       }
-    };
+    } catch (error) {
+      console.error('Error in SearchBar fetching current user:', error);
+      navigate('/login');
+    }
+  };
 
-    fetchCurrentUser();
-  }, []);
+  fetchCurrentUser();
+}, [navigate]);
 
   // Trigger search when committedQuery changes
   useEffect(() => {
@@ -106,14 +111,14 @@ function SearchBar() {
   const handleFollowToggle = async (userId, isCurrentlyFollowing) => {
     if (!currentUser) {
       navigate('/login');
-      return;
+      return; // got also issue here
     }
 
     try {
       const endpoint = `/api/users/follow/${userId}`;
       const method = isCurrentlyFollowing ? 'DELETE' : 'POST';
       
-      const response = await fetch(endpoint, { method });
+      const response = await fetch(endpoint, { method }); // here also issue: POST fetch failed loading
       
       if (response.ok) {
         // Update the results to reflect the new follow status
@@ -127,6 +132,8 @@ function SearchBar() {
       console.error('Error toggling follow:', error);
     }
   };
+
+  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

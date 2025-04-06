@@ -3,10 +3,17 @@ from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.user_validate import UserCreate, UserResponse, UserLogin
 from controllers.user_controller import create_user, login_user, logout_user, delete_user_by_id, search_user_by_username, get_tweets_by_user, getAll_users
-from controllers.following_controller import follow_user, unfollow_user, get_user_following
+from controllers.following_controller import follow_user, unfollow_user, get_user_following,  get_followers_count, get_following_count
 from middleware.auth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
+from models.follow_schema import Follow
 
+'''
+response_model=UserResponse tells fastAPi:
+1. what shcema to use for validating and converting the response
+2. what fields to include in the response (filter out any extra data)
+3. what to show in the automatic API documentation
+'''
 app = FastAPI()
 
 # creates a routes instance 
@@ -109,10 +116,20 @@ async def handle_unfollow_user(
     """Unfollow a user"""
     return unfollow_user(current_user.id, user_id, db)
 
+# Get followers count for any user
+@userRouter.get("/{user_id}/followers/count")
+async def handle_get_followers_count(
+    user_id: int, 
+    db: Session = Depends(get_db)
+):
+    """Get the number of followers for a specific user"""
+    return get_followers_count(user_id, db)
 
-'''
-response_model=UserResponse tells fastAPi:
-1. what shcema to use for validating and converting the response
-2. what fields to include in the response (filter out any extra data)
-3. what to show in the automatic API documentation
-'''
+# Get following count for any user
+@userRouter.get("/{user_id}/following/count") 
+async def handle_get_following_count(
+    user_id: int, 
+    db: Session = Depends(get_db)
+):
+    """Get the number of users a specific user is following"""
+    return get_following_count(user_id, db)
