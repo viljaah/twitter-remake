@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6"; // back button
 import styles from "./Settings.module.css";
 import { DarkModeContext, THEME_MODES} from "../../contexts/DarkMode";
 
@@ -88,7 +89,7 @@ const SettingsPage = () => {
                 <>
                   <div className={styles.settingsHeader}>
                         <button className={styles.backButton} onClick={() => setActivePage("main")}>
-                            Back
+                          <FaArrowLeft />
                         </button>
                      <h1 className={styles.headingSettings}>Your account</h1>
                   </div>
@@ -116,14 +117,14 @@ const SettingsPage = () => {
                 <>
                   <div className={styles.settingsHeader}>
                         <button className={styles.backButton} onClick={() => setActivePage("main")}>
-                          Back
+                          <FaArrowLeft />
                         </button>
                         <h1 className={styles.headingSettings}>Display</h1>
                   </div>
 
                   <div className={styles.displayContent}>
                     <p className={styles.displayDescription}>
-                      Manage your font size, color, and background. These settings affect all X accounts on this browser.
+                      Change your background to the color theme you prefer.
                     </p>
                     
                     {/* Background Options */}
