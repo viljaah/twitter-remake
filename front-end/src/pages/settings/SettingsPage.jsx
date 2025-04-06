@@ -98,7 +98,7 @@ const SettingsPage = () => {
                              Change password
                         </button>
 
-                        <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}>
+                        <button className={styles.settingBtn} style={{ color: 'var(--danger-color) !important'}}
                         onClick={handleDeleteAccount}
                         disabled={isDeleting}
                         >

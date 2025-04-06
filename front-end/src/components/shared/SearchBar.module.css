@@ -1,5 +1,3 @@
-/* fix this shitty css */
-
 .searchContainer {
   width: 100%;
   display: flex;
@@ -65,7 +63,7 @@
 }
 
 .resultItem {
-  border-bottom: 1px solid rgb(192, 190, 190);
+  border-bottom: 1px solid var(--border-color);
   padding: 30px;
   color: #fff;
 }
