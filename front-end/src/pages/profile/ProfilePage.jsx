@@ -18,20 +18,52 @@ const ProfilePage = () => {
   const [followersCount, setFollowersCount] = useState(0);
 
 
-  //fetch current user´s data
   useEffect(() => {
-    const fetchCurrentUser = async () => {
+    // Try to get the user from localStorage first
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
       try {
-        const response = await fetch('http://localhost:8000/api/users/me');
-        if (!response.ok) {
+        const userData = JSON.parse(storedUser);
+        setCurrentUserData(userData);
+        console.log("Using stored user data:", userData);
+      } catch (error) {
+        console.error("Error parsing stored user data:", error);
+        // Fall back to fetching from API if parsing fails
+        fetchFromAPI();
+      }
+    } else {
+      // If no stored user, fetch from API
+      fetchFromAPI();
+    }
+    
+    // The API fetch function
+    async function fetchFromAPI() {
+      try {
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          console.log("No authentication token found");
+          return;
+        }
+        
+        const response = await fetch('http://localhost:8000/api/users/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
           const data = await response.json();
           setCurrentUserData(data);
+        } else {
+          console.log("Failed to fetch current user, status:", response.status);
         }
       } catch (error) {
         console.log('Error fetching current user:', error);
       }
-    };
-    fetchCurrentUser();
+    }
   }, []);
 
   // effect to fetch user data when component mounts or username changes
@@ -90,55 +122,6 @@ const ProfilePage = () => {
     }
   }, [userData]);
 
-  // Check if current user is following this profile
-  useEffect(() => {
-    const checkFollowStatus = async () => {
-      if (userData?.id && currentUserData?.id) {
-        try {
-          const response = await fetch('/api/users/following');
-          if (response.ok) {
-            const followingUsers = await response.json();
-            const isCurrentlyFollowing = followingUsers.some(
-              (followedUser) => followedUser.id === userData.id
-            );
-            setIsFollowing(isCurrentlyFollowing);
-          }
-        } catch (error) {
-          console.error('Error checking follow status:', error);
-        }
-      }
-    };
-
-    checkFollowStatus();
-  }, [userData, currentUserData]);
-
- // Handle follow/unfollow action
- const handleFollowToggle = async () => {
-  if (!currentUserData) {
-    // Redirect to login or show login modal
-    return;
-  }
-
-  try {
-    const endpoint = isFollowing 
-      ? `/api/users/follow/${userData.id}` 
-      : `/api/users/follow/${userData.id}`;
-    
-    const method = isFollowing ? 'DELETE' : 'POST';
-    
-    const response = await fetch(endpoint, { method });
-    
-    if (response.ok) {
-      setIsFollowing(!isFollowing);
-      // Update followers count
-      setFollowersCount(prevCount => 
-        isFollowing ? prevCount - 1 : prevCount + 1
-      );
-    }
-  } catch (error) {
-    console.error('Error toggling follow:', error);
-  }
-};
 
   // show loading state
   if (loading) {
