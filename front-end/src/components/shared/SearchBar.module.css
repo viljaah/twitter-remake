@@ -1,5 +1,3 @@
-/* fix this shitty css */
-
 .searchContainer {
   width: 100%;
   display: flex;
@@ -69,20 +67,3 @@
   padding: 30px;
   color: #fff;
 }
-
-
-/* style for the follow button if we make it */
-/* .followBtn {
-  background: none;
-  border: none;
-  color: #1da1f2;
-  font-size: 15px;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
-  margin-left: auto; 
-  padding: 4px 8px;
-}
-
-.followBtn:hover {
-  color: #1a91da;
-} */
