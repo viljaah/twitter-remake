@@ -1,7 +1,7 @@
 ### tweet id
-@tweet_id = 16
+@tweet_id = ...
 ### token
-@token = 
+@token = ...
 
 ### create a new tweet
 POST http://localhost:8000/api/tweets
@@ -15,12 +15,16 @@ Authorization: Bearer {{token}}
 ### get all tweets
 GET http://localhost:8000/api/tweets
 
-### get a tweet by id
-GET http://localhost:8000/api/tweets/{{tweet_id}}
+### search for tweets containing the word you write in the query
+GET http://localhost:8000/api/tweets/search?query=weather
+
+### Search for hashtags containing the word "fun"
+GET http://localhost:8000/api/tweets/hashtag/search?query=summer
 
 ### update a tweet
 PATCH http://localhost:8000/api/tweets/{{tweet_id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "content": "Updated tweet content"
@@ -28,9 +32,4 @@ Content-Type: application/json
 
 ### delete a tweet
 DELETE http://localhost:8000/api/tweets/{{tweet_id}}
-
-### search for tweets containing the word you write in the query
-GET http://localhost:8000/api/tweets/search?query=weather
-
-### Search for hashtags containing the word "fun"
-GET http://localhost:8000/api/tweets/hashtag/search?query=summer
+Authorization: Bearer {{token}}

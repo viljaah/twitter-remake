@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from models.tweet_schema import Tweet
 from models.hashtag_schema import Hashtag
@@ -17,7 +18,6 @@ def create_tweet(db: Session, tweet_data: dict) -> Tweet:
 
     # extract hashtags from content
     hashtags_content = set(re.findall(r"#(\w+)", tweet_data.get("content", "")))
-
     for tag in hashtags_content:
         hashtag_obj = db.query(Hashtag).filter(Hashtag.name == tag).first()
         if not hashtag_obj:
@@ -42,40 +42,6 @@ def get_all_tweets(db: Session):
     # fetch all records from the tweets table
     tweets = db.query(Tweet).all()
     return tweets
-
-# edit one tweet
-# route PATCH /tweets/{tweet_id}
-def update_tweet(db: Session, tweet_id: int, tweet_data: dict) -> Tweet:
-    """
-    :param tweet_id: the id of the tweet to update
-    :param tweet_data: dictionary with fields to update (e.g {'content': 'New content'}...)
-    """
-    tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
-    # check if there is a tweet, to avoid trying to update a non-existent tweet
-    if tweet is None:
-        return None
-    # iterates over each key-value pair and updates the corresponding attribute of the tweet
-    for key, value in tweet_data.items():
-        setattr(tweet, key, value)
-    # the changes are saved to the database
-    db.commit()
-    # updates the tweet instance with the latest data from the database
-    db.refresh(tweet)
-    return tweet
-
-# delete one tweet
-# route DELETE /tweets/{tweet_id}
-def delete_tweet(db: Session, tweet_id: int) -> bool:
-    """
-    :param tweet_id: the id of the tweet to delete
-    :return: true if the tweet was found and deleted, if not, False.
-    """
-    tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
-    if tweet is None:
-        return False
-    db.delete(tweet)
-    db.commit()
-    return True
 
 # search for tweets that have the query string in their content
 # route GET /tweets/search?={query}
@@ -105,3 +71,43 @@ def search_hashtags(db: Session, query: str):
         .all()
     )
     return tweets
+
+# edit one tweet
+# route PATCH /tweets/{tweet_id}
+def update_tweet(db: Session, tweet_id: int, tweet_data: dict) -> Tweet:
+    """
+    :param tweet_id: the id of the tweet to update
+    :param tweet_data: dictionary with fields to update (e.g {'content': 'New content'}...)
+    """
+    tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+    # check if there is a tweet, to avoid trying to update a non-existent tweet
+    if tweet is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Tweet not found"
+        )
+    # iterates over each key-value pair and updates the corresponding attribute of the tweet
+    for key, value in tweet_data.items():
+        setattr(tweet, key, value)
+    # the changes are saved to the database
+    db.commit()
+    # updates the tweet instance with the latest data from the database
+    db.refresh(tweet)
+    return tweet
+
+# delete one tweet
+# route DELETE /tweets/{tweet_id}
+def delete_tweet(db: Session, tweet_id: int) -> bool:
+    """
+    :param tweet_id: the id of the tweet to delete
+    :return: true if the tweet was found and deleted, if not, False.
+    """
+    tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+    if tweet is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Tweet not found"
+        )
+    db.delete(tweet)
+    db.commit()
+    return {"message": "Tweet deleted successfully"}

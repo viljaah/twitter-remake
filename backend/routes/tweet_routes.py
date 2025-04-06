@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from config.db import get_db
 from validators.tweet_validate import TweetCreate, TweetUpdate
@@ -17,34 +17,24 @@ def post_tweet(tweet: TweetCreate, db: Session = Depends(get_db), current_user: 
     tweet_data = tweet.model_dump()
     # automatically add the current user id
     tweet_data["user_id"] = current_user.id
-    new_tweet = create_tweet(db, tweet_data)
-    return new_tweet
+    return create_tweet(db, tweet_data)
 
 @tweet_router.get("")
 def read_all_tweets(db: Session = Depends(get_db)):
-    tweets = get_all_tweets(db)
-    return tweets
+    return get_all_tweets(db)
 
 @tweet_router.get("/search")
 def search_for_tweets(query: str, db: Session = Depends(get_db)):
-    results = search_tweets(db, query)
-    return results
+    return search_tweets(db, query)
 
 @tweet_router.get("/hashtag/search")
 def search_for_hashtags(query: str, db: Session = Depends(get_db)):
-    results = search_hashtags(db, query)
-    return results
+    return search_hashtags(db, query)
 
 @tweet_router.patch("/{tweet_id}")
 def put_tweet(tweet_id: int, tweet: TweetUpdate, db: Session = Depends(get_db)):
-    updated_tweet = update_tweet(db, tweet_id, tweet.model_dump())
-    if not updated_tweet:
-        raise HTTPException(status_code=404, detail="Tweet not found")
-    return updated_tweet
+    return update_tweet(db, tweet_id, tweet.model_dump())
 
 @tweet_router.delete("/{tweet_id}")
 def remove_tweet(tweet_id: int, db: Session = Depends(get_db)):
-    success = delete_tweet(db, tweet_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Tweet not found")
-    return {"messsage": "Tweet deleted successfully"}
+    return delete_tweet(db, tweet_id)
