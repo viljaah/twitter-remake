@@ -10,9 +10,29 @@ const ProfilePage = () => {
   const { username } = useParams();
   // state to store user data
   const [userData, setUserData] = useState(null);
+  const [currentUserData, setCurrentUserData] = useState(null);
   const [userTweets, setUserTweets] = useState([]); // store the user's tweets # added later to get the users tweets
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
+
+
+  //fetch current user´s data
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/users/me');
+        if (!response.ok) {
+          const data = await response.json();
+          setCurrentUserData(data);
+        }
+      } catch (error) {
+        console.log('Error fetching current user:', error);
+      }
+    };
+    fetchCurrentUser();
+  }, []);
 
   // effect to fetch user data when component mounts or username changes
   // ask about hsi arrow function, why this arrow function?
@@ -70,6 +90,56 @@ const ProfilePage = () => {
     }
   }, [userData]);
 
+  // Check if current user is following this profile
+  useEffect(() => {
+    const checkFollowStatus = async () => {
+      if (userData?.id && currentUserData?.id) {
+        try {
+          const response = await fetch('/api/users/following');
+          if (response.ok) {
+            const followingUsers = await response.json();
+            const isCurrentlyFollowing = followingUsers.some(
+              (followedUser) => followedUser.id === userData.id
+            );
+            setIsFollowing(isCurrentlyFollowing);
+          }
+        } catch (error) {
+          console.error('Error checking follow status:', error);
+        }
+      }
+    };
+
+    checkFollowStatus();
+  }, [userData, currentUserData]);
+
+ // Handle follow/unfollow action
+ const handleFollowToggle = async () => {
+  if (!currentUserData) {
+    // Redirect to login or show login modal
+    return;
+  }
+
+  try {
+    const endpoint = isFollowing 
+      ? `/api/users/follow/${userData.id}` 
+      : `/api/users/follow/${userData.id}`;
+    
+    const method = isFollowing ? 'DELETE' : 'POST';
+    
+    const response = await fetch(endpoint, { method });
+    
+    if (response.ok) {
+      setIsFollowing(!isFollowing);
+      // Update followers count
+      setFollowersCount(prevCount => 
+        isFollowing ? prevCount - 1 : prevCount + 1
+      );
+    }
+  } catch (error) {
+    console.error('Error toggling follow:', error);
+  }
+};
+
   // show loading state
   if (loading) {
     return <div className={styles.loadingState}>Loading user profile...</div>;
@@ -79,6 +149,10 @@ const ProfilePage = () => {
   if (error) {
     return <div className={styles.errorState}>{error}</div>;
   }
+  
+   // Determine if this is the current user's own profile
+   const isOwnProfile = currentUserData?.username === username;
+
 
   // show user profile when data is laoded -> the jsx
   return (
@@ -92,7 +166,7 @@ const ProfilePage = () => {
           <h2 className={styles.headerName}>
             {userData?.display_name || userData?.username}
           </h2>
-          <span className={styles.postCount}> 0 posts</span>
+          <span className={styles.postCount}> {userTweets.length}</span>
         </div>
       </div>
 
@@ -115,7 +189,16 @@ const ProfilePage = () => {
 
           {/* Edit profile button */}
           <div className={styles.editProfileContainer}>
-            <button className={styles.editProfileButton}>Edit profile</button>
+            {isOwnProfile ? (
+              <button className={styles.editProfileButton}>Edit profile</button>
+            ) : (
+              <button 
+                className={`${styles.editProfileButton} ${isFollowing ? styles.unfollowButton : ''}`}
+                onClick={handleFollowToggle}
+              >
+                {isFollowing ? 'Unfollow' : 'Follow'}
+              </button>
+            )}
           </div>
 
           {/*profile details*/}
@@ -139,7 +222,7 @@ const ProfilePage = () => {
                 <strong>{userData.following}</strong> Following
               </button>
               <button className={styles.followBtn}>
-                <strong>{userData.followers}</strong> Followers
+                <strong>{followersCount}</strong> Followers
               </button>
             </div>
           </div>

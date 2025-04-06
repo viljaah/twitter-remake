@@ -1,5 +1,4 @@
-/* fix this shitty css */
-
+/* Search Container */
 .searchContainer {
   width: 100%;
   display: flex;
@@ -18,17 +17,15 @@
   padding: 10px 20px;
   font-size: 16px;
   outline: none;
-}
-
-/* had to udjust this because of the dark/dim/light mode */
-.searchContainer .searchInput {
   background: transparent !important;
+  color: #fff;
 }
 
 .searchInput:focus {
   border-color: #1d9bf0;
 }
 
+/* Filter Buttons */
 .filterButtons {
   display: flex;
   justify-content: space-around;
@@ -57,6 +54,7 @@
   border-bottom: 2px solid #1d9bf0;
 }
 
+/* Results Container */
 .resultsContainer {
   width: 100%;
   box-sizing: border-box;
@@ -65,7 +63,78 @@
 }
 
 .resultItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgb(192, 190, 190);
-  padding: 30px;
+  padding: 15px;
   color: #fff;
+}
+
+.resultItem:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* User Info Styling */
+.userInfo {
+  flex-grow: 1;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.userInfo p {
+  margin: 5px 0;
+}
+
+.userInfo p:first-child {
+  font-weight: bold;
+}
+
+.userInfo p:last-child {
+  color: #71767b;
+  font-size: 0.9rem;
+}
+
+/* Follow Button */
+.followButton {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.followButton.following {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.followButton:hover {
+  background-color: #f0f0f0;
+}
+
+.followButton.following:hover {
+  background-color: #333;
+}
+
+/* Tweet and Hashtag Results */
+.resultItem.tweetResult {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.resultItem.tweetResult p {
+  margin: 5px 0;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+.resultItem.hashtagResult {
+  color: #1d9bf0;
 }
