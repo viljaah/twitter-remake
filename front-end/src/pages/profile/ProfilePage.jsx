@@ -1,30 +1,31 @@
-import { useState, useEffect } from "react"; // react hooks for handling side effects and state
-import { useParams, Link } from "react-router-dom"; // react router hooks to access URL parameters (like username)
-import { FaArrowLeft } from "react-icons/fa6"; // back button
-import { IoCalendarOutline } from "react-icons/io5"; //for join data
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
+import { IoCalendarOutline } from "react-icons/io5";
 import styles from "./ProfilePage.module.css";
 import TweetItem from "./TweetItem";
 import FollowStats from "../../components/shared/followStats/FollowStats";
 import FollowersList from "../../components/shared/profileFollowerList/FollowerList";
 
-
 const ProfilePage = () => {
-  // Keep these existing state variables
   const { username } = useParams();
   const [userData, setUserData] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(null);
   const [userTweets, setUserTweets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState("posts"); // "posts", "followers", "following"
-  
-  // Add this if you need to know follow status in the profile component
+  const [activeTab, setActiveTab] = useState("posts");
   const [isFollowing, setIsFollowing] = useState(false);
 
-  // Keep your existing useEffect for getting current user data
+  // Add this function - it was missing!
+  const handleTabChange = (tab) => {
+    console.log(`Switching to tab: ${tab}`);
+    setActiveTab(tab);
+  };
+
   useEffect(() => {
     const authToken = localStorage.getItem('token');
-    const storedUserData = localStorage.getItem('userData'); 
+    const storedUserData = localStorage.getItem('user'); // Changed from 'userData' to 'user' to match your other code
     console.log("Current auth token:", authToken);
     if (storedUserData) {
       try {
@@ -37,7 +38,6 @@ const ProfilePage = () => {
     }
   }, []);
 
-  // Keep your existing useEffect for fetching user data
   useEffect(() => {
     console.log("Current username parameter:", username);
     
@@ -65,7 +65,6 @@ const ProfilePage = () => {
     fetchUserData();
   }, [username]);
 
-  // Keep your existing useEffect for fetching user tweets
   useEffect(() => {
     if (userData?.id) {
       const fetchUserTweets = async () => {
@@ -86,13 +85,19 @@ const ProfilePage = () => {
     }
   }, [userData]);
 
-  // Add this callback for the FollowStats component
   const handleFollowStatusChange = (status) => {
     setIsFollowing(status);
   };
 
   // Determine if this is the current user's own profile
-  const isOwnProfile = currentUserData?.username === username;
+  // Note: We're using localStorage.getItem('user') directly as a backup
+  const storedUser = localStorage.getItem('user');
+  const parsedStoredUser = storedUser ? JSON.parse(storedUser) : null;
+  const isOwnProfile = (currentUserData?.username === username) || 
+                      (parsedStoredUser?.username === username);
+
+  console.log("Is own profile:", isOwnProfile);
+  console.log("Current active tab:", activeTab);
 
   if (loading) {
     return <div className={styles.loadingState}>Loading user profile...</div>;
