@@ -59,14 +59,20 @@ function App() {
  * @param {string} token - JWT or authentication token from the backend
  */
   const handleLogin = (userData, token) => {
+    try{
     // Store authentication token to maintain session across page reloads
     // We use JSON.stringify since localStorage only stores strings
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
-  
+    setAuthUser(userData);
+     // After successful login
+     console.log("Login successful, storing token:", token);
+    } catch (error) {
+      console.error("login failed:", error);
     // Update application state to reflect logged-in status
    // This triggers re-renders of components that depend on auth state
-    setAuthUser(userData);
+    
+    }
   };
 
 

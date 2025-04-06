@@ -139,3 +139,26 @@ def unfollow_user(current_user_id: int, user_to_unfollow_id: int, db: Session):
         "message": f"You have unfollowed {user_to_unfollow.username}"
     }
 
+
+# In controllers/following_controller.py
+def get_followers_count(user_id: int, db: Session):
+    """
+    Count the number of followers for a specific user
+    
+    :param user_id: ID of the user whose followers to count
+    :param db: SQLAlchemy database session
+    :return: Count of followers
+    """
+    count = db.query(Follow).filter(Follow.following_id == user_id).count()
+    return {"count": count}
+
+def get_following_count(user_id: int, db: Session):
+    """
+    Count the number of users a specific user is following
+    
+    :param user_id: ID of the user whose following to count
+    :param db: SQLAlchemy database session
+    :return: Count of following
+    """
+    count = db.query(Follow).filter(Follow.follower_id == user_id).count()
+    return {"count": count}
