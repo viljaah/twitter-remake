@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosMore } from "react-icons/io";
 import { GoHeart } from "react-icons/go";
 import styles from "./TweetItem.module.css";
@@ -9,6 +9,26 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
   const [editContent, setEditContent] = useState(tweet.content);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isOwnTweet, setIsOwnTweet] = useState(false);
+
+  //check if the current user is the owner of this tweet
+  useEffect(()=> {
+    const checkOwnership = () => {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) return false;
+
+      try {
+        const currentUser = JSON.parse(storedUser);
+        // comapring the current user's id with the tweet's user_id
+        // The tweet object should have a user_id property that identifies the creator
+        setIsOwnTweet(currentUser.id === tweet.user_id);
+      } catch (error) {
+        console.error("Could not parse user data", error);
+        setIsOwnTweet(false);
+      }
+    };
+    checkOwnership();
+  }, [tweet]);
 
   const handleMenuToggle = () => {
     setMenuOpen((prev) => !prev);
@@ -24,9 +44,17 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
     if (!window.confirm("Are you sure you want to delete this tweet?")) return;
     setLoading(true);
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Authentication required");
+      }
       const response = await fetch(`http://localhost:8000/api/tweets/${tweet.id}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       });
+
       if (!response.ok) {
         throw new Error("Failed to delete tweet");
       }
@@ -48,13 +76,20 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
     }
     setLoading(true);
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
       const response = await fetch(`http://localhost:8000/api/tweets/${tweet.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({ content: editContent }),
       });
+
       if (!response.ok) {
         throw new Error("Failed to update tweet");
       }
@@ -95,21 +130,26 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
             @{tweet.handle || "anonymous"}
           </span>
         </div>
-        <button onClick={handleMenuToggle} className={styles.moreButton}>
-          <IoIosMore className={styles.moreIcon} />
-        </button>
-        {menuOpen && (
-          <div className={styles.dropdownMenu}>
-            <button className={styles.dropdownItem} onClick={handleEdit}>
-              Edit
+
+           {/* Only show "More" button if it's the user's own tweet */}
+          {isOwnTweet && (
+            <button onClick={handleMenuToggle} className={styles.moreButton}>
+              <IoIosMore className={styles.moreIcon} />
             </button>
-            <button className={styles.dropdownItem} onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        )}
-      </div>
-      <div className={styles.tweetContent}>
+          )}
+
+          {menuOpen && isOwnTweet && (
+              <div className={styles.dropdownMenu}>
+                 <button className={styles.dropdownItem} onClick={handleEdit}>
+                    Edit
+                  </button>
+                  <button className={styles.dropdownItem} onClick={handleDelete}>
+                   Delete
+                  </button>
+              </div>
+            )}
+          </div> 
+          <div className={styles.tweetContent}>
         {editMode ? (
           <div className={styles.editContainer}>
             <textarea
@@ -142,8 +182,29 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
       <div className={styles.tweetFooter}>
         <GoHeart className={styles.heartIcon} />
       </div>
-    </div>
+      </div>
+
+
+
+     
+      
+  
   );
 };
 
 export default TweetItem;
+
+ {/*<button onClick={handleMenuToggle} className={styles.moreButton}>
+          <IoIosMore className={styles.moreIcon} />
+        </button>
+        {menuOpen && (
+          <div className={styles.dropdownMenu}>
+            <button className={styles.dropdownItem} onClick={handleEdit}>
+              Edit
+            </button>
+            <button className={styles.dropdownItem} onClick={handleDelete}>
+              Delete
+            </button>
+          </div>
+        )}
+        </div>*/}
