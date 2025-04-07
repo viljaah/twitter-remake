@@ -27,33 +27,51 @@ const SignUpPage = ({ onSignup }) => {
     setError(null);
     
     try {
-      // If display_name is empty, use username as display name
+      // Log the data for debugging
+      console.log("About to submit:", formData);
+      
+      // Prepare the data
       const submitData = { ...formData };
       if (!submitData.display_name) {
         submitData.display_name = submitData.username;
       }
       
-      // Fetch registration
-      const response = await fetch('http://localhost:8000/api/users/register', {
+      // Make a simpler fetch with better error handling
+      console.log("Sending data to:", "http://localhost:8000/api/users/register");
+      
+      const response = await fetch("http://localhost:8000/api/users/register", {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitData)
+      }).catch(error => {
+        console.error("Network-level fetch error:", error);
+        throw new Error("Network error - is the server running?");
       });
       
-      // Check if the response is ok (status in the range 200-299)
+      console.log("Response received:", response.status);
+      
+      // Handle the response
       if (!response.ok) {
-        // Try to parse error message from response
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to create account');
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        
+        let errorMessage = "Failed to create account";
+        try {
+          const errorJson = JSON.parse(errorText);
+          errorMessage = errorJson.detail || errorMessage;
+        } catch (e) {
+          // If it's not JSON, use the error text
+          errorMessage = errorText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
       }
       
-      // Registration successful
+      // Success path
       const userData = await response.json();
+      console.log("Success response:", userData);
       alert('Account created successfully! Please login.');
-      navigate('/login'); // Redirect to login page
-      
+      navigate('/login');
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.message || 'Failed to create account. Please try again.');

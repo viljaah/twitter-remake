@@ -13,10 +13,10 @@ app = FastAPI()
 # These settings help your React app communicate with your backend without restrictions. In a production environment, you might want to be more specific about which methods and headers are allowed for security.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Your React app's URL
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["*"], #allow_methods=["*"] tells your backend which HTTP methods (GET, POST, PUT, etc.) are allowed from cross-origin requests. The asterisk * means "all methods are allowed."
-    allow_headers=["*"], # allow_headers=["*"] specifies which HTTP headers can be used in requests. Again, * means "all headers are allowed."
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 # Include the router - this is like app.use("/api/users", userRoutes) in Express
