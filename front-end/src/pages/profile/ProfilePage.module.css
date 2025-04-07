@@ -3,6 +3,7 @@
   max-width: 600px;
   border: 1px solid var(--border-color);
   margin-left: 300px;
+  z-index: -1;
 }
 
 /* styling for the header section*/
