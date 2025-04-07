@@ -21,7 +21,59 @@ const SignUpPage = ({ onSignup }) => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   
-  const handleSubmit = async (e) => {
+  // In SignUpPage.jsx, update the handleSubmit function:
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsPending(true);
+  setError(null);
+  
+  try {
+    // Prepare the data
+    const submitData = { ...formData };
+    if (!submitData.display_name) {
+      submitData.display_name = submitData.username;
+    }
+    
+    const response = await fetch("http://localhost:8000/api/users/register", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(submitData)
+    });
+    
+    // Handle non-OK responses
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      
+      // Handle validation errors from Pydantic
+      if (errorData && errorData.detail) {
+        if (Array.isArray(errorData.detail)) {
+          // This is a Pydantic validation error array
+          const validationErrors = errorData.detail.map(err => {
+            return `${err.loc.slice(1).join('.')}: ${err.msg}`;
+          }).join('; ');
+          throw new Error(validationErrors);
+        } else {
+          // This is a simple error message
+          throw new Error(errorData.detail);
+        }
+      }
+      
+      throw new Error('Failed to create account. Please try again.');
+    }
+    
+    // Success path
+    const userData = await response.json();
+    alert('Account created successfully! Please login.');
+    navigate('/login');
+  } catch (err) {
+    console.error('Registration error:', err);
+    setError(err.message || 'Failed to create account. Please try again.');
+  } finally {
+    setIsPending(false);
+  }
+};
+  /*const handleSubmit = async (e) => {
     e.preventDefault();
     setIsPending(true);
     setError(null);
@@ -78,7 +130,7 @@ const SignUpPage = ({ onSignup }) => {
     } finally {
       setIsPending(false);
     }
-  };
+  };*/
   
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
