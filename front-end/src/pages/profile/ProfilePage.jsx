@@ -17,7 +17,6 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("posts");
   const [isFollowing, setIsFollowing] = useState(false);
 
-  // Add this function - it was missing!
   const handleTabChange = (tab) => {
     console.log(`Switching to tab: ${tab}`);
     setActiveTab(tab);
@@ -25,7 +24,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const authToken = localStorage.getItem('token');
-    const storedUserData = localStorage.getItem('user'); // Changed from 'userData' to 'user' to match your other code
+    const storedUserData = localStorage.getItem('user');
     console.log("Current auth token:", authToken);
     if (storedUserData) {
       try {

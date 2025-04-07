@@ -1,5 +1,5 @@
 .mainContent {
-  flex: 1; /*doe sthis actually do naything?*/
+  flex: 1;
   max-width: 600px;
   border: 1px solid var(--border-color);
   margin-left: 300px;
@@ -16,7 +16,7 @@
 
 .backButton {
   color: #fff;
-  margin-right: 20px; /* opisiton how far name and count posts will be from teh backButton*/
+  margin-right: 20px;
   top: 10px;
   position: relative;
 }
@@ -27,7 +27,6 @@
 }
 
 .headerName {
-  /* still stylin for the header section with the back button*/
   font-weight: bold;
   font-size: 1.2rem;
   margin: 0;
@@ -47,7 +46,7 @@
 
 /* 3. Profile Information Section */
 .profileDetails {
-  margin-top: 80px; /* Increase from 60px to 80px or more */
+  margin-top: 80px;
   padding-bottom: 15px;
 }
 
@@ -58,7 +57,7 @@
 
 .profilePictureContainer {
   position: absolute;
-  top: -60px; /* Adjust based on your design */
+  top: -60px;
   left: 15px;
   border: 4px solid var(--profile-border);
   border-radius: 50%;
@@ -88,7 +87,7 @@
 }
 
 .nameContainer {
-  margin-top: 60px; /* Space for the profile picture */
+  margin-top: 60px;
 }
 
 .displayName {
@@ -120,7 +119,6 @@
   margin: 15px 0;
 }
 
-/* changed the follow buttons a bit */
 .followBtn {
   background: none;
   border: none;
@@ -133,7 +131,7 @@
   color: #1da1f2;
 }
 
-/* 4. Navigation Tabs (idk if i need this yet*/
+/* 4. Navigation Tabs */
 .navTabs {
   display: flex;
   border-bottom: 1px solid var(--border-color);

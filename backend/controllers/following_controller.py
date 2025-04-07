@@ -14,7 +14,7 @@ def get_user_following(user_id: int, db: Session):
     :return: List of users the specified user is following with follow status
     :raises HTTPException: If user not found
     """
-    # Check if user exists
+    # check if the user exists
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(
@@ -22,14 +22,14 @@ def get_user_following(user_id: int, db: Session):
             detail=f"User with ID {user_id} not found"
         )
     
-    # Get all users this user follows
+    # get all users the current user follows
     following = db.query(User).join(
         Follow, Follow.following_id == User.id
     ).filter(
         Follow.follower_id == user_id
     ).all()
     
-    # Format the response
+    # format the response
     following_list = []
     for followed_user in following:
         following_list.append({
@@ -37,7 +37,7 @@ def get_user_following(user_id: int, db: Session):
             "username": followed_user.username,
             "display_name": followed_user.display_name,
             "bio": followed_user.bio,
-            "is_following": True  # Always true since these are users being followed
+            "is_following": True  # always true since these are users being followed
         })
     
     return {
@@ -45,7 +45,7 @@ def get_user_following(user_id: int, db: Session):
         "following": following_list
     }
 
-# NEW FUNCTION: Get users following a specific user
+# Get users following a specific user
 def get_user_followers(user_id: int, db: Session):
     """
     Get all followers of a specific user
@@ -74,7 +74,7 @@ def get_user_followers(user_id: int, db: Session):
     followers_list = []
     
     for follower in followers:
-        # Check if user follows this follower back
+        # Check if user follows this user back
         is_following = db.query(Follow).filter(
             Follow.follower_id == user_id,
             Follow.following_id == follower.id
@@ -187,8 +187,6 @@ def unfollow_user(current_user_id: int, user_to_unfollow_id: int, db: Session):
         "message": f"You have unfollowed {user_to_unfollow.username}"
     }
 
-
-# In controllers/following_controller.py
 def get_followers_count(user_id: int, db: Session):
     """
     Count the number of followers for a specific user

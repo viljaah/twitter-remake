@@ -1,9 +1,8 @@
-// import React from 'react';
-import { useState } from 'react'
+import { useState } from 'react';
 import styles from "./SideBar.module.css";
 import { NavLink } from "react-router-dom";
-import PostSidebar from "./PostSidebar";
-import XSvg from "../svgs/X";
+import PostSidebar from "../postContainers/PostSidebar";
+import XSvg from "../../svgs/X";
 import { GoHome } from "react-icons/go";
 import { GoSearch } from "react-icons/go";
 import { GoBell } from "react-icons/go";
@@ -18,7 +17,7 @@ import { IoIosMore } from "react-icons/io";
 
 function SideBar({ 
   
-  currentUser = { username: 'username', profilePicture: 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg' }, onLogout }) {
+  currentUser = { username: 'username' }, onLogout }) {
   
   const [isPostSidebarOpen, setIsPostSidebarOpen] = useState(false);
 
@@ -101,12 +100,9 @@ function SideBar({
         <li>
           <button className={styles.postBtn} onClick={handleOpenPostModal}>Post</button>
         </li>
-        {/* mulig denne må endres litt i og med at vi skal ha logout her, kanskje det må være en link..? */}
         <li className={styles.userSection}>
           <button className={styles.userButton} onClick={onLogout}>
             <img
-              // src={currentUser.profilePicture}
-              // remove the one under eventually when pathing is set up
               src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"
               className={styles.profileImg}
             />

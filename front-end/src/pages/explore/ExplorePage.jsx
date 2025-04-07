@@ -1,6 +1,6 @@
 // ExplorePage.jsx
 import React, { useState } from 'react';
-import SearchBar from '../../components/shared/SearchBar';
+import SearchBar from '../../components/shared/searchBar/SearchBar';
 import styles from './Explore.module.css';
 
 function ExplorePage() {

@@ -15,8 +15,5 @@ class User(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     
- # Relationship to tweets
+    # relationship to tweets
     tweets = relationship("Tweet", back_populates="user", cascade="all, delete-orphan")
-    
-    ##def __repr__(self):
-        ##return f"<User {self.username}>"
