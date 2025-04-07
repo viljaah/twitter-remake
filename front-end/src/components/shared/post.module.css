@@ -16,6 +16,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 }
 
 .textArea {
@@ -92,7 +93,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 900;
+  z-index: 10;
 }
 
 .postSidebarContent {

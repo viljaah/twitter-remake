@@ -1,16 +1,18 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styles from './Post.module.css';
 import PostHome from './PostHome';
 
-function PostSidebar({ onClose }) {
-  return (
+const PostSidebar = ({ onClose }) => {
+  return ReactDOM.createPortal(
     <div className={styles.overlay}>
       <div className={styles.postSidebarContent}>
-        <PostHome />
+      <PostHome />
         <button onClick={onClose} className={styles.closeBtn}>X</button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
-}
+};
 
 export default PostSidebar;
