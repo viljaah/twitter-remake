@@ -183,28 +183,7 @@ const TweetItem = ({ tweet, onTweetUpdated, onTweetDeleted }) => {
         <GoHeart className={styles.heartIcon} />
       </div>
       </div>
-
-
-
-     
-      
-  
   );
 };
 
 export default TweetItem;
-
- {/*<button onClick={handleMenuToggle} className={styles.moreButton}>
-          <IoIosMore className={styles.moreIcon} />
-        </button>
-        {menuOpen && (
-          <div className={styles.dropdownMenu}>
-            <button className={styles.dropdownItem} onClick={handleEdit}>
-              Edit
-            </button>
-            <button className={styles.dropdownItem} onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        )}
-        </div>*/}

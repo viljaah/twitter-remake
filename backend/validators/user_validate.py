@@ -6,7 +6,6 @@ class UserCreate(BaseModel):
     password: str
     display_name: str = None
     bio: str = None
-    # profile_picture_url: str = None
 
     @field_validator('email')
     @classmethod
@@ -58,7 +57,6 @@ class UserResponse(BaseModel):
     email: str
     display_name: str = None
     bio: str = None
-    # profile_picture_url: str = None
 
     class Config:  # Properly indented to be nested inside UserResponse
         orm_mode = True  # This allows conversion from SQLAlchemy model

@@ -42,7 +42,6 @@
   align-items: center;
 }
 
-/* hover effect for all links, men dårlig hover effect, vil ha det annerledes */
 .sidebar li .linkText:hover {
   color: #1da1f2;
 }

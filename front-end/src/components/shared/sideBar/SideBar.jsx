@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from "./SideBar.module.css";
 import { NavLink } from "react-router-dom";
-import PostSidebar from "./PostSidebar";
-import XSvg from "../svgs/X";
+import PostSidebar from "../postContainers/PostSidebar";
+import XSvg from "../../svgs/X";
 import { GoHome } from "react-icons/go";
 import { GoSearch } from "react-icons/go";
 import { GoBell } from "react-icons/go";

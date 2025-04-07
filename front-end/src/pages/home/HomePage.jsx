@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./HomePage.module.css";
-import PostHome from "../../components/shared/PostHome";
-import SearchBar from "../../components/shared/SearchBar";
+import PostHome from "../../components/shared/postContainers/PostHome";
+import SearchBar from "../../components/shared/searchBar/SearchBar";
 import { GoHeart } from "react-icons/go";
 
 function HomePage() {
