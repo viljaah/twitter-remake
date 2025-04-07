@@ -289,7 +289,7 @@ function App() {
             <Route path="/login" element={!authUser ? (<LoginPage onLogin={handleLogin} />) : (<Navigate to="/" />) } />
             <Route path="/signup" element={!authUser ? (<SignUpPage onSignup={handleLogin} />) : (<Navigate to="/" />) } />
             <Route path="/profile/:username" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
-            <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
+            <Route path="/settings" element={authUser ? <SettingsPage onLogout={handleLogout}/> : <Navigate to="/login" />} />
             <Route path="/explore" element={authUser ? <ExplorePage /> : <Navigate to="/login" />} />
           </Routes>
         {authUser && !hideRightSidebar && <ListUsers />}

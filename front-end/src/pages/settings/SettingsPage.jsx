@@ -1,15 +1,17 @@
 import React, {useState, useContext} from "react";
 import { FaArrowLeft } from "react-icons/fa6"; // back button
 import styles from "./Settings.module.css";
+import {useNavigate} from "react-router-dom";
 import { DarkModeContext, THEME_MODES} from "../../contexts/DarkMode";
 
-const SettingsPage = () => {
+const SettingsPage = ({onLogout}) => {
       const [activePage, setActivePage] = useState("main"); // main for the setting where buttons are displayed (i think), this is by default
       const { themeMode, setThemeMode } = useContext(DarkModeContext);
       const [deleteError, setDeleteError] = useState("");
       const [isDeleting, setIsDeleting] = useState(false);
+      const navigate = useNavigate();
 
-    // function that will handle account deletion
+    /* function that will handle account deletion
     const handleDeleteAccount = async () => {
       const confirmed = window.confirm(
         "Are you sure you want to delete your account? This action cannot be undone."
@@ -60,6 +62,66 @@ const SettingsPage = () => {
         
         // Force direct redirection to login
         window.location.href = "/login";
+        
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        setDeleteError(error.message);
+        setIsDeleting(false);
+      }
+    };*/
+     // function that will handle account deletion
+     const handleDeleteAccount = async () => {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete your account? This action cannot be undone."
+      );
+
+      if (!confirmed) return;
+      
+      setIsDeleting(true);
+      setDeleteError("");
+
+      try {
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user");
+
+        if (!token || !userData) {
+          throw new Error("Authentication required");
+        }
+
+        const user = JSON.parse(userData);
+
+        // api call service
+        const response = await fetch(`http://localhost:8000/api/users/${user.id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          // Try to get error details if possible
+          let errorMessage = "Failed to delete account";
+          try {
+            const data = await response.json();
+            errorMessage = data.detail || errorMessage;
+          } catch (e) {
+            // If parsing JSON fails, use response status
+            errorMessage = `Server error: ${response.status} ${response.statusText}`;
+          }
+          throw new Error(errorMessage);
+        }
+
+        // Clear user data from local storage
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        
+        // Show success message
+        alert("Your account has been deleted successfully");
+        
+        // Update parent component's auth state 
+        // This will trigger the route guards and redirect to login
+        onLogout();
         
       } catch (error) {
         console.error("Error deleting account:", error);
