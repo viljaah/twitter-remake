@@ -11,7 +11,6 @@ from middleware.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 def create_user(user, db: Session):
     #Validates if a username already exists
     db_user = db.query(User).filter(User.username == user.username).first()
-    #this is error handler
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
     
@@ -20,23 +19,21 @@ def create_user(user, db: Session):
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
-    # Hashes the password using bcrypt (good security practice)
+    # hashes the password using bcrypt (good security practice)
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
 
-    # Creates a new user with the provided data
+    # creates a new user with the provided data
     new_user = User(
         username = user.username,
         email = user.email,
         password_hash = hashed_password.decode('utf-8'),
         display_name = user.display_name,
         bio = user.bio,
-        # profile_picture_url = user.profile_picture_url
     )
     # Adds the user to the database and commits the transaction
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    # Returns the newly created user
     return new_user
 
 
@@ -198,9 +195,9 @@ def search_user_by_username(username: str, db: Session):
             "bio": user.bio,
             "created_at": user.created_at,
             "updated_at": user.updated_at,
-            "following": 0,  # You can implement this later
-            "followers": 0,  # You can implement this later
-            "joinDate": user.created_at.strftime("%B %Y")  # Format: "April 2023"
+            "following": 0, 
+            "followers": 0,
+            "joinDate": user.created_at.strftime("%B %Y")  # Format: "April 2025"
         }
     }
 

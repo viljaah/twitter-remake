@@ -22,13 +22,12 @@ userRouter = APIRouter(
     tags=["users"], #this is for API documentation grouping
 )
 # this is the public route, so no auth is needed
-# THIS IS IMPLEMENTED (MÅ PUSSES OPP PÅ FROTNEND)
 @userRouter.post("/register", response_model=UserResponse, status_code=201)
-async def register_user(user: UserCreate, db: Session = Depends(get_db)): # db: session depends getdb, it tells fastapi to call my get_db() function to create db session 
+# db: session depends getdb, it tells fastapi to call my get_db() function to create db session 
+async def register_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(user, db)
 
 # login is using the OAuth2PasswordRequestForm
-# THIS IS IMPLEMENTED (MÅ PUSSES OPP PÅ FROTNEND)
 @userRouter.post("/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # creating here a UserLogin-like object
@@ -36,9 +35,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
         username = form_data.username,
         password = form_data.password
     )
-    return login_user(user_credentials, db) # the message being dipalyed
+    return login_user(user_credentials, db) # the message being dispalyed
 
-# THIS IS IMPLEMENTED (MÅ PUSSES OPP PÅ FROTNEND)
+# log out user
 @userRouter.post("/logout")
 async def handle_logout():
     return logout_user()
@@ -52,7 +51,6 @@ async def get_users(db: Session = Depends(get_db)):
 # No need to specify a user ID in the URL
 # Always returns the profile of whoever is logged in
 #Useful for "My Profile" features
-# need to implement htis
 @userRouter.get("/me")
 async def get_current_user_info(current_user = Depends(get_current_user)):
     """Get the currently authenticated user's profile"""
@@ -64,21 +62,19 @@ async def get_current_user_info(current_user = Depends(get_current_user)):
         "bio": current_user.bio
     }
 
-# In FastAPI, route order matters. When you have a route with a path parameter like /{user_id} and another specific route like /search, the more specific route (/search) needs to be defined first.
-# THIS IS IMPLEMENTED (MÅ PUSSES OPP PÅ FROTNEND)
+# In FastAPI, route order matters. When you have a route with a path parameter like /{user_id} 
+# and another specific route like /search, the more specific route (/search) needs to be defined first
 @userRouter.get("/search")
 async def search_users(q: str, db: Session = Depends(get_db)):
     return search_user_by_username(q, db)
 
-# THIS IS IMPLEMENTED 
+# retrieve all tweets that belongs to this user
 @userRouter.get("/{user_id}/tweets")
 async def get_user_tweets(user_id: int, db: Session = Depends(get_db)):
     return get_tweets_by_user(user_id, db)
 
 
-# Protected delete route - can only delete your own account
-# implement this
-# THIS IS IMPLEMENTED (MÅ PUSSES OPP PÅ FROTNEND)
+# protected delete route - can only delete your own account
 @userRouter.delete("/{user_id}")
 async def delete_user(
     user_id: int, 
@@ -87,7 +83,7 @@ async def delete_user(
 ):
     return delete_user_by_id(user_id, db, current_user)
 
-# Get users the current user is following
+# get users the current user is following
 @userRouter.get("/following")
 async def get_my_following(
     db: Session = Depends(get_db),
@@ -96,7 +92,7 @@ async def get_my_following(
     """Get list of users the current user is following"""
     return get_user_following(current_user.id, db)
 
-# NEW ENDPOINT: Get followers of the current user
+# get followers of the current user
 @userRouter.get("/followers")
 async def get_my_followers(
     db: Session = Depends(get_db),

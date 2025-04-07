@@ -10,7 +10,8 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 #For your frontend to be able to make requests to your backend, you need to enable CORS (Cross-Origin Resource Sharing)
-# These settings help your React app communicate with your backend without restrictions. In a production environment, you might want to be more specific about which methods and headers are allowed for security.
+# These settings help your React app communicate with your backend without restrictions. In a production environment, 
+# you might want to be more specific about which methods and headers are allowed for security
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],

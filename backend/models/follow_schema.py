@@ -1,5 +1,3 @@
-# Create a new file called follow_schema.py in your models directory
-
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, UniqueConstraint
 from sqlalchemy.sql import func
 from config.db import Base
@@ -12,7 +10,7 @@ class Follow(Base):
     following_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
-    # Create a unique constraint to prevent duplicate follows
+    # create a unique constraint to prevent duplicate follows
     __table_args__ = (
         UniqueConstraint('follower_id', 'following_id', name='unique_follow'),
     )
