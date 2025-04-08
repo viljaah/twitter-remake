@@ -107,24 +107,6 @@
   gap: 8px;
 }
 
-.saveBtn,
-.cancelBtn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.saveBtn {
-  background-color: #1d9bf0;
-  color: #fff;
-}
-
-.cancelBtn {
-  background-color: #ccc;
-  color: #000;
-}
-
 .error {
   color: red;
   font-size: 0.9rem;

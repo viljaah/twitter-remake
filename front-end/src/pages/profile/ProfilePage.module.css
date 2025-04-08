@@ -76,16 +76,6 @@
   padding-top: 10px;
 }
 
-.editProfileButton {
-  border: 1px solid rgb(192, 190, 190);
-  background-color: white;
-  color: black;
-  font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  cursor: pointer;
-}
-
 .nameContainer {
   margin-top: 60px;
 }

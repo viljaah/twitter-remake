@@ -46,20 +46,6 @@
   color: #1da1f2;
 }
 
-.postBtn {
-  background-color: var(--post-button);
-  border: none;
-  border-radius: 9999px;
-  padding: 6% 40%;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.postBtn:hover {
-  background-color: rgb(192, 190, 190);
-}
-
 .userSection {
   padding-top: 20px;
 }

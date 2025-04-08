@@ -14,6 +14,7 @@ import { GoVerified } from "react-icons/go";
 import { BsPerson } from "react-icons/bs";
 import { GoGear } from "react-icons/go";
 import { IoIosMore } from "react-icons/io";
+import Button from "../../ui/Button.jsx";
 
 function SideBar({ 
   
@@ -98,7 +99,15 @@ function SideBar({
           </NavLink>
         </li>
         <li>
-          <button className={styles.postBtn} onClick={handleOpenPostModal}>Post</button>
+          <Button
+              variant="primary"
+              size="lg"
+              onClick={handleOpenPostModal}
+              fullWidth={true}
+              className={styles.postBtnPosition}
+            >
+             Post
+          </Button>
         </li>
         <li className={styles.userSection}>
           <button className={styles.userButton} onClick={onLogout}>
