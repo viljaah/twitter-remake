@@ -1,0 +1,12 @@
+.tweetList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .emptyState {
+    padding: 30px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 16px;
+  }

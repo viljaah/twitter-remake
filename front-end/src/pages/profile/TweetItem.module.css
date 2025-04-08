@@ -22,7 +22,21 @@
   font-weight: 600;
   margin-right: 6px;
 }
+/* added htis*/
+.userLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
 
+.userInfo {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10px;
+}
+/**/
 .handle {
   color: #657786;
   font-size: 0.9rem;

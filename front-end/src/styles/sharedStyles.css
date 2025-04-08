@@ -1,0 +1,130 @@
+/* Common button styles */
+.btn {
+    border-radius: 9999px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .btn-primary {
+    background-color: var(--post-button);
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: rgb(192, 190, 190);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .btn-danger {
+    background-color: transparent;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+  }
+  
+  .btn-danger:hover {
+    background-color: var(--danger-hover);
+  }
+  
+  /* Common avatar styles */
+  .avatar {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .avatar-sm {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatar-md {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .avatar-lg {
+    width: 120px;
+    height: 120px;
+  }
+  
+  /* Common container styles */
+  .container {
+    width: 600px;
+    border: 1px solid var(--border-color);
+  }
+  
+  .card {
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px;
+  }
+  
+  /* Common form element styles */
+  .input-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: #71767b;
+    font-size: 1.2rem;
+  }
+  
+  .input, .textarea {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: transparent;
+  }
+  
+  .input:focus, .textarea:focus {
+    outline: none;
+    border-color: #1da1f2;
+  }
+  
+  .textarea {
+    resize: none;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: var(--danger-color);
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* Loading state */
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--text-secondary);
+  }
+  
+  /* Responsive container for pages */
+  .page-container {
+    margin-left: 300px;
+    width: 600px;
+  }
+  
+  @media (max-width: 1250px) {
+    .page-container {
+      margin-left: 170px;
+    }
+  }
