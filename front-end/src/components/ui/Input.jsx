@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/sharedStyles.css';
+import "../../styles/sharedStyles.css";
 
 /**
  * Reusable Input component with optional icon
