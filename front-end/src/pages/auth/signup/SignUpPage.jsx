@@ -59,7 +59,7 @@ const SignUpPage = () => {
         <div className={styles.formContainer}>
           <form onSubmit={handleSubmit} className={styles.form}>
             <h1 className={styles.heading}>Join today</h1>
-            <label className={styles.inputLabel}>
+            <label className={styles.inputContainer}>
               <MdOutlineMail className={styles.inputIcon} />
               <input
                 type="email"
@@ -71,7 +71,7 @@ const SignUpPage = () => {
                 required
               />
             </label>
-            <label className={styles.inputLabel}>
+            <label className={styles.inputContainer}>
               <FaUser className={styles.inputIcon} />
               <input
                 type="text"
@@ -83,7 +83,7 @@ const SignUpPage = () => {
                 required
               />
             </label>
-            <label className={styles.inputLabel}>
+            <label className={styles.inputContainer}>
               <FaUser className={styles.inputIcon} />
               <input
                 type="text"
@@ -94,7 +94,7 @@ const SignUpPage = () => {
                 value={formData.display_name}
               />
             </label>
-            <label className={styles.inputLabel}>
+            <label className={styles.inputContainer}>
               <MdPassword className={styles.inputIcon} />
               <input
                 type="password"
@@ -106,7 +106,7 @@ const SignUpPage = () => {
                 required
               />
             </label>
-            <label className={styles.inputLabel}>
+            <label className={styles.inputContainer}>
               <FaUser className={styles.inputIcon} />
               <textarea
                 className={styles.input}
@@ -122,7 +122,7 @@ const SignUpPage = () => {
             </button>
             {error && <p className={styles.errorMessage}>{error}</p>}
           </form>
-          <div className={styles.switchpContainer}>
+          <div className={styles.switchSection}>
             <p>Already have an account?</p>
             <Link to="/login">
               <button className={styles.switchButton}>Sign in</button>
