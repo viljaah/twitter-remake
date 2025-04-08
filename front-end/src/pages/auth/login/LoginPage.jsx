@@ -7,6 +7,7 @@ import styles from "../../../styles/components/authPage.module.css";
 import { loginUser } from "../../../service/authService";
 import { useAuth } from "../../../contexts/AuthContext";
 
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();

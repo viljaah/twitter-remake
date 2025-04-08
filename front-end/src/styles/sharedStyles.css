@@ -69,12 +69,12 @@
   }
   
   /* Common form element styles */
-  .input-container {
+  .inputContainer {
     position: relative;
     margin-bottom: 1.5rem;
   }
   
-  .input-icon {
+  .inputIcon {
     position: absolute;
     top: 50%;
     left: 0.75rem;
@@ -91,7 +91,9 @@
     font-size: 1rem;
     background-color: transparent;
   }
-  
+  .input::placeholder {
+    color: #71767b;
+  }
   .input:focus, .textarea:focus {
     outline: none;
     border-color: #1da1f2;
