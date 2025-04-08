@@ -1,0 +1,165 @@
+/* Shared styles for Login and Signup Pages */
+.pageWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .logoContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    max-width: 40%;
+    height: auto;
+    fill: var(--text-primary);
+  }
+  
+  .formContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  
+  .inputContainer {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  .inputIcon {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: #71767b;
+    font-size: 1.2rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: transparent;
+  }
+  
+  .input::placeholder {
+    color: #71767b;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #1da1f2;
+  }
+  
+  .submitButton {
+    background-color: #1da1f2;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #1484ba;
+  }
+  
+  .submitButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .errorMessage {
+    color: #f4212e;
+    margin-bottom: 1rem;
+  }
+  
+  .switchSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .switchButton {
+    background: none;
+    color: #1da1f2;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0;
+  }
+  
+  .switchButton:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 900px) {
+    .pageWrapper {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .container {
+      flex-direction: column;
+    }
+    
+    .logo {
+      width: 40%;
+      max-width: 200px;
+    }
+  }
+  
+  /* Optional: Textarea styles for signup page */
+  .textarea {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: none;
+    background: transparent;
+  }
+  
+  .textarea::placeholder {
+    color: #71767b;
+  }
+  
+  .textarea:focus {
+    outline: none;
+    border-color: #1da1f2;
+  }

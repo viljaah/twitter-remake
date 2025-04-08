@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import XSvg from "../../../components/svgs/X";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
-import styles from './LoginPage.module.css';
+import styles from "../../../styles/components/authPage.module.css";
 import { loginUser } from "../../../service/authService";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -95,7 +95,7 @@ const LoginPage = () => {
             
             <button 
               type="submit" 
-              className={styles.loginButton}
+              className={styles.submitButton}
               disabled={loading}
             >
               {loading ? "Logging in..." : "Log in"}
@@ -103,10 +103,10 @@ const LoginPage = () => {
             
             {error && <div className={styles.errorMessage}>{error}</div>}
             
-            <div className={styles.signupSection}>
+            <div className={styles.switchSection}>
               <p>Don't have an account?</p>
               <Link to='/signup'>
-                <button className={styles.signupButton}>Sign up</button>
+                <button className={styles.switchButton}>Sign up</button>
               </Link>
             </div>
           </form>

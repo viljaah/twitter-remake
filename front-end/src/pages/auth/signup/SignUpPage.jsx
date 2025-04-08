@@ -4,7 +4,7 @@ import { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
-import styles from "./SignUpPage.module.css";
+import styles from "../../../styles/components/authPage.module.css";
 import XSvg from "../../../components/svgs/X";
 import { registerUser } from "../../../service/authService";
 
@@ -63,7 +63,7 @@ const SignUpPage = () => {
               <MdOutlineMail className={styles.inputIcon} />
               <input
                 type="email"
-                className="grow"
+                className={styles.input}
                 placeholder="Email"
                 name="email"
                 onChange={handleInputChange}
@@ -75,7 +75,7 @@ const SignUpPage = () => {
               <FaUser className={styles.inputIcon} />
               <input
                 type="text"
-                className="grow"
+                className={styles.input}
                 placeholder="Username"
                 name="username"
                 onChange={handleInputChange}
@@ -87,7 +87,7 @@ const SignUpPage = () => {
               <FaUser className={styles.inputIcon} />
               <input
                 type="text"
-                className="grow"
+                className={styles.input}
                 placeholder="Display Name (optional)"
                 name="display_name"
                 onChange={handleInputChange}
@@ -98,7 +98,7 @@ const SignUpPage = () => {
               <MdPassword className={styles.inputIcon} />
               <input
                 type="password"
-                className="grow"
+                className={styles.input}
                 placeholder="Password"
                 name="password"
                 onChange={handleInputChange}
@@ -109,7 +109,7 @@ const SignUpPage = () => {
             <label className={styles.inputLabel}>
               <FaUser className={styles.inputIcon} />
               <textarea
-                className="grow"
+                className={styles.input}
                 placeholder="Bio (optional)"
                 name="bio"
                 onChange={handleInputChange}
@@ -117,15 +117,15 @@ const SignUpPage = () => {
                 rows="3"
               />
             </label>
-            <button className={styles.signUpButton} disabled={isPending}>
+            <button className={styles.submitButton} disabled={isPending}>
               {isPending ? "Creating account..." : "Sign up"}
             </button>
             {error && <p className={styles.errorMessage}>{error}</p>}
           </form>
-          <div className={styles.signupContainer}>
+          <div className={styles.switchpContainer}>
             <p>Already have an account?</p>
             <Link to="/login">
-              <button className={styles.signInButton}>Sign in</button>
+              <button className={styles.switchButton}>Sign in</button>
             </Link>
           </div>
         </div>
