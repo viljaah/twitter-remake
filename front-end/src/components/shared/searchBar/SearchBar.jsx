@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import styles from './SearchBar.module.css';
 import { getCurrentUser, followUser, unfollowUser } from "../../../service/userService.js";
+import Button from "../../ui/Button.jsx";
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -243,12 +244,14 @@ function SearchBar() {
                       {result.display_name && <p>{result.display_name}</p>}
                     </Link>
                     {currentUser && currentUser.id !== result.id && (
-                      <button 
-                        className={`${styles.followButton} ${result.is_following ? styles.following : ''}`}
-                        onClick={() => handleFollowToggle(result.id, result.is_following)}
-                      >
-                        {result.is_following ? 'Unfollow' : 'Follow'}
-                      </button>
+                     <Button 
+                     variant={result.is_following ? "unfollow" : "follow"}
+                     size="sm"
+                     onClick={() => handleFollowToggle(result.id, result.is_following)}
+                     className={styles.followButtonPosition}
+                   >
+                     {result.is_following ? 'Unfollow' : 'Follow'}
+                   </Button>
                     )}
                   </>
                 )}

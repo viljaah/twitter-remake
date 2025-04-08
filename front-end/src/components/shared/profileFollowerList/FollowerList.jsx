@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./FollowersList.module.css";
+import Button from '../../ui/Button.jsx';
 import { getFollowing, followUser, unfollowUser } from '../../../service/userService.js';
 
 const FollowersList = ({ type }) => {
@@ -128,21 +129,25 @@ const FollowersList = ({ type }) => {
               </Link>
               
               {type === 'followers' && (
-                <button
-                  className={styles.followBtn}
+                <Button
+                  variant={following.includes(user.id) ? "danger" : "primary"}
+                  size="sm"
                   onClick={() => handleToggleFollow(user.id)}
+                  className={styles.followBtnPosition}
                 >
                   {following.includes(user.id) ? 'Unfollow' : 'Follow'}
-                </button>
+               </Button>
               )}
               
               {type === 'following' && (
-                <button
-                  className={styles.followBtn}
+                <Button
+                  variant={following.includes(user.id) ? "danger" : "primary"}
+                  size="sm"
                   onClick={() => handleToggleFollow(user.id)}
+                  className={styles.followBtnPosition}
                 >
-                  Unfollow
-                </button>
+                  {following.includes(user.id) ? 'Unfollow' : 'Follow'}
+              </Button>
               )}
             </li>
           ))}

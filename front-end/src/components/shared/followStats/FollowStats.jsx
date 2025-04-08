@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import Button from "../../ui/Button.jsx"
 import { getFollowersCount, getFollowingCount, getFollowing, followUser, unfollowUser } from '../../../service/userService.js';
 
 // This component displays follower/following counts and a follow/unfollow button
@@ -133,14 +134,16 @@ const FollowStats = ({ userId, styles, onFollowStatusChange}) => {
       </div>
       
       {/* Follow/Unfollow button - only shown if not viewing own profile */}
-      {!isOwnProfile && (
-        <button 
-          className={`${styles.followButton} ${isFollowing ? styles.unfollowButton : ''}`}
-          onClick={handleFollowToggle}
+        {!isOwnProfile && (
+        <Button 
+            variant={isFollowing ? "danger" : "primary"}
+            size="sm"
+            onClick={handleFollowToggle}
+            className={styles.followButtonPosition}
         >
-          {isFollowing ? 'Unfollow' : 'Follow'}
-        </button>
-      )}
+            {isFollowing ? 'Unfollow' : 'Follow'}
+        </Button>
+        )}
     </div>
   );
 };

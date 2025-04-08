@@ -57,19 +57,8 @@
 }
 
 .postBtn {
-  background-color: var(--post-button);
-  border: none;
-  border-radius: 9999px;
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
+  margin-left: auto; /* Keep any positioning styles */
 }
-
-.postBtn:hover {
-  background-color: rgb(192, 190, 190);
-}
-
 @media (max-width: 600px) {
   .icon:last-child {
     display: none;
