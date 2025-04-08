@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+/*import React, {useState, useContext} from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import styles from "./Settings.module.css";
 import {useNavigate} from "react-router-dom";
@@ -76,7 +76,7 @@ const SettingsPage = ({onLogout}) => {
 
     return (
         <div className={styles.settingsContainer}>
-          {/* Main Settings Page */}
+          {/* Main Settings Page *
           {activePage === "main" && (
             <>
               <h1 className={styles.headingSettings}>Settings</h1>
@@ -98,7 +98,7 @@ const SettingsPage = ({onLogout}) => {
             </>
           )}
     
-          {/* Account Settings Page */}
+          {/* Account Settings Page *
           {activePage === "account" && (
             <>
               <div className={styles.settingsHeader}>
@@ -132,7 +132,7 @@ const SettingsPage = ({onLogout}) => {
             </>
           )}
     
-          {/* Display Settings Page */}
+          {/* Display Settings Page *
           {activePage === "display" && (
             <>
               <div className={styles.settingsHeader}>
@@ -150,11 +150,11 @@ const SettingsPage = ({onLogout}) => {
                   Change your background to the color theme you prefer.
                 </p>
                 
-                {/* Background Options */}
+                {/* Background Options *
                 <div className={styles.settingSection}>
                   <h2 className={styles.sectionTitle}>Background</h2>
                   <div className={styles.backgroundOptions}>
-                    {/* Default (Black) */}
+                    {/* Default (Black) *
                     <div 
                       className={`${styles.backgroundOption} ${styles.themeButton}`}
                       role="button"
@@ -172,7 +172,7 @@ const SettingsPage = ({onLogout}) => {
                       <span>Default Dark</span>
                     </div>
 
-                    {/* Dim */}
+                    {/* Dim *
                     <div 
                       className={`${styles.backgroundOption} ${styles.themeButton}`}
                       role="button"
@@ -187,7 +187,7 @@ const SettingsPage = ({onLogout}) => {
                       <span>Dim</span>
                     </div>
 
-                    {/* Light */}
+                    {/* Light *
                     <div 
                       className={styles.backgroundOption}
                       role="button"
@@ -210,4 +210,67 @@ const SettingsPage = ({onLogout}) => {
     );
 };
         
+export default SettingsPage;*/
+import React, { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa6";
+import styles from "./Settings.module.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { DarkModeContext, THEME_MODES } from "../../contexts/DarkMode";
+import AccountSettings from "../../components/shared/settings/AccountSettings";
+import DisplaySettings from "../../components/shared/settings/DisplaySettings";
+
+const SettingsPage = () => {
+  const [activePage, setActivePage] = useState("main");
+  const { logout } = useAuth();
+  
+  return (
+    <div className={styles.settingsContainer}>
+      {/* Main Settings Page */}
+      {activePage === "main" && (
+        <MainSettings onNavigate={setActivePage} />
+      )}
+    
+      {/* Account Settings Page */}
+      {activePage === "account" && (
+        <AccountSettings 
+          onBack={() => setActivePage("main")}
+          onLogout={logout}
+        />
+      )}
+    
+      {/* Display Settings Page */}
+      {activePage === "display" && (
+        <DisplaySettings 
+          onBack={() => setActivePage("main")}
+        />
+      )}
+    </div>
+  );
+};
+
+// Main settings page with navigation options
+const MainSettings = ({ onNavigate }) => {
+  return (
+    <>
+      <h1 className={styles.headingSettings}>Settings</h1>
+      <div className={styles.listOfSettings}>
+        <button 
+          className={styles.settingBtn} 
+          onClick={() => onNavigate("account")}
+        > 
+          Your account
+        </button>
+
+        <button 
+          className={styles.settingBtn} 
+          onClick={() => onNavigate("display")}
+        >
+          Display
+        </button>
+      </div>
+    </>
+  );
+};
+
 export default SettingsPage;
