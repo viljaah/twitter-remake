@@ -60,7 +60,7 @@
   }
   
   /* For light theme, ensure buttons are visible */
-  body[data-theme="light"] .btn-follow {
+  body[data-theme="light"] .btn-follow, .btn-primary {
     background-color: #e6e6e6;
     color: #000000;
   }
