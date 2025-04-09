@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/sharedStyles.css';
+//import '../../styles/sharedStyles.css';
 
 /**
  * Avatar component for user profile pictures
