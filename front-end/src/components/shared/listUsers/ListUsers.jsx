@@ -54,7 +54,7 @@ const ListUsers = () => {
           return;
         }
 
-        const data = await getFollowing();
+        const data = await getFollowing(); // this is coming form the userService
         // Extract the followed user IDs
         const followingIds = data.following.map(u => u.id);
         setFollowing(followingIds);
@@ -81,12 +81,12 @@ const ListUsers = () => {
     try {
       if (following.includes(userId)) {
         // Already following; attempt to unfollow
-        await unfollowUser(userId);
+        await unfollowUser(userId); // fucntion extracted from userService
         // On success, remove this user's ID from following state
         setFollowing(prev => prev.filter(id => id !== userId));
       } else {
         // Not following; attempt to follow
-        await followUser(userId);
+        await followUser(userId); // funciton extracted from userService
         // On success, add this user's ID to following state
         setFollowing(prev => [...prev, userId]);
       }
