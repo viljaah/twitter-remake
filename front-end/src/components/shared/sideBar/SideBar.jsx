@@ -104,7 +104,6 @@ function SideBar({
               size="lg"
               onClick={handleOpenPostModal}
               fullWidth={true}
-              className={styles.postBtnPosition}
             >
              Post
           </Button>

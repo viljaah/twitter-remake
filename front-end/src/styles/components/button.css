@@ -22,8 +22,9 @@
   }
   
   .btn-lg {
-    padding: 10px 20px;
+    padding: 10px 40px;
     font-size: 18px;
+    margin-left: -25px;
   }
   
   /* Button variants */
