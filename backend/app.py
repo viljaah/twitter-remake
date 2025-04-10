@@ -27,7 +27,7 @@ app.add_middleware(
         "https://twitter-remake-1.onrender.com" 
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"], # or have [*]
+    allow_methods=["*"], # or have [*]
     allow_headers=["*"],
 )
 
