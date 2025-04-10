@@ -30,7 +30,5 @@ app.include_router(userRouter, prefix="/api")
 app.include_router(tweet_router, prefix="/api")
 
 if __name__ == "__main__":
-    # Use environment variables set by Render or fallback to defaults for local development
-    host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("app:app", host=host, port=port, reload=True)
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
