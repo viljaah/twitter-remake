@@ -1,7 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+import os
+from dotenv import load_dotenv
 
-DATABASE_URL = "postgresql://twitterdb_gr08_user:xFiH1DSWlOlBQIIgmHvU7rO0Te5yrjs5@dpg-cvjtdteuk2gs73a2tieg-a.frankfurt-postgres.render.com:5432/twitterdb_gr08?sslmode=require"
+load_dotenv()
+# Get database URL from environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 
 # create the engine and test the connection
 try:
@@ -23,3 +28,4 @@ def get_db():
         yield db # this gives the database connection to your API endpoint
     finally:
         db.close() # makes sure taht the connection is closed even if there's an error
+
