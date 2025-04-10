@@ -3,6 +3,11 @@ from config.db import engine, Base
 from routes.tweet_routes import tweet_router
 from routes.user_routes import userRouter 
 from fastapi.middleware.cors import CORSMiddleware
+import os
+import uvicorn
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # this creates tables if they have not been created yet, need to create the tbales in my db before i can use them
 Base.metadata.create_all(bind=engine)
@@ -25,6 +30,5 @@ app.include_router(userRouter, prefix="/api")
 app.include_router(tweet_router, prefix="/api")
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="localhost", port=8000, reload=True)
-
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
