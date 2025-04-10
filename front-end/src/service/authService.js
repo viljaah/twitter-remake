@@ -15,6 +15,7 @@ export const loginUser = async (username, password) => {
 
     const response = await fetch(`${API_URL}/users/login`, {
       method: 'POST',
+      credentials: 'include',  // Important for cross-origin requests
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },

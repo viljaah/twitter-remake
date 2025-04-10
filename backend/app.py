@@ -23,7 +23,8 @@ app.add_middleware(
     CORSMiddleware,
      allow_origins=[
         "http://localhost:3000",
-        "https://twitter-remake-frontend.onrender.com"  # Add your deployed frontend URL
+        "https://twitter-remake-frontend.onrender.com",  # Add your deployed frontend URL
+        "https://twitter-remake-1.onrender.com" 
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"], # or have [*]
