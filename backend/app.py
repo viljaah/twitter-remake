@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import uvicorn
 from dotenv import load_dotenv
+from fastapi.responses import RedirectResponse
 
 load_dotenv()
 
@@ -13,6 +14,7 @@ load_dotenv()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
 
 #For your frontend to be able to make requests to your backend, you need to enable CORS (Cross-Origin Resource Sharing)
 # These settings help your React app communicate with your backend without restrictions. In a production environment, 
@@ -28,6 +30,11 @@ app.add_middleware(
 # Include the router - this is like app.use("/api/users", userRoutes) in Express
 app.include_router(userRouter, prefix="/api")
 app.include_router(tweet_router, prefix="/api")
+
+#After this change, visiting your base URL will redirect to the FastAPI automatic documentation page where you can see and test all your API endpoints
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/docs")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
