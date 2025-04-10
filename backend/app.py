@@ -21,7 +21,10 @@ app = FastAPI()
 # you might want to be more specific about which methods and headers are allowed for security
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://twitter-remake-frontend.onrender.com"],
+     allow_origins=[
+        "http://localhost:3000",
+        "https://twitter-remake-frontend.onrender.com"  # Add your deployed frontend URL
+    ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"], # or have [*]
     allow_headers=["*"],
