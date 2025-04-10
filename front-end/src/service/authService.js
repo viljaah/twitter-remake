@@ -3,7 +3,7 @@
  * All API calls related to authentication are centralized here
  */
 
-const API_URL = 'https://twitter-remake-1.onrender.com/api';
+const API_URL = 'https://twitter-remake-1.onrender.com';
 
 // Login user
 export const loginUser = async (username, password) => {
@@ -13,7 +13,7 @@ export const loginUser = async (username, password) => {
     formBody.append('username', username);
     formBody.append('password', password);
 
-    const response = await fetch(`${API_URL}/users/login`, {
+    const response = await fetch(`${API_URL}/api/users/login`, {
       method: 'POST',
       credentials: 'include',  // Important for cross-origin requests
       headers: {
@@ -49,7 +49,7 @@ export const loginUser = async (username, password) => {
 // Register user
 export const registerUser = async (userData) => {
   try {
-    const response = await fetch(`${API_URL}/users/register`, {
+    const response = await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ export const logoutUser = async () => {
     if (token) {
       try {
         // Notify the backend about logout to invalidate the token
-        await fetch(`${API_URL}/users/logout`, {
+        await fetch(`${API_URL}/api/users/logout`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -149,7 +149,7 @@ export const validateToken = async () => {
       return false;
     }
 
-    const response = await fetch(`${API_URL}/users/me`, {
+    const response = await fetch(`${API_URL}/api/users/me`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
