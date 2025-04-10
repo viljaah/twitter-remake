@@ -14,7 +14,7 @@ const ListUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users');
+        const response = await fetch('https://twitter-remake-1.onrender.com/api/users');
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }

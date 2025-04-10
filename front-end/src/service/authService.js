@@ -3,7 +3,7 @@
  * All API calls related to authentication are centralized here
  */
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'https://twitter-remake-1.onrender.com/api';
 
 // Login user
 export const loginUser = async (username, password) => {
