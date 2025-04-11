@@ -14,20 +14,20 @@ load_dotenv()
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
-
+origins = [
+    "http://localhost:3000",  # Adjust if running locally
+    "https://yourfrontenddomain.com",  # Replace with your actual frontend domain
+    "*",  # Temporary fix, but not recommended for production
+]
 #For your frontend to be able to make requests to your backend, you need to enable CORS (Cross-Origin Resource Sharing)
 # These settings help your React app communicate with your backend without restrictions. In a production environment, 
 # you might want to be more specific about which methods and headers are allowed for security
 app.add_middleware(
     CORSMiddleware,
-     allow_origins=[
-         "*"
-       ## "http://localhost:3000",
-       ## "https://twitter-remake-frontend.onrender.com",  # Add your deployed frontend URL
-    ],
+    allow_origins=origins,  # Allows only specified origins
     allow_credentials=True,
-    allow_methods=["*"], # or have [*]
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
 )
 
 # Include the router - this is like app.use("/api/users", userRoutes) in Express
