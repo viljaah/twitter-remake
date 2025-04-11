@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from fastapi.responses import RedirectResponse
 load_dotenv()
 
+
 # this creates tables if they have not been created yet, need to create the tbales in my db before i can use them
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -22,7 +23,6 @@ app.add_middleware(
      allow_origins=[
         "http://localhost:3000",
         "https://twitter-remake-frontend.onrender.com",  # Add your deployed frontend URL
-        "https://twitter-remake-1.onrender.com" 
     ],
     allow_credentials=True,
     allow_methods=["*"], # or have [*]

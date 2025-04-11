@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, field_validator
+from pydantic import BaseModel, EmailStr, field_validator, ConfigDict
 
 class UserCreate(BaseModel):
     username: str
@@ -58,5 +58,6 @@ class UserResponse(BaseModel):
     display_name: str = None
     bio: str = None
 
-    class Config:  # Properly indented to be nested inside UserResponse
-        orm_mode = True  # This allows conversion from SQLAlchemy model
+    model_config = ConfigDict(from_attributes=True)  # Replaces the old orm_mode=True
+    #class Config:  # Properly indented to be nested inside UserResponse
+        #orm_mode = True  # This allows conversion from SQLAlchemy model
