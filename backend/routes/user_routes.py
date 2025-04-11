@@ -21,6 +21,10 @@ userRouter = APIRouter(
     prefix="/users", #this acts like app.use("api/users", userRoutes) in express
     tags=["users"], #this is for API documentation grouping
 )
+@userRouter.get("/test")
+async def test_endpoint():
+    return {"message": "User routes are working"}
+
 # this is the public route, so no auth is needed
 @userRouter.post("/register", response_model=UserResponse, status_code=201)
 # db: session depends getdb, it tells fastapi to call my get_db() function to create db session 
