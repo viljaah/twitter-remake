@@ -38,9 +38,6 @@ app.include_router(tweet_router, prefix="/api")
 async def root():
     return RedirectResponse(url="/docs")
 
-@app.get("/api/debug-cors")
-async def debug_cors():
-    return {"message": "CORS is working!"}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
