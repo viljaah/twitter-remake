@@ -7,12 +7,10 @@ import os
 import uvicorn
 from dotenv import load_dotenv
 from fastapi.responses import RedirectResponse
-
 load_dotenv()
 
 # this creates tables if they have not been created yet, need to create the tbales in my db before i can use them
 Base.metadata.create_all(bind=engine)
-
 app = FastAPI()
 
 
@@ -39,6 +37,10 @@ app.include_router(tweet_router, prefix="/api")
 @app.get("/")
 async def root():
     return RedirectResponse(url="/docs")
+
+@app.get("/api/debug-cors")
+async def debug_cors():
+    return {"message": "CORS is working!"}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
