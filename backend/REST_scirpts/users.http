@@ -1,18 +1,18 @@
 ### Register User
-POST http://localhost:8000/api/users/register
+POST https://twitter-remake-1.onrender.com/api/users/register
 Content-Type: application/json
 
 {
-  "username": "vilja",
-  "email": "vilja@hotmail.com",
-  "password": "stratos",
-  "display_name": "viljaH",
-  "bio": "hei, im vilja and i love stratos"
+  "username": "modetest",
+  "email": "modetest@gmail.com",
+  "password": "modetest",
+  "display_name": "modetest",
+  "bio": "hei, modesta here and i also love stratos, test"
 }
 
 
 ### Login User - IMPORTANT: For OAuth2 you need to use form data, not JSON
-POST http://localhost:8000/api/users/login
+POST https://twitter-remake-1.onrender.com/api/users/login
 Content-Type: application/x-www-form-urlencoded
 
 username=vilja&password=stratos

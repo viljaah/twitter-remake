@@ -3,6 +3,7 @@
  * All API calls related to search functionality are centralized here
  */
 
+//const API_URL = 'http://0.0.0.0:8000/api'; 
 const API_URL = 'https://twitter-remake-1.onrender.com/api';
 
 // Helper function to get auth headers
