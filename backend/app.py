@@ -21,8 +21,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
      allow_origins=[
-        "http://localhost:3000",
-        "https://twitter-remake-frontend.onrender.com",  # Add your deployed frontend URL
+         "*"
+       ## "http://localhost:3000",
+       ## "https://twitter-remake-frontend.onrender.com",  # Add your deployed frontend URL
     ],
     allow_credentials=True,
     allow_methods=["*"], # or have [*]
@@ -38,9 +39,6 @@ app.include_router(tweet_router, prefix="/api")
 async def root():
     return RedirectResponse(url="/docs")
 
-@app.get("/api/debug-cors")
-async def debug_cors():
-    return {"message": "CORS is working!"}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
