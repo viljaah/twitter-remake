@@ -4,6 +4,7 @@
  */
 
 const API_URL = 'https://twitter-remake-1.onrender.com';
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
 
 // Login user
 export const loginUser = async (username, password) => {
@@ -13,9 +14,18 @@ export const loginUser = async (username, password) => {
     formBody.append('username', username);
     formBody.append('password', password);
 
-    const response = await fetch(`${API_URL}/api/users/login`, {
+    /*const response = await fetch(`${API_URL}/api/users/login`, {
       method: 'POST',
       credentials: 'include',  // Important for cross-origin requests
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formBody
+    });*/
+    const response = await fetch(`${CORS_PROXY}${API_URL}/api/users/login`, {
+      method: 'POST',
+      // Remove credentials when using CORS proxy
+      // credentials: 'include', 
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
