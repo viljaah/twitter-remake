@@ -21,9 +21,7 @@ userRouter = APIRouter(
     prefix="/users", #this acts like app.use("api/users", userRoutes) in express
     tags=["users"], #this is for API documentation grouping
 )
-@userRouter.get("/test")
-async def test_endpoint():
-    return {"message": "User routes are working"}
+
 
 # this is the public route, so no auth is needed
 @userRouter.post("/register", response_model=UserResponse, status_code=201)
@@ -32,34 +30,15 @@ async def register_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(user, db)
 
 # login is using the OAuth2PasswordRequestForm
-'''@userRouter.post("/login")
+@userRouter.post("/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # creating here a UserLogin-like object
     user_credentials = UserLogin(
         username = form_data.username,
         password = form_data.password
     )
-    return login_user(user_credentials, db) # the message being dispalyed'''
+    return login_user(user_credentials, db) # the message being dispalyed
 
-@userRouter.post("/login")
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    try:
-        print(f"Login attempt for user: {form_data.username}")
-        
-        user_credentials = UserLogin(
-            username = form_data.username,
-            password = form_data.password
-        )
-        
-        result = login_user(user_credentials, db)
-        print(f"Login result: {result}")
-        return result
-        
-    except Exception as e:
-        print(f"Login error: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        raise
 
 # log out user
 @userRouter.post("/logout")
