@@ -12,7 +12,7 @@ Content-Type: application/json
 
 
 ### Login User - IMPORTANT: For OAuth2 you need to use form data, not JSON
-POST https://twitter-remake-1.onrender.com/api/users/login
+POST https://twitter-remake-backend.onrender.com/api/users/login
 Content-Type: application/x-www-form-urlencoded
 
 username=vilja&password=stratos
