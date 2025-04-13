@@ -6,6 +6,7 @@
 // const API_URL = 'https://twitter-remake-1.onrender.com';
 const API_URL = 'https://twitter-remake-backend.onrender.com';
 //const API_URL = 'http://0.0.0.0:8000';
+// const API_URL = 'http://localhost:8000';
 
 // Login user
 export const loginUser = async (username, password) => {

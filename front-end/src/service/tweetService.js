@@ -3,7 +3,8 @@
  * All API calls related to tweets are centralized here
  */
 
-const API_URL = 'http://0.0.0.0:8000/api';//'https://twitter-remake-1.onrender.com/api';
+// const API_URL = 'http://0.0.0.0:8000/api';//'https://twitter-remake-1.onrender.com/api';
+const API_URL = 'http://localhost:8000/api';
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
