@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from models.user_schema import User
 from models.tweet_schema import Tweet
 import bcrypt 
+print("bcrypt module location:", bcrypt.__file__)
+print("Available attributes:", dir(bcrypt))
 from datetime import timedelta
 from middleware.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 
