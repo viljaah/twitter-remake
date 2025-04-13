@@ -39,8 +39,10 @@ app.include_router(tweet_router, prefix="/api")
 async def root():
     return RedirectResponse(url="/docs")
 
+port = int(os.environ.get("PORT", 8001))
+print(f"Starting on port: {port}")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 8001))
     print(f"Starting on port: {port}")  # Debug line; remove this in production
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
