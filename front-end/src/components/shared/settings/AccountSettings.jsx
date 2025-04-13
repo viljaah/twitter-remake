@@ -34,7 +34,7 @@ const AccountSettings = ({ onBack, onLogout }) => {
       }
 
       // API call to delete account
-      const response = await fetch(`http://localhost:8000/api/users/${authUser.id}`, {
+      const response = await fetch(`https://twitter-remake-backend.onrender.com/api/users/${authUser.id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
