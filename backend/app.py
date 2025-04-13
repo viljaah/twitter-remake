@@ -16,8 +16,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",  # Adjust if running locally
-    "https://yourfrontenddomain.com",  # Replace with your actual frontend domain
-    "*",  # Temporary fix, but not recommended for production
+    "https://twitter-remake-frontend-1qap.onrender.com",  # Replace with your actual frontend domain
+    # "*",  # Temporary fix, but not recommended for production
 ]
 #For your frontend to be able to make requests to your backend, you need to enable CORS (Cross-Origin Resource Sharing)
 # These settings help your React app communicate with your backend without restrictions. In a production environment, 
