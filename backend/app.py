@@ -9,19 +9,15 @@ from dotenv import load_dotenv
 from fastapi.responses import RedirectResponse
 load_dotenv()
 
-
 # this creates tables if they have not been created yet, need to create the tbales in my db before i can use them
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 origins = [
     "http://localhost:3000",  # Adjust if running locally
-    "https://twitter-remake-frontend-1qap.onrender.com",  # Replace with your actual frontend domain
-    # "*",  # Temporary fix, but not recommended for production
+    "https://twitter-remake-frontend-1qap.onrender.com",
 ]
-#For your frontend to be able to make requests to your backend, you need to enable CORS (Cross-Origin Resource Sharing)
-# These settings help your React app communicate with your backend without restrictions. In a production environment, 
-# you might want to be more specific about which methods and headers are allowed for security
+# add CORS middleware to allow requests from specified origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # Allows only specified origins
